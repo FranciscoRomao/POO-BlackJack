@@ -1,0 +1,43 @@
+@startuml
+
+package "BlackJack"
+{
+    class Game
+    {
+        +type:int
+        +min_bet:int
+        +max_bet:int
+        +init_bal:int
+        +shoe:int
+        shuffle:int
+        
+        +Game(gameType:int, min)
+        +main(args:String)
+    }
+    
+    class Chip
+    {
+        +value
+        
+        +Chip(value:int)
+    }
+    
+    class Card
+    {
+        +rank:int
+        
+        +Card(rank:int)
+    }
+    
+    abstract Player
+    {
+        -chips:chip[0..*]
+        -cards:card[0..*]
+        -
+        +Player(init_chips:chip[0..*])
+    }
+    
+    Player "0..*" *--x Card
+    Player "0..*" *--x Chip
+}
+@enduml
