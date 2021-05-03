@@ -9,7 +9,8 @@ package "BlackJack"
         +max_bet:int
         +init_bal:int
         +shoe:int
-        shuffle:int
+        +shuffle:int
+        +round:int
         
         +Game(gameType:int, min)
         +main(args:String)
@@ -29,15 +30,34 @@ package "BlackJack"
         +Card(rank:int)
     }
     
-    abstract Player
+    class Player
     {
-        -chips:chip[0..*]
-        -cards:card[0..*]
-        -
+        +my_chips:chip[0..*]
+        +bet_chips:chip[0..*]
+        +cards:card[0..*]
+        
         +Player(init_chips:chip[0..*])
+        +Bet()
+    }
+    
+    class Dealer
+    {
+        +cards:card[0..*]
+        
+        -hole_card:int
+        
+        +Dealer()
+        +DealCards()
+        +CheckBJ()
+        
+        
     }
     
     Player "0..*" *--x Card
+    Dealer "0..*" *--x Card
     Player "0..*" *--x Chip
+    Game "1" *--x Player
+    Game "1" *--x Dealer
+    
 }
 @enduml
