@@ -1,4 +1,4 @@
-# CPD_KNN
+# POO - Blackjack
 
 ## Task List
 
