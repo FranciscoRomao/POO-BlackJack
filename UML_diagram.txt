@@ -72,11 +72,6 @@ package "BlackJack"
         +Insurance()
     }
     
-    class FileReader
-    {
-        +fileName:
-    }
-    
     class Dealer
     {
         -hole_card:int
