@@ -57,13 +57,11 @@ package "BlackJack"
     
     class Player
     {
-        +my_chips:chip[0..*]
-        +bet_chips:chip[0..*]
         +hilo_count:int
         +ace5_count:int
         
-        +Player(init_chips:chip[0..*], type:int)
-        +Play(type:int, ):int
+        +Player(init_chips:chip[0..*])
+        +Play():int
         +Debug()
         +Sim()
         +Hit()
@@ -83,10 +81,8 @@ package "BlackJack"
     }
     
     class Shoe
-    {
-        -cards:card[0..*]
-        
-        +Shoe(numDecks:int, )
+    {        
+        +Shoe(numDecks:int)
         +Shuffle()
         +GetCard()
     }
