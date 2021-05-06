@@ -1,19 +1,11 @@
 package BlackJack;
-
+import java.io.*;
 class Game
 {
-    public int type;
+    public char mode;
     public Player player;
     public Dealer dealer;
-    /*interactive - 0
-    simulation - 1
-    debug - 2*/
-    
-    public int strat;
-    /*BS - 0
-    HL - 1
-    BS_AF - 2
-    HL_AF - 3*/
+    public String strat;
     
     public int min_bet;
     public int max_bet;
@@ -23,24 +15,54 @@ class Game
     //Number of decks on the shoe
     
     public int shuffle;
-
+    
     //Percentage of shoe used to shuffle again
+
+    public int shuffleNum;
     
     public int round;
-    
-    public Game(int gameType, int min, int max, int strategy, int balance, int ndecks, int shuffle_rate)
+
+    /**
+     * 
+     * @param gameMode Game mode
+     * @param min Minimum bet 
+     * @param max Maximum bet
+     * @param balance Initial ammount of money
+     * @param ndecks Number of 52 card decks in the shoe
+     * @param shuffle_rate Percentage of shoe played before shuffling
+     * @param cmd Name of the file with the commands
+     * @param shoeFile Name of the file with the shoe
+     * @param sNum Number of shuffles to perform until ending the simulation
+     * @param strat Counting cards strategy to use
+     */
+    //char gameMode, int min, int max, int balance, int ndecks, int shuffle_rate, File cmd, File shoeFile, int sNum, String strat
+    public Game(String[] args)
     {
-        this.type = gameType;
-        this.strat = strategy;
-        this.max_bet = max;
+
+        this.mode = args[0]
         this.min_bet = min;
+        this.max_bet = max;
         this.round = 0;
-        this.shoe = ndecks;
-        this.shuffle = shuffle_rate;
+        if(gameMode != 'd'){
+            this.player = new Player(this, balance, strat);
+            this.shoe = ndecks;
+            this.shuffle = shuffle_rate;
+            if(gameMode == 'i')
+                return;
+            this.shuffleNum = sNum;
+            this.strat = strat;
+            return;
+        }
+        if(gameMode == 'd'){
+            this.dealer = new Dealer(this, shoeFile);
+            this.player = new Player(this, balance, strat, cmd);
+        }
+
     }
 
     public static void main(String[] args)
     {
-        //TODO     
+        Game newGame = new Game(args[0], min, max, balance, ndecks, shuffle_rate, cmd, shoeFile, sNum, strat)
+        
     }
 }
