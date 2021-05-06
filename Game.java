@@ -1,5 +1,6 @@
 package BlackJack;
 import java.io.*;
+import java.util.Scanner;
 class Game
 {
     public char mode;
@@ -45,44 +46,49 @@ class Game
             System.out.println("Wrong number of parameters");
             System.exit(-1);
         }
-        this.min_bet = Integer.parseInt(args[1]);
-        if(this.min_bet < 1){
-            System.out.println("Minimum bet has to be more than 1$");
+        try {
+            this.min_bet = Integer.parseInt(args[1]);
+            if(this.min_bet < 1){
+                System.out.println("Minimum bet has to be more than 1$");
+                System.exit(-1);
+            }
+            this.max_bet = Integer.parseInt(args[2]);
+            if(this.max_bet < 10*this.min_bet || this.max_bet > 20*this.min_bet){
+                System.out.println("Maximum bet has to be a value between "+10*this.min_bet+" and "+20*this.min_bet+" if the minimum bet is "+this.min_bet);
+                System.exit(-1);
+            }
+            this.round = 0;
+            if(this.mode != 'd'){
+                if(Integer.parseInt(args[3]) < 50*this.min_bet){
+                    System.out.println("Balance has to be a value greater than "+50*this.min_bet+" if the minimum bet is "+this.min_bet);
+                    System.exit(-1);
+                }
+                if(this.mode == 's'){
+                    // TODO verificação da strategy
+                    this.strat = args[7];
+                    this.shuffleNum = Integer.parseInt(args[6]);
+                }
+                this.player = new Player(this, Integer.parseInt(args[3]), this.strat);
+                if(Integer.parseInt(args[4]) < 4 || Integer.parseInt(args[4]) > 8){
+                    System.out.println("The number of decks has to be between 4 and 8");
+                    System.exit(-1);
+                }
+                this.shoe = Integer.parseInt(args[4]);
+                if(Integer.parseInt(args[5]) < 10 || Integer.parseInt(args[5]) > 100){
+                    System.out.println("Percentage of shoe played has to be between 10 and 100");
+                    System.exit(-1);
+                }                
+                this.shuffle = Integer.parseInt(args[5]);
+                return;
+            }
+            if(this.mode == 'd'){
+                this.dealer = new Dealer(this, args[4]);
+                this.player = new Player(this, Integer.parseInt(args[3]), args[5]);
+            }       
+        } catch (Exception e) {
+            System.out.println("Please insert numbers only besides the mode and the strategy");
             System.exit(-1);
         }
-        this.max_bet = Integer.parseInt(args[2]);
-        if(this.max_bet < 10*this.min_bet || this.max_bet > 20*this.min_bet){
-            System.out.println("Maximum bet has to be a value between "+10*this.min_bet+" and "+20*this.min_bet+" if the minimum bet is "+this.min_bet);
-            System.exit(-1);
-        }
-        this.round = 0;
-        if(this.mode != 'd'){
-            if(Integer.parseInt(args[3]) < 50*this.min_bet){
-                System.out.println("Balance has to be a value greater than "+50*this.min_bet+" if the minimum bet is "+this.min_bet);
-                System.exit(-1);
-            }
-            if(this.mode == 's'){
-                // TODO verificação da strategy
-                this.strat = args[7];
-                this.shuffleNum = Integer.parseInt(args[6]);
-            }
-            this.player = new Player(this, Integer.parseInt(args[3]), this.strat);
-            if(Integer.parseInt(args[4]) < 4 || Integer.parseInt(args[4]) > 8){
-                System.out.println("The number of decks has to be between 4 and 8");
-                System.exit(-1);
-            }
-            this.shoe = Integer.parseInt(args[4]);
-            if(Integer.parseInt(args[5]) < 10 || Integer.parseInt(args[5]) > 100){
-                System.out.println("Percentage of shoe played has to be between 10 and 100");
-                System.exit(-1);
-            }
-            this.shuffle = Integer.parseInt(args[5]);
-            return;
-        }
-        if(this.mode == 'd'){
-            this.dealer = new Dealer(this, args[4]);
-            this.player = new Player(this, Integer.parseInt(args[3]), args[5]);
-        }       
     }
     @Override
     public String toString(){
@@ -91,8 +97,20 @@ class Game
 
     public static void main(String[] args)
     {
+        String str;
         Game newGame = new Game(args);
         System.out.println(newGame);
-        System.out.println(newGame.player.action);
+        newGame.player.readPlay();
+        //System.out.println(newGame.player.action);
+        // try {
+        //     Scanner s = new Scanner(newGame.player.action).useDelimiter(" ");
+        //     while (s.hasNext()) {
+        //         str = s.next();
+        //         System.out.println(str);
+        //     }            
+        // } catch (Exception e) {
+        //     //TODO: handle exception
+        //     System.out.println("Error");
+        // }
     }
 }
