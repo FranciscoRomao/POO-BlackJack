@@ -19,10 +19,10 @@
 - [ ] Implementar função CheckBJ do Dealer
 - [ ] Ler input e inicializar o jogo
 
-##Discutir
+## Discutir
 
 - Quando fazemos o construct do Game este pode fazer logo construct de um Dealer porque não pode haver um jogo sem Dealer
 
-##Notas
+## Notas
 
 - Link para compilar UML: https://www.planttext.com/ ou então usar extenção do PlantUML para o VS Code
