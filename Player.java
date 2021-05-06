@@ -19,17 +19,7 @@ public class Player
     public String action;
 
     //public Player(Game game, LinkedList<Chip> init_chips, int strat)
-    public Player(Game game, int balance, String strat)
-    {
-        this.game = game;
-        this.balance = balance;
-        this.bet_chips = new LinkedList<Chip>();
-        this.hand = new Hand();
-
-        this.hilo_count = 0;
-        this.ace5_count = 0;
-    }
-    public Player(Game game, int balance, String strat, File cmd)
+    public Player(Game game, int balance, String string)
     {
         this.game = game;
         this.balance = balance;
@@ -39,8 +29,16 @@ public class Player
         this.hilo_count = 0;
         this.ace5_count = 0;
 
-        Scanner s = new Scanner(cmd).useDelimiter("/n");
-        action = s.next();
+        if(game.mode == 'd'){
+            File cmdFile = new File(string);
+            try {
+                Scanner s = new Scanner(cmdFile).useDelimiter("/Z");
+                action = s.next();    
+            } catch (Exception e) {
+                System.out.println("Error reading file");
+                System.exit(-1);
+            }            
+        }
     }
 
     public int Play()
@@ -52,7 +50,7 @@ public class Player
          */
         return 0;
     }
-
+/*
     public int Debug()
     {
         //TODO
@@ -88,5 +86,5 @@ public class Player
         //TODO
         return 0;
     }
-
+*/
 }

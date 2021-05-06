@@ -24,46 +24,75 @@ class Game
 
     /**
      * 
-     * @param gameMode Game mode
-     * @param min Minimum bet 
-     * @param max Maximum bet
-     * @param balance Initial ammount of money
-     * @param ndecks Number of 52 card decks in the shoe
-     * @param shuffle_rate Percentage of shoe played before shuffling
-     * @param cmd Name of the file with the commands
-     * @param shoeFile Name of the file with the shoe
-     * @param sNum Number of shuffles to perform until ending the simulation
-     * @param strat Counting cards strategy to use
+     * @param args Input Parameters
      */
-    //char gameMode, int min, int max, int balance, int ndecks, int shuffle_rate, File cmd, File shoeFile, int sNum, String strat
     public Game(String[] args)
     {
+        if(args.length == 0){ //args vazio
+            System.out.println("Specify input parameters");
+            System.exit(-1);
+        }
+        if(args[0].charAt(0) != '-'){
+            System.out.println("Specify the mode like this -<mode>");
+            System.exit(-1);
+        }
         this.mode = args[0].charAt(1);
-        if(this.mode != 'd' || this.mode != 'i' || this.mode != 's')
-            //TODO invalid mode exit -1
-        this.min_bet = min;
-        this.max_bet = max;
+        if(this.mode != 'd' && this.mode != 'i' && this.mode != 's'){
+            System.out.println("Invalid mode");
+            System.exit(-1);
+        }
+        if((this.mode != 's' && args.length != 6) || (this.mode == 's' && args.length != 8)){
+            System.out.println("Wrong number of parameters");
+            System.exit(-1);
+        }
+        this.min_bet = Integer.parseInt(args[1]);
+        if(this.min_bet < 1){
+            System.out.println("Minimum bet has to be more than 1$");
+            System.exit(-1);
+        }
+        this.max_bet = Integer.parseInt(args[2]);
+        if(this.max_bet < 10*this.min_bet || this.max_bet > 20*this.min_bet){
+            System.out.println("Maximum bet has to be a value between "+10*this.min_bet+" and "+20*this.min_bet+" if the minimum bet is "+this.min_bet);
+            System.exit(-1);
+        }
         this.round = 0;
-        if(gameMode != 'd'){
-            this.player = new Player(this, balance, strat);
-            this.shoe = ndecks;
-            this.shuffle = shuffle_rate;
-            if(gameMode == 'i')
-                return;
-            this.shuffleNum = sNum;
-            this.strat = strat;
+        if(this.mode != 'd'){
+            if(Integer.parseInt(args[3]) < 50*this.min_bet){
+                System.out.println("Balance has to be a value greater than "+50*this.min_bet+" if the minimum bet is "+this.min_bet);
+                System.exit(-1);
+            }
+            if(this.mode == 's'){
+                // TODO verificação da strategy
+                this.strat = args[7];
+                this.shuffleNum = Integer.parseInt(args[6]);
+            }
+            this.player = new Player(this, Integer.parseInt(args[3]), this.strat);
+            if(Integer.parseInt(args[4]) < 4 || Integer.parseInt(args[4]) > 8){
+                System.out.println("The number of decks has to be between 4 and 8");
+                System.exit(-1);
+            }
+            this.shoe = Integer.parseInt(args[4]);
+            if(Integer.parseInt(args[5]) < 10 || Integer.parseInt(args[5]) > 100){
+                System.out.println("Percentage of shoe played has to be between 10 and 100");
+                System.exit(-1);
+            }
+            this.shuffle = Integer.parseInt(args[5]);
             return;
         }
-        if(gameMode == 'd'){
-            this.dealer = new Dealer(this, shoeFile);
-            this.player = new Player(this, balance, strat, cmd);
-        }
-
+        if(this.mode == 'd'){
+            this.dealer = new Dealer(this, args[4]);
+            this.player = new Player(this, Integer.parseInt(args[3]), args[5]);
+        }       
+    }
+    @Override
+    public String toString(){
+        return mode+" "+min_bet+" "+max_bet+" "+this.player.balance+" "+shoe+" "+shuffle;
     }
 
     public static void main(String[] args)
     {
-        Game newGame = new Game(args[0], min, max, balance, ndecks, shuffle_rate, cmd, shoeFile, sNum, strat)
-        
+        Game newGame = new Game(args);
+        System.out.println(newGame);
+        System.out.println(newGame.player.action);
     }
 }

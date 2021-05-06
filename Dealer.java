@@ -17,14 +17,13 @@ class Dealer
         this.shoe = new Shoe(this.game.shoe);
     }
     
-    public Dealer(Game game, File shoe)
+    public Dealer(Game game, String shoe)
     {
         this.game = game;
         this.hand = new Hand();
-        this.shoe = new Shoe(this.game.shoe);
         //TODO create shoe from file
     }
-
+/*
     public int Hit()
     {
         //getCard()
@@ -43,4 +42,5 @@ class Dealer
         //TODO
         return 0;
     }
+    */
 }
