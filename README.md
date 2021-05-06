@@ -17,7 +17,7 @@
 - [ ] Implementar função Hit do Dealer
 - [ ] Implementar função DealCards do Dealer
 - [ ] Implementar função CheckBJ do Dealer
-- [ ] Ler input e inicializar o jogo
+- [x] Ler input e inicializar o jogo
 
 ## Discutir
 
