@@ -38,8 +38,9 @@ class Game
     //char gameMode, int min, int max, int balance, int ndecks, int shuffle_rate, File cmd, File shoeFile, int sNum, String strat
     public Game(String[] args)
     {
-
-        this.mode = args[0]
+        this.mode = args[0].charAt(1);
+        if(this.mode != 'd' || this.mode != 'i' || this.mode != 's')
+            //TODO invalid mode exit -1
         this.min_bet = min;
         this.max_bet = max;
         this.round = 0;
