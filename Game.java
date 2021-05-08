@@ -10,17 +10,18 @@ class Game
     
     public int min_bet;
     public int max_bet;
+
     //public int init_bal;
     
-    public int shoe;
     //Number of decks on the shoe
-    
-    public int shuffle;
+    public int shoe;
     
     //Percentage of shoe used to shuffle again
+    public int shuffle;
 
     public int shuffleNum;
     
+    //Game round counter
     public int round;
 
     /**

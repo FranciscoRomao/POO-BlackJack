@@ -10,7 +10,7 @@
 - [ ] Implementar função Debug do Player
 - [ ] Implementar função Sim do Player
 - [ ] Implementar função Hit do Player
-- [ ] Implementar constructor do Shoe
+- [x] Implementar constructor do Shoe
 - [x] Implementar função Shuffle do Shoe
 - [ ] Leitura do file para o shoe
 - [ ] Implementar constructor do Dealer
