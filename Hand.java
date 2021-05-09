@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 public class Hand
 {
-    LinkedList<Card> cards;
+    private LinkedList<Card> cards;
 
     public Hand()
     {
@@ -35,6 +35,11 @@ public class Hand
         }
 
         return sum;
+    }
+
+    public void addCard(Card to_add)
+    {
+        this.cards.add(to_add);
     }
 
     public boolean HandhasAce() //Assuming all Aces value 11

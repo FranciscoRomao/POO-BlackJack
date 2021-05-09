@@ -21,26 +21,43 @@ class Dealer
     {
         this.game = game;
         this.hand = new Hand();
-        //TODO create shoe from file
-    }
-/*
-    public int Hit()
-    {
-        //getCard()
-        //TODO
-        return 0;
+        this.shoe = new Shoe(shoe);
     }
 
-    public int DealCards()
+    public void Hit()
     {
-        //TODO
-        return 0;
+        Card aux;
+        aux = shoe.getCard();
+        this.hand.addCard(aux);
     }
-    
+
+    public void DealCards()
+    {
+        Card aux;
+
+        for(int i=0; i<2; i++)
+        {
+            aux = shoe.getCard();
+            this.game.player.hand.addCard(aux);
+        }
+
+        aux = shoe.getCard();
+        
+        this.hole_card = aux;
+        
+        aux = shoe.getCard();
+
+        this.hand.addCard(aux);
+    }
+
     public int CheckBJ()
     {
-        //TODO
+        if(this.game.player.hand.HandSum() == 21)
+            return 1;
+        
+        if(this.hand.HandSum() == 21)
+            return 2;
+            
         return 0;
     }
-    */
 }

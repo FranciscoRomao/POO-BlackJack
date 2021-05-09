@@ -21,6 +21,46 @@ class Card
         this.suit = suit;
     }
 
+    public Card(String cardCode)//tipo 2S
+    {
+        switch (cardCode.charAt(0))
+        {
+            case 'A':
+                this.rank = 1; break;
+
+            case 'J':
+                this.rank = 11; break;
+
+            case 'Q':
+                this.rank = 12; break;
+
+            case 'K':
+                this.rank = 13; break;
+
+            default:
+                this.rank = Character.getNumericValue(cardCode.charAt(0));
+                break;
+        }
+
+        switch (cardCode.charAt(1))
+        {
+            case 'C':
+                this.suit = 0; break;
+
+            case 'S':
+                this.suit = 1; break;
+
+            case 'D':
+                this.suit = 2; break;
+
+            case 'H':
+                this.suit = 3; break;
+        
+            default:
+                break;
+        }
+    }
+
     public int getValue()
     {
         if(rank == 0)

@@ -103,13 +103,15 @@ public class Player
         //TODO
         return 0;
     }
-
+    
     public Hit()
     {
-        //TODO
-        return 0;
+        Card aux;
+        
+        aux = shoe.getCard();
+        
+        this.hand.addCard(aux);
     }
-
     public GetBalance()
     {
         //TODO

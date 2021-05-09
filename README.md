@@ -12,11 +12,13 @@
 - [ ] Implementar função Hit do Player
 - [x] Implementar constructor do Shoe
 - [x] Implementar função Shuffle do Shoe
-- [ ] Leitura do file para o shoe
-- [ ] Implementar constructor do Dealer
-- [ ] Implementar função Hit do Dealer
-- [ ] Implementar função DealCards do Dealer
-- [ ] Implementar função CheckBJ do Dealer
+- [x] Implementar função getCard do Shoe
+- [x] Leitura do file para o shoe
+- [x] Implementar constructor do Dealer
+- [x] Implementar constructor do Hand
+- [x] Implementar função Hit do Dealer
+- [x] Implementar função DealCards do Dealer
+- [x] Implementar função CheckBJ do Dealer
 - [x] Ler input e inicializar o jogo
 
 ## Discutir

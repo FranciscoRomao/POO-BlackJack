@@ -29,21 +29,19 @@ class Shoe
     public Shoe(String fileName)
     {
         File shoeFile = new File("./shoe-file.txt");
-
-        Scanner scan = new Scanner(shoeFile);
-
-        
-
         LinkedList<Card> cards = new LinkedList<Card>();
-        LinkedList<Card> aux;
+        String str;
+        Card aux;
+        
+        Scanner scan = new Scanner(shoeFile).useDelimiter(" ");
 
-        for(int i=0; i<numDecks; i++)
+        while (s.hasNext())
         {
-            aux = singleDeck();
-            cards.addAll(aux);
-        }
+            str = s.next();
+            aux = new Card(str);
 
-        Shuffle();
+            cards.add(aux);
+        }
     }
 
     public LinkedList<Card> singleDeck()
@@ -63,7 +61,6 @@ class Shoe
         return deck;
     }
 
-    
     public LinkedList<Card> Shuffle()
     {
         int ncards = cards.size();
@@ -84,9 +81,8 @@ class Shoe
         return shuffled;
     }
 
-    public int GetCard()
+    public Card GetCard()
     {
-        //TODO
-        return 0;
+        return this.cards.pop();
     }
 }
