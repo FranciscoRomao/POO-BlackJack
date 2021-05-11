@@ -14,7 +14,7 @@
             "type": "java",
             "name": "Launch Game",
             "request": "launch",
-            "mainClass": "BlackJack.Game",
+            "mainClass": "main.Main",
             // "args": "-d 5 75 1000 shoe-file.txt cmd-file.txt"
             "args": "-i 5 75 1000 4 50"
         }

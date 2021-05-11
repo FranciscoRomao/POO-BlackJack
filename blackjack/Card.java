@@ -1,4 +1,4 @@
-package BlackJack;
+package blackjack;
 
 class Card
 {
@@ -59,6 +59,28 @@ class Card
             default:
                 break;
         }
+    }
+
+    public char getSuit(){
+        char retSuit = '\0';
+        switch (suit)
+        {
+            case 0:
+                retSuit = 'C'; break;
+
+            case 1:
+                retSuit = 'S'; break;
+
+            case 2:
+                retSuit = 'D'; break;
+
+            case 3:
+                retSuit = 'H'; break;
+        
+            default:
+                break;
+        }
+        return retSuit;
     }
 
     public int getValue()

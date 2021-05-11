@@ -1,9 +1,9 @@
-package BlackJack;
+package blackjack;
 
 import java.util.LinkedList;
 import java.io.*;
 
-class Dealer
+public class Dealer
 {
     public Game game;
     private Card hole_card;

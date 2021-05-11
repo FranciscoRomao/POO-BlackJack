@@ -1,4 +1,4 @@
-package BlackJack;
+package blackjack;
 
 import java.util.*;
 import java.io.*;

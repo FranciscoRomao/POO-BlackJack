@@ -1,4 +1,4 @@
-package BlackJack;
+package blackjack;
 
 import java.util.LinkedList;
 import java.util.Iterator;
@@ -70,7 +70,7 @@ public class Hand
         int i = 1;
         while(it.hasNext()){
             Card c = it.next();
-            str.append("Card "+i+" "+c.rank+" "+c.suit+"\n");
+            str.append("Card "+i+" "+c.rank+" "+c.getSuit()+"\n");
             i++;
         }
         return str.toString();

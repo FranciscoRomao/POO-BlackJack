@@ -1,7 +1,6 @@
-package BlackJack;
-import java.io.*;
-import java.util.Scanner;
-class Game
+package blackjack;
+
+public class Game
 {
     public char mode;
     public Player player;
@@ -97,12 +96,5 @@ class Game
         return mode+" "+min_bet+" "+max_bet+" "+this.player.balance+" "+shoe+" "+shuffle;
     }
 
-    public static void main(String[] args)
-    {
-        Game newGame = new Game(args);
-        System.out.println(newGame);
-        //newGame.player.readPlay();
-        newGame.dealer.DealCards();
-        System.out.println(newGame.player.hand);
-    }
+    
 }

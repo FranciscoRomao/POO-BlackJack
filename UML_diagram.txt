@@ -1,6 +1,6 @@
 @startuml
 
-package "BlackJack"
+package "blackjack"
 {
     class Game
     {
