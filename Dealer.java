@@ -6,12 +6,12 @@ import java.io.*;
 class Dealer
 {
     public Game game;
-    private int hole_card;
+    private Card hole_card;
     private Shoe shoe;
     public Hand hand;
     
     public Dealer(Game game)
-    {
+    {      
         this.game = game;
         this.hand = new Hand();
         this.shoe = new Shoe(this.game.shoe);

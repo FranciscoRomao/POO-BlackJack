@@ -1,6 +1,7 @@
 package BlackJack;
 
 import java.util.LinkedList;
+import java.util.Iterator;
 
 public class Hand
 {
@@ -60,5 +61,18 @@ public class Hand
     public int get(int index)
     {
         return cards.get(index).rank;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder str = new StringBuilder();
+        Iterator<Card> it = cards.iterator();
+        int i = 1;
+        while(it.hasNext()){
+            Card c = it.next();
+            str.append("Card "+i+" "+c.rank+" "+c.suit+"\n");
+            i++;
+        }
+        return str.toString();
     }
 }

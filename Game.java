@@ -69,7 +69,6 @@ class Game
                     this.strat = args[7];
                     this.shuffleNum = Integer.parseInt(args[6]);
                 }
-                this.player = new Player(this, Integer.parseInt(args[3]), this.strat);
                 if(Integer.parseInt(args[4]) < 4 || Integer.parseInt(args[4]) > 8){
                     System.out.println("The number of decks has to be between 4 and 8");
                     System.exit(-1);
@@ -79,7 +78,9 @@ class Game
                     System.out.println("Percentage of shoe played has to be between 10 and 100");
                     System.exit(-1);
                 }                
-                this.shuffle = Integer.parseInt(args[5]);
+                shuffle = Integer.parseInt(args[5]);
+                dealer = new Dealer(this);
+                player = new Player(this, Integer.parseInt(args[3]), this.strat);
                 return;
             }
             if(this.mode == 'd'){
@@ -98,20 +99,10 @@ class Game
 
     public static void main(String[] args)
     {
-        String str;
         Game newGame = new Game(args);
         System.out.println(newGame);
-        newGame.player.readPlay();
-        //System.out.println(newGame.player.action);
-        // try {
-        //     Scanner s = new Scanner(newGame.player.action).useDelimiter(" ");
-        //     while (s.hasNext()) {
-        //         str = s.next();
-        //         System.out.println(str);
-        //     }            
-        // } catch (Exception e) {
-        //     //TODO: handle exception
-        //     System.out.println("Error");
-        // }
+        //newGame.player.readPlay();
+        newGame.dealer.DealCards();
+        System.out.println(newGame.player.hand);
     }
 }

@@ -43,34 +43,34 @@ public class Player
 
     public int readPlay()
     {
-        if(this.game.mode != 's'){
+        if(game.mode != 's'){
             InputStream input = null;
             Scanner s = null;
-            if(this.game.mode == 'd'){
+            if(game.mode == 'd'){
                 try {
-                    input = new FileInputStream(this.cmdFile);                
+                    input = new FileInputStream(cmdFile);                
                 } catch (Exception e) {
                     System.out.println("Error with the file");
                     System.exit(-1);
                 }
             } 
-            else if(this.game.mode == 'i'){
+            else if(game.mode == 'i'){
                 input = System.in;
             }
             try {
                 s = new Scanner(input).useDelimiter(" |\\n");            
-                if(this.game.mode == 'i')
+                if(game.mode == 'i')
                     System.out.print("Command >> ");
                 while (s.hasNext()) {
-                    this.action = s.next();
-                    System.out.println(this.action);
+                    action = s.next();
+                    System.out.println(action);
                     //todo this.play(string action)
                     //este if a baixo é para tirar mas dá jeito agora
-                    if(this.action.equals("q")){
+                    if(action.equals("q")){
                         s.close();
                         return 1;
                     }
-                    if(this.game.mode == 'i')
+                    if(game.mode == 'i')
                         System.out.print("Command >> ");
                 }
             } catch (Exception e) {

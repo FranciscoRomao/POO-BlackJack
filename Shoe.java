@@ -2,7 +2,6 @@ package BlackJack;
 
 import java.util.*;
 import java.io.*;
-import java.lang.Math;
 
 class Shoe
 {
@@ -14,7 +13,7 @@ class Shoe
      */
     public Shoe(int numDecks)
     {
-        LinkedList<Card> cards = new LinkedList<Card>();
+        cards = new LinkedList<Card>();
         LinkedList<Card> aux;
 
         for(int i=0; i<numDecks; i++)
@@ -22,8 +21,7 @@ class Shoe
             aux = singleDeck();
             cards.addAll(aux);
         }
-
-        Shuffle();
+        cards = Shuffle();
     }
 
     public Shoe(String fileName)
@@ -66,10 +64,11 @@ class Shoe
         int ncards = cards.size();
         int getCard_idx;
         LinkedList<Card> shuffled = new LinkedList<Card>();
+        Random r = new Random();
 
         while(ncards > 0)
         {
-            getCard_idx = (int)Math.random()*ncards;
+            getCard_idx = r.nextInt(ncards);
 
             shuffled.add(cards.get(getCard_idx));
 
@@ -81,7 +80,7 @@ class Shoe
         return shuffled;
     }
 
-    public Card GetCard()
+    public Card getCard()
     {
         return this.cards.pop();
     }
