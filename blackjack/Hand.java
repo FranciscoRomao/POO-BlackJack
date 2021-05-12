@@ -6,10 +6,12 @@ import java.util.Iterator;
 public class Hand
 {
     private LinkedList<Card> cards;
+    public int bet;
 
     public Hand()
     {
         cards = new LinkedList<Card>();
+        bet = 0;
     }
 
     public int HandSum() //Assuming all Aces value 11

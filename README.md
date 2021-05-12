@@ -9,13 +9,12 @@
 - [ ] Implementar função Play do Player
 - [ ] Implementar função Debug do Player
 - [ ] Implementar função Sim do Player
-- [ ] Implementar função Hit do Player
+- [x] Implementar função Hit do Player
 - [ ] Implementar função Bet do Player
-- [ ] Implementar função CurrentBalance do Player
 - [ ] Implementar função Deal do Player
-- [ ] Implementar função Stand do Player
-- [ ] Implementar função Insurance do Player
-- [ ] Implementar função Surrender do Player
+- [x] Implementar função Stand do Player
+- [x] Implementar função Insurance do Player
+- [x] Implementar função Surrender do Player
 - [ ] Implementar função Split do Player
 - [ ] Implementar função DoubleDown do Player
 - [ ] Implementar função Advice do Player - G
@@ -34,7 +33,7 @@
 
 ## Discutir
 
-- Quando fazemos o construct do Game este pode fazer logo construct de um Dealer porque não pode haver um jogo sem Dealer
+- Porque é que hand tem as cartas private?
 
 ## Notas
 
