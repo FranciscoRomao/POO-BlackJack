@@ -57,9 +57,9 @@ public class Basic implements Strategy
     public int Advice(Hand playerHand, Card dealerCard)
     {
         
-        playerHand.get(0).rank;
+        playerHand.get(0);
         playerHand.size();
-        playerHand.get(1).rank;
+        playerHand.get(1);
         /*Ace - 0
         One...Ten - 1...10
         Jacks - 11

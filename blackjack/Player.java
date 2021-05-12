@@ -10,25 +10,27 @@ public class Player
     public LinkedList<Hand> hands;
     public int hilo_count;
     public int ace5_count;
-    public HiLo hilo;
-    public Std_bet standard;
-    public Basic basic;
-    public Ace5 ace5;
+    //public HiLo hilo;
+    //public Std_bet standard;
+    //public Basic basic;
+    //public Ace5 ace5;
     public int balance;
     public String action;
     public File cmdFile;
     public boolean stand;
+    public double bet;
+    public  LinkedList<Chip> bet_chips;
 
     //public Player(Game game, LinkedList<Chip> init_chips, int strat)
     public Player(Game game, int balance, String string)
     {
         this.game = game;
         this.balance = balance;
-        this.bet = 0;
+        this.bet = 0.0;
         this.bet_chips = new LinkedList<Chip>();
-        this.hand = new LinkedList<Hand>();
-        this.hand.add(new Hand());
-        this.stand = 0;
+        this.hands = new LinkedList<Hand>();
+        this.hands.add(new Hand());
+        this.stand = false;
 
         this.hilo_count = 0;
         this.ace5_count = 0;
@@ -107,13 +109,13 @@ public class Player
         return 0;
     }
     */
-    public Hit()
+    public void Hit()
     {
         Card aux;
         
-        aux = shoe.getCard();
-        
-        this.hand.addCard(aux);
+        aux = game.dealer.shoe.getCard();
+        //! é preciso especifacar a hand
+        //hands.addCard(aux);
     }
     /*
     public Bet()
@@ -124,7 +126,7 @@ public class Player
 
     public void Split()
     {
-        hand.add(new Hand());
+        hands.add(new Hand());
 
     }
 
@@ -135,14 +137,14 @@ public class Player
 
     public void Stand()
     {
-        this.stand = 1;
+        this.stand = true;
     }
 
     public void Surrender()
     {
         this.bet = 0;
-        this.stand = 0;
-        this.hand = this.game.Dealer.DealCards();
+        this.stand = false;
+        this.game.dealer.DealCards();
         this.game.round = 0;
     }
 }

@@ -26,19 +26,23 @@ class Shoe
 
     public Shoe(String fileName)
     {
-        File shoeFile = new File("./shoe-file.txt");
+        var shoeFile = new File("./shoe-file.txt");
         LinkedList<Card> cards = new LinkedList<Card>();
         String str;
         Card aux;
-        
-        Scanner scan = new Scanner(shoeFile).useDelimiter(" ");
-
-        while (s.hasNext())
-        {
-            str = s.next();
-            aux = new Card(str);
-
-            cards.add(aux);
+        try {
+            Scanner scan = new Scanner(shoeFile).useDelimiter(" ");
+    
+            while (scan.hasNext())
+            {
+                str = scan.next();
+                aux = new Card(str);
+    
+                cards.add(aux);
+            }            
+        } catch (Exception e) {
+            System.out.println("Error reading shoe file");
+            System.exit(1);
         }
     }
 

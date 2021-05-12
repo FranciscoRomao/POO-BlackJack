@@ -7,7 +7,7 @@ public class Dealer
 {
     public Game game;
     private Card hole_card;
-    private Shoe shoe;
+    public Shoe shoe;
     public Hand hand;
     
     public Dealer(Game game)
@@ -38,7 +38,8 @@ public class Dealer
         for(int i=0; i<2; i++)
         {
             aux = shoe.getCard();
-            this.game.player.hand.addCard(aux);
+            //!é preciso especificar qual a hand - meti o get first para deixar de dar erro
+            this.game.player.hands.getFirst().addCard(aux);
         }
 
         aux = shoe.getCard();
@@ -52,7 +53,7 @@ public class Dealer
 
     public int CheckBJ()
     {
-        if(this.game.player.hand.HandSum() == 21)
+        if(this.game.player.hands.getFirst().HandSum() == 21)
             return 1;
         
         if(this.hand.HandSum() == 21)
