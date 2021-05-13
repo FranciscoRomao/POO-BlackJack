@@ -68,12 +68,11 @@ public class Hand
     @Override
     public String toString(){
         StringBuilder str = new StringBuilder();
+        str.append("");
         Iterator<Card> it = cards.iterator();
-        int i = 1;
         while(it.hasNext()){
             Card c = it.next();
-            str.append("Card "+i+" "+c.rank+" "+c.getSuit()+"\n");
-            i++;
+            str.append(c.showRank()+""+c.getSuit()+" ");
         }
         return str.toString();
     }

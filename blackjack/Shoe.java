@@ -21,7 +21,7 @@ class Shoe
             aux = singleDeck();
             cards.addAll(aux);
         }
-        cards = Shuffle();
+        cards = Shuffle(); //!acho que isto tem de sair daqui porque há situações onde não se faz shuffle
     }
 
     public Shoe(String fileName)
@@ -87,5 +87,18 @@ class Shoe
     public Card getCard()
     {
         return this.cards.pop();
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder str = new StringBuilder();
+        str.append("");
+        Iterator<Card> it = cards.iterator();
+        while(it.hasNext()){
+            Card c = it.next();
+            str.append(c.showRank()+""+c.getSuit()+" ");
+            str.append("\n");
+        }
+        return str.toString();
     }
 }

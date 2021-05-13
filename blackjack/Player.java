@@ -23,13 +23,14 @@ public class Player
 
     private Scanner s;
     private InputStream input;
+    private String delim;
 
     //public Player(Game game, LinkedList<Chip> init_chips, int strat)
     public Player(Game game, int balance, String string)
     {
         this.game = game;
         this.balance = balance;
-        this.bet = 0.0;
+        this.bet = 11.0;
         this.bet_chips = new LinkedList<Chip>();
         this.hands = new LinkedList<Hand>();
         this.hands.add(new Hand());
@@ -51,9 +52,11 @@ public class Player
                     System.out.println("Error with the file");
                     System.exit(-1);
                 }
+                delim = " |\\n";
                 break;
             case 'i':
                 input = System.in;
+                delim = "\n";
                 break;
             case 's':
                 //todo strat = string            
@@ -61,7 +64,7 @@ public class Player
             default:
                 break;
         }
-        s = new Scanner(input).useDelimiter(" |\\n"); //! o delimet assim não funciona para o bet   
+        s = new Scanner(input).useDelimiter(delim); 
     }
 
     public String readPlay()
@@ -142,5 +145,18 @@ public class Player
         this.stand = false;
         this.game.dealer.DealCards();
         this.game.round = 0;
+    }
+    
+    public String showHand(){
+        StringBuilder str = new StringBuilder();
+        str.append("player's hand ");
+        Iterator<Hand> it = hands.iterator();
+        while(it.hasNext()){
+            Hand h = it.next();
+            str.append(h);
+            if(it.hasNext())
+                str.append("\n");
+        }
+        return str.toString();
     }
 }

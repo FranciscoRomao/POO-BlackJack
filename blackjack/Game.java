@@ -82,13 +82,13 @@ public class Game {
                 shuffle = Integer.parseInt(args[5]);
                 dealer = new Dealer(this);
                 player = new Player(this, Integer.parseInt(args[3]), this.strat);
-                context = new StateContext(player);
+                context = new StateContext(this);
                 return;
             }
             if (this.mode == 'd') {
                 this.dealer = new Dealer(this, args[4]);
                 this.player = new Player(this, Integer.parseInt(args[3]), args[5]);
-                context = new StateContext(player);
+                context = new StateContext(this);
             }
         } catch (Exception e) {
             System.out.println("Please insert numbers only besides the mode and the strategy");

@@ -82,6 +82,27 @@ class Card
         }
         return retSuit;
     }
+    public String showRank(){
+        char retSuit = '\0';
+        switch (rank)
+        {
+            case 0:
+                retSuit = 'A'; break;
+
+            case 11:
+                retSuit = 'J'; break;
+
+            case 12:
+                retSuit = 'Q'; break;
+
+            case 13:
+                retSuit = 'K'; break;
+        
+            default:
+                return String.valueOf(rank);                
+        }
+        return Character.toString(retSuit);
+    }
 
     public int getValue()
     {

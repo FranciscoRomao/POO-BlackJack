@@ -2,11 +2,10 @@ package blackjack;
 
 public class StateContext {
     private State state;
-    public Player player;
+    public Game game;
     
-    public StateContext(Player player_) {
-        player = player_;
-        System.out.println(player);
+    public StateContext(Game game_) {
+        game = game_;
         state = new GameStart();
     }
     /**
