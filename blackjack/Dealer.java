@@ -61,4 +61,8 @@ public class Dealer
             
         return 0;
     }
+
+    public String showHand(){
+        return "dealer's hand "+hand+"X";
+    }
 }
