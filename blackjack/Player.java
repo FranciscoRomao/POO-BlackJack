@@ -30,7 +30,7 @@ public class Player
     {
         this.game = game;
         this.balance = balance;
-        this.bet = 11.0;
+        this.bet = game.min_bet;
         this.bet_chips = new LinkedList<Chip>();
         this.hands = new LinkedList<Hand>();
         this.hands.add(new Hand());
@@ -158,5 +158,18 @@ public class Player
                 str.append("\n");
         }
         return str.toString();
+    }
+
+    public boolean placeBet(double value){
+        if(value != -1 && (value < game.min_bet || value > game.max_bet)){
+            System.out.println("Invalid bet ammount. Has to be greater than "+game.min_bet+" and smaller than "+game.max_bet);
+            return false;
+        }
+        if(value != -1){
+            bet = value;
+        }
+        System.out.println("player is betting "+bet);
+        balance -= bet;
+        return true;
     }
 }

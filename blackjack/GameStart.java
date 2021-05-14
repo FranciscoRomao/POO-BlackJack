@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class GameStart implements State{
     @Override
     public boolean play(StateContext context){
+        boolean nextState = false;
         String action;
         action = context.game.player.readPlay();
         Scanner s = new Scanner(action);
@@ -11,16 +12,15 @@ public class GameStart implements State{
             case "$":                
             System.out.println(context.game.player.balance+"$");
             break;
-            case "b":
-                //todo player.bet
-                try {                                                
-                    context.game.player.bet = Double.parseDouble(s.next());
+            case "b":                
+                try {                       
+                    nextState = context.game.player.placeBet(Double.parseDouble(s.next()));                         
                 } catch (Exception e) {
-                } finally{
                     if(context.game.mode != 'd')
-                        System.out.println("b "+context.game.player.bet);
-                }                    
-                context.setState(new DealState());
+                        nextState = context.game.player.placeBet(-1);  
+                }
+                if(context.game.mode == 'd' || nextState)             
+                    context.setState(new DealState());
                 break;
             default:
                 System.out.println(action+": illegal command");
