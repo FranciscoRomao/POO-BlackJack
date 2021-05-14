@@ -151,9 +151,15 @@ public class Player
         StringBuilder str = new StringBuilder();
         str.append("player's hand ");
         Iterator<Hand> it = hands.iterator();
+        boolean hasSplit = false;
+        int i = 1;
         while(it.hasNext()){
             Hand h = it.next();
-            str.append(h);
+            if(it.hasNext())
+                hasSplit = true;
+            if(hasSplit)
+                str.append("["+i+"]"+h+"("+h.handSum()+")"); 
+            str.append(h+"("+h.handSum()+")");
             if(it.hasNext())
                 str.append("\n");
         }

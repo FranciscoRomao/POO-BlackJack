@@ -5,7 +5,6 @@ public class DealState implements State{
     private boolean firstInput = true;
     @Override
     public boolean play(StateContext context){
-        boolean goBack = false;
         String action;
         action = context.game.player.readPlay();
         Scanner s = new Scanner(action);
@@ -19,8 +18,6 @@ public class DealState implements State{
                 if(context.game.mode == 'd' && firstInput)
                     context.game.player.placeBet(-1);
                 context.game.dealer.DealCards();
-                System.out.println(context.game.dealer.showHand());
-                System.out.println(context.game.player.showHand());
                 context.setState(new SideRulesState());
                 break;
             default:

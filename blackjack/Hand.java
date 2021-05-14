@@ -14,7 +14,7 @@ public class Hand
         bet = 0;
     }
 
-    public int HandSum() //Assuming all Aces value 11
+    public int handSum() //Assuming all Aces value 11
     {
         int sum = 0;
         int rank = 0;

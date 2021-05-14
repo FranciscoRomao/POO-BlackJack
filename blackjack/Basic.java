@@ -72,7 +72,7 @@
 //         //3. Se os Ases forem todos 1 é HARD
 //         //4. Se houver um par é PAIR
         
-//         int HandSum = playerHand.HandSum(); //soma da mao do jogador
+//         int HandSum = playerHand.handSum(); //soma da mao do jogador
 
 //         if (playerHand.size() > 2 && (playerHand.get(0).rank == playerHand.get(1).rank))
 //         {
@@ -91,7 +91,7 @@
 //                 }    
 //             }*/
             
-//             if(playerHand.HandhasAce() && playerHand.HandSum()>21)
+//             if(playerHand.HandhasAce() && playerHand.handSum()>21)
 //                 mat=1;
 //             else
 //                 mat=2;

@@ -39,24 +39,26 @@ public class Dealer
         {
             aux = shoe.getCard();
             //!é preciso especificar qual a hand - meti o get first para deixar de dar erro
-            this.game.player.hands.getFirst().addCard(aux);
+            game.player.hands.getFirst().addCard(aux);
         }
 
         aux = shoe.getCard();
         
-        this.hole_card = aux;
+        hole_card = aux;
         
         aux = shoe.getCard();
 
-        this.hand.addCard(aux);
+        hand.addCard(aux);
+        System.out.println(showHand());
+        System.out.println(game.player.showHand());
     }
 
     public int CheckBJ()
     {
-        if(this.game.player.hands.getFirst().HandSum() == 21)
+        if(this.game.player.hands.getFirst().handSum() == 21)
             return 1;
         
-        if(this.hand.HandSum() == 21)
+        if(this.hand.handSum() == 21)
             return 2;
             
         return 0;
