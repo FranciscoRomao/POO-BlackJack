@@ -30,6 +30,7 @@ public class EndGameState implements State {
                 System.out.println(action+": illegal command");
                 break;
         }
+        s.close();
         return !action.equals("q");
     }
     

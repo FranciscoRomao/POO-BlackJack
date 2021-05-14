@@ -21,23 +21,21 @@ class Shoe
             aux = singleDeck();
             cards.addAll(aux);
         }
-        cards = Shuffle(); //!acho que isto tem de sair daqui porque há situações onde não se faz shuffle
+        cards = Shuffle(); 
     }
 
     public Shoe(String fileName)
     {
-        var shoeFile = new File("./shoe-file.txt");
-        LinkedList<Card> cards = new LinkedList<Card>();
+        File shoeFile = new File(fileName);
+        cards = new LinkedList<Card>();
         String str;
         Card aux;
         try {
             Scanner scan = new Scanner(shoeFile).useDelimiter(" ");
-    
             while (scan.hasNext())
             {
                 str = scan.next();
                 aux = new Card(str);
-    
                 cards.add(aux);
             }            
         } catch (Exception e) {

@@ -6,13 +6,13 @@
 - [x] Implementar função Advice no Basic - G
 - [ ] Implementar função Advice no Ace5 - G
 - [ ] Implementar função Advice no Std_bet - G
-- [ ] Implementar função Play do Player
-- [ ] Implementar função Debug do Player
+- [x] Implementar função Play do Player
+- [x] Implementar função Debug do Player
 - [ ] Implementar função Sim do Player
 - [x] Implementar função Hit do Player
 - [ ] Implementar função Bet do Player
 - [ ] Implementar função Deal do Player
-- [x] Implementar função Stand do Player
+- [x] Implementar função Stand do PDlayer
 - [x] Implementar função Insurance do Player
 - [x] Implementar função Surrender do Player
 - [ ] Implementar função Split do Player
