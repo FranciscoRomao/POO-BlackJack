@@ -24,13 +24,16 @@ public class Player
     private Scanner s;
     private InputStream input;
     private String delim;
+    public int handNumber;
+    private boolean splitted;
+    public int nHands;
 
     //public Player(Game game, LinkedList<Chip> init_chips, int strat)
     public Player(Game game, int balance, String string)
     {
         this.game = game;
         this.balance = balance;
-        this.bet = 11.0;
+        this.bet = game.min_bet;
         this.bet_chips = new LinkedList<Chip>();
         this.hands = new LinkedList<Hand>();
         this.hands.add(new Hand());
@@ -38,6 +41,10 @@ public class Player
 
         this.hilo_count = 0;
         this.ace5_count = 0;
+
+        handNumber = 0;
+        splitted = false;
+        nHands = 1;
 
         switch (this.game.mode) {
             case 'd':
@@ -91,42 +98,24 @@ public class Player
         return action;
     }
 
-    public void play(String action){
-        //todo verificar em que fase do jogo se está e possíveis comandos
-        //chamar as funções especificas de cada comando
-    }
-    /*
-    public int Debug()
+    public boolean hit()
     {
-        //TODO
-        return 0;
+        hands.getFirst().addCard(game.dealer.shoe.getCard());
+        System.out.println("player hits");
+        if(splitted){
+            System.out.println("player's hand ["+handNumber+"]"+hands.getFirst()+hands.getFirst().handSum());
+        }
+        else {
+            System.out.println("player's hand "+hands.getFirst()+"("+hands.getFirst().handSum()+")");
+        }
+        return hands.getFirst().handSum() >= 21;
     }
-
-    public Sim()
-    {
-        //TODO
-        return 0;
-    }
-    */
-    public void Hit()
-    {
-        Card aux;
-        
-        aux = game.dealer.shoe.getCard();
-        //! é preciso especifacar a hand
-        //hands.addCard(aux);
-    }
-    /*
-    public Bet()
-    {
-        
-        return 0;
-    }*/
 
     public void Split()
     {
         hands.add(new Hand());
-
+        splitted = true;
+        nHands++;
     }
 
     public void Insurance()
@@ -143,20 +132,39 @@ public class Player
     {
         this.bet = 0;
         this.stand = false;
-        this.game.dealer.DealCards();
+        this.game.dealer.dealCards();
         this.game.round = 0;
     }
-    
-    public String showHand(){
+
+    public String showAllHands(int num){
         StringBuilder str = new StringBuilder();
         str.append("player's hand ");
         Iterator<Hand> it = hands.iterator();
+        boolean hasSplit = false;
+        int i = 1;
         while(it.hasNext()){
             Hand h = it.next();
-            str.append(h);
+            if(it.hasNext())
+                hasSplit = true;
+            if(hasSplit)
+                str.append("["+i+"]"+h+"("+h.handSum()+")"); 
+            str.append(h+"("+h.handSum()+")");
             if(it.hasNext())
                 str.append("\n");
         }
         return str.toString();
+    }
+
+    public boolean placeBet(double value){
+        if(value != -1 && (value < game.min_bet || value > game.max_bet)){
+            System.out.println("Invalid bet ammount. Has to be greater than "+game.min_bet+" and smaller than "+game.max_bet);
+            return false;
+        }
+        if(value != -1){
+            bet = value;
+        }
+        System.out.println("player is betting "+bet);
+        balance -= bet;
+        return true;
     }
 }

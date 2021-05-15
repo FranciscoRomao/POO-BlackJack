@@ -9,7 +9,7 @@
 - [x] Implementar função Play do Player
 - [x] Implementar função Debug do Player
 - [ ] Implementar função Sim do Player
-- [x] Implementar função Hit do Player
+- [x] Implementar função hit do Player
 - [ ] Implementar função Bet do Player
 - [ ] Implementar função Deal do Player
 - [x] Implementar função Stand do PDlayer
@@ -25,9 +25,9 @@
 - [x] Leitura do file para o shoe
 - [x] Implementar constructor do Dealer
 - [x] Implementar constructor do Hand
-- [x] Implementar função Hit do Dealer
-- [x] Implementar função DealCards do Dealer
-- [x] Implementar função CheckBJ do Dealer
+- [x] Implementar função hit do Dealer
+- [x] Implementar função dealCards do Dealer
+- [x] Implementar função checkBJ do Dealer
 - [x] Ler input e inicializar o jogo
 - [ ] Implementar o main
 

@@ -57,7 +57,7 @@
 //     public int Advice(Hand playerHand, Card dealerCard)
 //     {
         
-//         playerHand.get(0);
+//         playerHand.getFirst();
 //         playerHand.size();
 //         playerHand.get(1);
 //         /*Ace - 0
@@ -72,9 +72,9 @@
 //         //3. Se os Ases forem todos 1 é HARD
 //         //4. Se houver um par é PAIR
         
-//         int HandSum = playerHand.HandSum(); //soma da mao do jogador
+//         int HandSum = playerHand.handSum(); //soma da mao do jogador
 
-//         if (playerHand.size() > 2 && (playerHand.get(0).rank == playerHand.get(1).rank))
+//         if (playerHand.size() > 2 && (playerHand.getFirst().rank == playerHand.get(1).rank))
 //         {
 //             mat = 0; //pair
 //         } 
@@ -91,14 +91,14 @@
 //                 }    
 //             }*/
             
-//             if(playerHand.HandhasAce() && playerHand.HandSum()>21)
+//             if(playerHand.HandhasAce() && playerHand.handSum()>21)
 //                 mat=1;
 //             else
 //                 mat=2;
 //         }
         
 //         if (mat == 0) {
-//             char suggest = pair[playerHand.get(0)-2][dealerCard.getValue()-2];
+//             char suggest = pair[playerHand.getFirst()-2][dealerCard.getValue()-2];
 //         } else if (mat == 2) {
 //             char suggest = soft[sum-13][dealerCard.getValue()-2];
 //         } else { //hard

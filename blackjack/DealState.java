@@ -5,24 +5,28 @@ public class DealState implements State{
     private boolean firstInput = true;
     @Override
     public boolean play(StateContext context){
+        Player player = context.game.player;
         String action;
-        action = context.game.player.readPlay();
+        action = player.readPlay();
         Scanner s = new Scanner(action);
         switch (s.next()) {
             case "$":
-                System.out.println(context.game.player.balance+"$");
+                if(context.game.mode == 'd' && firstInput)
+                    player.placeBet(-1);
+                System.out.println(player.balance+"$");
                 break;
             case "d":
-                context.game.dealer.DealCards();
-                System.out.println(context.game.dealer.showHand());
-                System.out.println(context.game.player.showHand());
+                if(context.game.mode == 'd' && firstInput)
+                    player.placeBet(-1);
+                context.game.dealer.dealCards();
                 context.setState(new SideRulesState());
                 break;
             default:
                 if(context.game.mode == 'd' && firstInput){                    
                     try {
-                        context.game.player.bet = Double.parseDouble(action);  
-                        System.out.println("b "+context.game.player.bet);    
+                        if(!player.placeBet(Double.parseDouble(action))){
+                            context.setState(new GameStart());
+                        }
                         break;                  
                     } catch (Exception e) {
                     }
