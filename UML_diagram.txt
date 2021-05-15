@@ -64,7 +64,7 @@ package "blackjack"
         +Play():int
         +Debug()
         +Sim()
-        +Hit()
+        +hit()
         +GetBalance()
         +Bet()
         +Insurance()
@@ -75,9 +75,9 @@ package "blackjack"
         -hole_card:int
         
         +Dealer()
-        +Hit()
-        +DealCards()
-        +CheckBJ()
+        +hit()
+        +dealCards()
+        +checkBJ()
     }
     
     class Shoe

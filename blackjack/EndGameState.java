@@ -4,16 +4,18 @@ import java.util.Scanner;
 public class EndGameState implements State {
     @Override
     public boolean play(StateContext context){
+        Player player = context.game.player;
         String action;
-        action = context.game.player.readPlay();
+        action = player.readPlay();
         Scanner s = new Scanner(action);
         //todo implement all siderules here
         switch (s.next()) {
             case "$":
-                System.out.println(context.game.player.balance+"$");
+                System.out.println(player.balance+"$");
                 break;
             case "h":
-                System.out.println("player hits");
+                if(player.hit())
+                    context.game.dealer.endRound(player.hands.get(player.handNumber).handSum());
                 break;
             case "s":
                 System.out.println("player stands");

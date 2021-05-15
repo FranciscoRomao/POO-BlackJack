@@ -1,23 +1,24 @@
 package blackjack;
 import java.util.Scanner;
-
+//!dá erro se no terminal escrever \n qq
 public class GameStart implements State{
     @Override
     public boolean play(StateContext context){
+        Player player = context.game.player;
         boolean nextState = false;
         String action;
-        action = context.game.player.readPlay();
+        action = player.readPlay();
         Scanner s = new Scanner(action);
         switch (s.next()) {
             case "$":                
-            System.out.println(context.game.player.balance+"$");
+            System.out.println(player.balance+"$");
             break;
             case "b":                
                 try {                       
-                    nextState = context.game.player.placeBet(Double.parseDouble(s.next()));                         
+                    nextState = player.placeBet(Double.parseDouble(s.next()));                         
                 } catch (Exception e) {
                     if(context.game.mode != 'd')
-                        nextState = context.game.player.placeBet(-1);  
+                        nextState = player.placeBet(-1);  
                 }
                 if(context.game.mode == 'd' || nextState)             
                     context.setState(new DealState());

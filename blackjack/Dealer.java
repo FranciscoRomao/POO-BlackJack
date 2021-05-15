@@ -1,7 +1,5 @@
 package blackjack;
-
-import java.util.LinkedList;
-import java.io.*;
+import java.util.*;
 
 public class Dealer
 {
@@ -24,21 +22,20 @@ public class Dealer
         this.shoe = new Shoe(shoe);
     }
 
-    public void Hit()
+    public void hit()
     {
         Card aux;
         aux = shoe.getCard();
-        this.hand.addCard(aux);
+        hand.addCard(aux);
     }
 
-    public void DealCards()
+    public void dealCards()
     {
         Card aux;
 
         for(int i=0; i<2; i++)
         {
             aux = shoe.getCard();
-            //!é preciso especificar qual a hand - meti o get first para deixar de dar erro
             game.player.hands.getFirst().addCard(aux);
         }
 
@@ -49,11 +46,11 @@ public class Dealer
         aux = shoe.getCard();
 
         hand.addCard(aux);
-        System.out.println(showHand());
-        System.out.println(game.player.showHand());
+        System.out.println(showHand()+"X");
+        System.out.println("player's hand "+game.player.hands.getFirst()+"("+game.player.hands.getFirst().handSum()+")");
     }
 
-    public int CheckBJ()
+    public int checkBJ()
     {
         if(this.game.player.hands.getFirst().handSum() == 21)
             return 1;
@@ -64,7 +61,21 @@ public class Dealer
         return 0;
     }
 
+    public void endRound(int handSum){
+        if(handSum > 21){
+            System.out.println("player busts");
+            hand.addCard(hole_card);
+            System.out.println(showHand());
+            System.out.println("player loses and his current balance is "+game.player.balance);
+        }
+        game.player.hands.remove(0);
+        game.player.nHands--;
+        if(game.player.nHands == 0){
+            game.player.hands.add(new Hand());
+        }
+    }
+
     public String showHand(){
-        return "dealer's hand "+hand+"X";
+        return "dealer's hand "+hand;
     }
 }
