@@ -1,4 +1,4 @@
-package blackjack;
+/*package blackjack;
 
 import java.util.LinkedList;
 
@@ -12,10 +12,22 @@ public class HiLo implements Strategy
 	}
 
     @Override
-    public int Advice(LinkedList<Card> playerHand, Card dealerCard)
+    public int Advice(Hand playerHand, Card dealerCard)
     {
         int foo = 0;
-        //TODO
+
+		if(playerHand.handSum() == 16)
+
+
+
+
+
+
+
+
+
+
+
         return foo;
     }
 
@@ -49,4 +61,4 @@ public class HiLo implements Strategy
 
 		return (float)(Math.round(true_count/0.5) * 0.5);
 	}
-}
+}*/
