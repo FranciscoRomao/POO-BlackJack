@@ -49,7 +49,7 @@ class Shoe
         LinkedList<Card> deck = new LinkedList<Card>();
         Card aux;
 
-        for(int i=0; i<13; i++)
+        for(int i=1; i<=13; i++)
         {
             for(int j=0; j<4; j++)
             {
@@ -84,7 +84,11 @@ class Shoe
 
     public Card getCard()
     {
-        return this.cards.pop();
+        return cards.pop();
+    }
+
+    public int getNumCards() {
+        return cards.size();
     }
 
     @Override

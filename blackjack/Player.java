@@ -14,7 +14,7 @@ public class Player
     //public Std_bet standard;
     //public Basic basic;
     //public Ace5 ace5;
-    public int balance;
+    public double balance;
     public String action;
     public File cmdFile;
     public boolean stand;
@@ -155,6 +155,10 @@ public class Player
     }
 
     public boolean placeBet(double value){
+        if(value > balance || (value == -1 && balance < bet)){
+            System.out.println("Player doesn't have enough money to bet. Available balance: "+balance);
+            return false;
+        }
         if(value != -1 && (value < game.min_bet || value > game.max_bet)){
             System.out.println("Invalid bet ammount. Has to be greater than "+game.min_bet+" and smaller than "+game.max_bet);
             return false;

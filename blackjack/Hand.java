@@ -21,20 +21,12 @@ public class Hand
 
         for(int i=0; i<cards.size(); i++)
         {
-            rank = cards.get(i).rank;
-            
-            if(rank == 0)
-            {
-                sum += 11;   
-            }
-            else if(rank>=2 && rank <=10)
-            {
-                sum+=rank;
-            }
-            else
-            {
-                sum+=10;
-            }
+            sum += cards.get(i).getValue();
+        }
+
+        if(sum > 21 && HandhasAce())
+        {
+            sum = sum - 10;
         }
 
         return sum;
@@ -53,16 +45,23 @@ public class Hand
         {
             rank = cards.get(i).rank;
             
-            if(rank == 0)
+            if(rank == 1)
                 return true;
         }
-
         return false;
     }
 
     public int get(int index)
     {
         return cards.get(index).rank;
+    }
+
+    public int getNumCards(){
+        return cards.size();
+    }
+
+    public boolean hasBlackjack(){
+            return (this.handSum() == 21 && this.getNumCards() == 2);
     }
 
     @Override

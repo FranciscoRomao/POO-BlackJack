@@ -86,7 +86,7 @@ class Card
         char retSuit = '\0';
         switch (rank)
         {
-            case 0:
+            case 1:
                 retSuit = 'A'; break;
 
             case 11:

@@ -8,34 +8,36 @@ public class DealState implements State{
         Player player = context.game.player;
         String action;
         action = player.readPlay();
-        Scanner s = new Scanner(action);
-        switch (s.next()) {
-            case "$":
-                if(context.game.mode == 'd' && firstInput)
-                    player.placeBet(-1);
-                System.out.println(player.balance+"$");
-                break;
-            case "d":
-                if(context.game.mode == 'd' && firstInput)
-                    player.placeBet(-1);
-                context.game.dealer.dealCards();
-                context.setState(new SideRulesState());
-                break;
-            default:
-                if(context.game.mode == 'd' && firstInput){                    
-                    try {
-                        if(!player.placeBet(Double.parseDouble(action))){
-                            context.setState(new GameStart());
+        try(Scanner s = new Scanner(action)) {
+            switch (s.next()) {
+                case "$":
+                    if(context.game.mode == 'd' && firstInput)
+                        player.placeBet(-1);
+                    System.out.println(player.balance+"$");
+                    break;
+                case "d":
+                    if(context.game.mode == 'd' && firstInput)
+                        player.placeBet(-1);
+                    context.game.dealer.dealCards();
+                    context.setState(new SideRulesState());
+                    break;
+                default:
+                    if(context.game.mode == 'd' && firstInput){                    
+                        try {
+                            if(!player.placeBet(Double.parseDouble(action))){
+                                context.setState(new GameStart());
+                            }
+                            break;                  
+                        } catch (Exception e) {
                         }
-                        break;                  
-                    } catch (Exception e) {
                     }
-                }
-                System.out.println(action+": illegal command");
-                break;
-        }
-        firstInput = false;
-        s.close();
+                    System.out.println(action+": illegal command");
+                    break;
+            }
+            firstInput = false;
+        } catch (Exception e) {
+            return true;
+        } 
         return !action.equals("q");
     }
 }

@@ -2,16 +2,19 @@
 
 ### TODO
 
-- [ ] Implementar função Advice no HiLo - G
-- [x] Implementar função Advice no Basic - G
-- [ ] Implementar função Advice no Ace5 - G
-- [ ] Implementar função Advice no Std_bet - G
+- [ ] Implementar função Advice no HiLo
+- [ ] Incluir HiLo no código
+- [x] Implementar função Advice no Basic
+- [ ] Incluir Basic no código
+- [ ] Implementar função Advice no Ace5
+- [ ] Incluir Ace5 no código
+- [ ] Implementar função Advice no Std_bet
+- [ ] Incluir Std_bet no código
 - [x] Implementar função Play do Player
 - [x] Implementar função Debug do Player
 - [ ] Implementar função Sim do Player
 - [x] Implementar função hit do Player
-- [ ] Implementar função Bet do Player
-- [ ] Implementar função Deal do Player
+- [x] Implementar função Bet do Player
 - [x] Implementar função Stand do PDlayer
 - [x] Implementar função Insurance do Player
 - [x] Implementar função Surrender do Player
@@ -38,3 +41,26 @@
 ## Notas
 
 - Link para compilar UML: https://www.planttext.com/ ou então usar extenção do PlantUML para o VS Code
+- Perguntar à prof sobre mudar a aposta
+
+
+## HiLo
+
+|Player\Dealer|1|2|3|4|5|6|7|8|9|10|11|12|13|
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|1| | | | | | | | | | | | |
+|2| | | | | | | | | | | | |
+|3| | | | | | | | | | | | |
+|4| | | | | | | | | | | | |
+|5| | | | | | | | | | | | |
+|6| | | | | | | | | | | | |
+|7| | | | | | | | | | | | |
+|8| | | | | | | | | | | | |
+|9| | | | | | | | | | | | |
+|10| | | | | | | | | | | | |
+|11| | | | | | | | | | | | |
+|12| | | | | | | | | | | | |
+|13| | | | | | | | | | | | |
+|14| | | | | | | | | | | | |
+|15| | | | | | | | | | | | |
+|16| | | | | | | | | | | | |
