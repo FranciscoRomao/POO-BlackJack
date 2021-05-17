@@ -5,6 +5,7 @@ public class EndGameState implements State {
     @Override
     public boolean play(StateContext context){
         Player player = context.game.player;
+        Dealer dealer = context.game.dealer;
         String action;
         action = player.readPlay();
         Scanner s = new Scanner(action);
@@ -14,13 +15,11 @@ public class EndGameState implements State {
                 System.out.println(player.balance+"$");
                 break;
             case "h":
-                if(player.hit())
-                    context.game.dealer.endRound(player.hands.get(player.handNumber).handSum());
+                player.hit();
+                dealer.handCheck(player.hands.getFirst());
                 break;
             case "s":
-                System.out.println("player stands");
-                //todo finish hand method
-                context.setState(new GameStart());
+                dealer.stand();
                 break;
             case "ad":
                 System.out.println("player asks for advice");

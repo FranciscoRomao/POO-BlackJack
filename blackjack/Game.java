@@ -107,4 +107,8 @@ public class Game {
             playing = context.play();
         }
     }
+
+    public void changeState(State newState){
+        context.setState(newState);
+    }
 }

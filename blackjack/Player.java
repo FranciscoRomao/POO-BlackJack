@@ -98,7 +98,7 @@ public class Player
         return action;
     }
 
-    public boolean hit()
+    public void hit()
     {
         hands.getFirst().addCard(game.dealer.shoe.getCard());
         System.out.println("player hits");
@@ -108,7 +108,6 @@ public class Player
         else {
             System.out.println("player's hand "+hands.getFirst()+"("+hands.getFirst().handSum()+")");
         }
-        return hands.getFirst().handSum() >= 21;
     }
 
     public void Split()

@@ -4,7 +4,7 @@ class Card
 {
     public int rank;
     /*Ace - 0
-    One...Ten - 1...10
+    Two...Ten - 2...10
     Jacks - 11
     Queen - 12
     King - 13*/
@@ -106,11 +106,11 @@ class Card
 
     public int getValue()
     {
-        if(rank == 0)
+        if(rank == 1)
         {
             return 11;
         }
-        else if(rank>0 && rank <=10)
+        else if(rank > 1 && rank <= 10)
         {
             return rank;
         }
