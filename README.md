@@ -42,6 +42,7 @@
 
 - Link para compilar UML: https://www.planttext.com/ ou então usar extenção do PlantUML para o VS Code
 - Perguntar à prof sobre mudar a aposta
+- Temos de confirmar o que acontece quando o player perde insurance
 
 
 ## HiLo

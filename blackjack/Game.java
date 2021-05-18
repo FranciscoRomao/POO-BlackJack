@@ -106,6 +106,7 @@ public class Game {
         while(playing){
             playing = context.play();
         }
+        System.out.println("bye");
     }
 
     public void changeState(State newState){

@@ -18,7 +18,8 @@ public class Player
     public String action;
     public File cmdFile;
     public boolean stand;
-    public double bet;
+    public float bet;
+    public float insuranceBet;
     public  LinkedList<Chip> bet_chips;
 
     private Scanner s;
@@ -33,14 +34,15 @@ public class Player
     {
         this.game = game;
         this.balance = balance;
-        this.bet = game.min_bet;
-        this.bet_chips = new LinkedList<Chip>();
-        this.hands = new LinkedList<Hand>();
-        this.hands.add(new Hand());
-        this.stand = false;
+        bet = game.min_bet;
+        insuranceBet = -1;
+        bet_chips = new LinkedList<Chip>();
+        hands = new LinkedList<Hand>();
+        hands.add(new Hand());
+        stand = false;
 
-        this.hilo_count = 0;
-        this.ace5_count = 0;
+        hilo_count = 0;
+        ace5_count = 0;
 
         handNumber = 0;
         splitted = false;
@@ -117,9 +119,18 @@ public class Player
         nHands++;
     }
 
-    public void Insurance()
+    public void insure()
     {
-        this.bet = this.bet * 1.5;
+        if(game.dealer.hand.get(0) != 1){    //1==ACE
+            System.out.println("i: illegal command");
+            return;
+        }
+        System.out.println("player is insuring");
+        insuranceBet = bet;
+    }
+
+    public boolean insured(){
+        return (insuranceBet != -1);
     }
 
     public void Stand()
@@ -154,7 +165,7 @@ public class Player
         return str.toString();
     }
 
-    public boolean placeBet(double value){
+    public boolean placeBet(float value){
         if(value > balance || (value == -1 && balance < bet)){
             System.out.println("Player doesn't have enough money to bet. Available balance: "+balance);
             return false;

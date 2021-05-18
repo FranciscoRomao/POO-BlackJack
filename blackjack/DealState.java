@@ -24,7 +24,7 @@ public class DealState implements State{
                 default:
                     if(context.game.mode == 'd' && firstInput){                    
                         try {
-                            if(!player.placeBet(Double.parseDouble(action))){
+                            if(!player.placeBet(Float.parseFloat(action))){
                                 context.setState(new GameStart());
                             }
                             break;                  

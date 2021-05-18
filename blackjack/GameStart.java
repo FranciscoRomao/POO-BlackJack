@@ -15,7 +15,7 @@ public class GameStart implements State{
                 break;
                 case "b":                
                     try {                       
-                        nextState = player.placeBet(Double.parseDouble(s.next()));                         
+                        nextState = player.placeBet(Float.parseFloat(s.next()));                         
                     } catch (Exception e) {
                         if(context.game.mode != 'd')
                             nextState = player.placeBet(-1);  

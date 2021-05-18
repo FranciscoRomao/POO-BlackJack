@@ -9,6 +9,8 @@ public class SideRulesState implements State {
         String action;
         int handStatus = 1;
         action = player.readPlay();
+        if(context.game.mode == 'd')
+            System.out.println("-cmd "+action);
         try(Scanner s = new Scanner(action)) {
             //todo implement all siderules here
             switch (s.next()) {
@@ -16,11 +18,10 @@ public class SideRulesState implements State {
                     System.out.println(player.balance+"$");
                     break;
                 case "i":
-                    System.out.println("player insures");
+                    player.insure();
                     break;
                 case "u":
                     System.out.println("player surrenders");
-                    //todo finish hand method
                     context.setState(new GameStart());
                     break;
                 case "p":
@@ -31,7 +32,7 @@ public class SideRulesState implements State {
                     break;
                 case "h":
                     player.hit();
-                    handStatus = dealer.handCheck(player.hands.getFirst());
+                    handStatus = dealer.bustCheck(player.hands.getFirst());
                     if(handStatus == 1) //nao foi blackjack nem bust
                         context.setState(new EndGameState());
                     break;

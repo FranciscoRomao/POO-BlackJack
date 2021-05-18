@@ -62,7 +62,7 @@ public class Dealer
         return 0;
     }
 
-    public int handCheck(Hand handToCheck){
+    public int bustCheck(Hand handToCheck){
         if(handToCheck.handSum() > 21){
             bust();
             return -1;
@@ -90,6 +90,7 @@ public class Dealer
         System.out.println(showHand()+"("+hand.handSum()+")");
         if(hand.hasBlackjack()){
             System.out.println("blackjack!!");
+            insuranceCheck();
         }
         System.out.println("player loses and his current balance is "+game.player.balance);
         newRound();
@@ -103,6 +104,7 @@ public class Dealer
         if(game.player.hands.getFirst().hasBlackjack() || hand.hasBlackjack()){
             System.out.println("dealer stands");
             System.out.println("blackjack!!");
+            insuranceCheck();
         } else {
             while(hand.handSum() < 17){
                 hit();
@@ -118,6 +120,18 @@ public class Dealer
         printEndScreen(busts);
         newRound();
     }   
+
+    private void insuranceCheck(){
+        if(hand.hasBlackjack() && game.player.insured()){            
+            game.player.balance += game.player.insuranceBet;
+            game.player.insuranceBet = -1;
+            System.out.println("player wins insurance");
+            return;
+        } 
+        if(!hand.hasBlackjack() && game.player.insured()){
+            System.out.println("players loses insurance");
+        }
+    }
 
     private void printEndScreen(boolean busts){
         if(game.player.hands.getFirst().handSum() > hand.handSum() || busts){

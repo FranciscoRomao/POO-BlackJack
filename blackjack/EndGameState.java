@@ -17,7 +17,7 @@ public class EndGameState implements State {
                     break;
                 case "h":
                     player.hit();
-                    handStatus = dealer.handCheck(player.hands.getFirst());
+                    handStatus = dealer.bustCheck(player.hands.getFirst());
                     break;
                 case "s":
                     dealer.stand();
