@@ -62,7 +62,7 @@ public class Dealer
         return 0;
     }
 
-    public int handCheck(Hand handToCheck){
+    public int bustCheck(Hand handToCheck){
         if(handToCheck.handSum() > 21){
             bust();
             return -1;
@@ -70,7 +70,7 @@ public class Dealer
         return 1;
     }
 
-    private void newRound(){
+    public void newRound(){
         game.player.hands.removeFirst();
         game.player.nHands--;
         hand = new Hand();
@@ -84,12 +84,17 @@ public class Dealer
         }
     }
 
-    public void bust(){
-        System.out.println("player busts");
+    public void showHole(){
         hand.addCard(hole_card);
         System.out.println(showHand()+"("+hand.handSum()+")");
+    }
+
+    public void bust(){
+        System.out.println("player busts");
+        showHole();
         if(hand.hasBlackjack()){
-            System.out.println("blackjack!!");
+            System.out.println("blackjack!!");   //todo meter esta condição numa função dependendo do que a prof responder
+            insuranceCheck();
         }
         System.out.println("player loses and his current balance is "+game.player.balance);
         newRound();
@@ -98,11 +103,11 @@ public class Dealer
     public void stand(){
         boolean busts = false;
         System.out.println("player stands");
-        hand.addCard(hole_card);
-        System.out.println(showHand()+"("+hand.handSum()+")");
+        showHole();
         if(game.player.hands.getFirst().hasBlackjack() || hand.hasBlackjack()){
             System.out.println("dealer stands");
             System.out.println("blackjack!!");
+            insuranceCheck();
         } else {
             while(hand.handSum() < 17){
                 hit();
@@ -118,6 +123,18 @@ public class Dealer
         printEndScreen(busts);
         newRound();
     }   
+
+    public void insuranceCheck(){
+        if(hand.hasBlackjack() && game.player.insured()){            
+            game.player.balance += game.player.insuranceBet*2;
+            game.player.insuranceBet = -1;
+            System.out.println("player wins insurance");
+            return;
+        } 
+        if(!hand.hasBlackjack() && game.player.insured()){
+            System.out.println("players loses insurance");
+        }
+    }
 
     private void printEndScreen(boolean busts){
         if(game.player.hands.getFirst().handSum() > hand.handSum() || busts){

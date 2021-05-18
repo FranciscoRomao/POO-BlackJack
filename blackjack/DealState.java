@@ -8,6 +8,8 @@ public class DealState implements State{
         Player player = context.game.player;
         String action;
         action = player.readPlay();
+        if(context.game.mode == 'd' )
+            System.out.println("-cmd "+action);
         try(Scanner s = new Scanner(action)) {
             switch (s.next()) {
                 case "$":
@@ -24,7 +26,7 @@ public class DealState implements State{
                 default:
                     if(context.game.mode == 'd' && firstInput){                    
                         try {
-                            if(!player.placeBet(Double.parseDouble(action))){
+                            if(!player.placeBet(Float.parseFloat(action))){
                                 context.setState(new GameStart());
                             }
                             break;                  

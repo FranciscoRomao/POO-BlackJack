@@ -8,6 +8,8 @@ public class GameStart implements State{
         boolean nextState = false;
         String action;
         action = player.readPlay();
+        if(context.game.mode == 'd')
+            System.out.println("-cmd "+action);
         try(Scanner s = new Scanner(action)) {
             switch (s.next()) {
                 case "$":                
@@ -15,7 +17,7 @@ public class GameStart implements State{
                 break;
                 case "b":                
                     try {                       
-                        nextState = player.placeBet(Double.parseDouble(s.next()));                         
+                        nextState = player.placeBet(Float.parseFloat(s.next()));                         
                     } catch (Exception e) {
                         if(context.game.mode != 'd')
                             nextState = player.placeBet(-1);  

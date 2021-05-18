@@ -14,11 +14,12 @@ public class Player
     //public Std_bet standard;
     //public Basic basic;
     //public Ace5 ace5;
-    public double balance;
+    public float balance;
     public String action;
     public File cmdFile;
     public boolean stand;
-    public double bet;
+    public float bet;
+    public float insuranceBet;
     public  LinkedList<Chip> bet_chips;
 
     private Scanner s;
@@ -33,14 +34,15 @@ public class Player
     {
         this.game = game;
         this.balance = balance;
-        this.bet = game.min_bet;
-        this.bet_chips = new LinkedList<Chip>();
-        this.hands = new LinkedList<Hand>();
-        this.hands.add(new Hand());
-        this.stand = false;
+        bet = game.min_bet;
+        insuranceBet = -1;
+        bet_chips = new LinkedList<Chip>();
+        hands = new LinkedList<Hand>();
+        hands.add(new Hand());
+        stand = false;
 
-        this.hilo_count = 0;
-        this.ace5_count = 0;
+        hilo_count = 0;
+        ace5_count = 0;
 
         handNumber = 0;
         splitted = false;
@@ -117,25 +119,46 @@ public class Player
         nHands++;
     }
 
-    public void Insurance()
+    public void insure()
     {
-        this.bet = this.bet * 1.5;
+        if(game.dealer.hand.get(0) != 1){    //1==ACE
+            System.out.println("i: illegal command");
+            return;
+        }
+        System.out.println("player is insuring");
+        insuranceBet = bet;
+        balance -= insuranceBet;
     }
 
-    public void Stand()
-    {
-        this.stand = true;
+    public boolean insured(){
+        return (insuranceBet != -1);
     }
 
-    public void Surrender()
+    public void surrender()
     {
-        this.bet = 0;
-        this.stand = false;
-        this.game.dealer.dealCards();
-        this.game.round = 0;
+        System.out.println("payer is surrendering");
+        balance += bet*0.5;
+        game.dealer.showHole();
+        if(game.dealer.hand.hasBlackjack()){
+            System.out.println("blackjack!!");   //todo meter esta condição numa função dependendo do que a prof responder
+            game.dealer.insuranceCheck();
+        }
+        System.out.println("player loses and his current balance is "+game.player.balance);
+        game.dealer.newRound();
     }
 
-    public String showAllHands(int num){
+    public void doubleDown(){
+        if(hands.getFirst().handSum() < 9 || hands.getFirst().handSum() > 11){
+            System.out.println("2: illegal command");
+            return;
+        }
+        balance -= bet;
+        bet += bet;
+        hit();
+        game.dealer.stand();
+    }
+
+    public String showAllHands(){
         StringBuilder str = new StringBuilder();
         str.append("player's hand ");
         Iterator<Hand> it = hands.iterator();
@@ -154,7 +177,7 @@ public class Player
         return str.toString();
     }
 
-    public boolean placeBet(double value){
+    public boolean placeBet(float value){
         if(value > balance || (value == -1 && balance < bet)){
             System.out.println("Player doesn't have enough money to bet. Available balance: "+balance);
             return false;
