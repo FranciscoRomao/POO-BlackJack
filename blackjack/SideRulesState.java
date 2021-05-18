@@ -28,7 +28,7 @@ public class SideRulesState implements State {
                     System.out.println("player splits");
                     break;
                 case "2":
-                    System.out.println("player doubles");
+                    player.doubleDown();
                     break;
                 case "h":
                     player.hit();

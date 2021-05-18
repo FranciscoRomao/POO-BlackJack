@@ -14,7 +14,7 @@ public class Player
     //public Std_bet standard;
     //public Basic basic;
     //public Ace5 ace5;
-    public double balance;
+    public float balance;
     public String action;
     public File cmdFile;
     public boolean stand;
@@ -145,6 +145,17 @@ public class Player
         }
         System.out.println("player loses and his current balance is "+game.player.balance);
         game.dealer.newRound();
+    }
+
+    public void doubleDown(){
+        if(hands.getFirst().handSum() < 9 || hands.getFirst().handSum() > 11){
+            System.out.println("2: illegal command");
+            return;
+        }
+        balance -= bet;
+        bet += bet;
+        hit();
+        game.dealer.stand();
     }
 
     public String showAllHands(){
