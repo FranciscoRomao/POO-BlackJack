@@ -127,26 +127,27 @@ public class Player
         }
         System.out.println("player is insuring");
         insuranceBet = bet;
+        balance -= insuranceBet;
     }
 
     public boolean insured(){
         return (insuranceBet != -1);
     }
 
-    public void Stand()
+    public void surrender()
     {
-        this.stand = true;
+        System.out.println("payer is surrendering");
+        balance += bet*0.5;
+        game.dealer.showHole();
+        if(game.dealer.hand.hasBlackjack()){
+            System.out.println("blackjack!!");   //todo meter esta condição numa função dependendo do que a prof responder
+            game.dealer.insuranceCheck();
+        }
+        System.out.println("player loses and his current balance is "+game.player.balance);
+        game.dealer.newRound();
     }
 
-    public void Surrender()
-    {
-        this.bet = 0;
-        this.stand = false;
-        this.game.dealer.dealCards();
-        this.game.round = 0;
-    }
-
-    public String showAllHands(int num){
+    public String showAllHands(){
         StringBuilder str = new StringBuilder();
         str.append("player's hand ");
         Iterator<Hand> it = hands.iterator();

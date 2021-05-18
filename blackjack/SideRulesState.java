@@ -21,7 +21,7 @@ public class SideRulesState implements State {
                     player.insure();
                     break;
                 case "u":
-                    System.out.println("player surrenders");
+                    player.surrender();
                     context.setState(new GameStart());
                     break;
                 case "p":

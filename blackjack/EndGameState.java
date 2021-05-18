@@ -9,6 +9,8 @@ public class EndGameState implements State {
         String action;
         int handStatus = 1;
         action = player.readPlay();
+        if(context.game.mode == 'd')
+            System.out.println("-cmd "+action);
         try(Scanner s = new Scanner(action)) {
             //todo implement all siderules here
             switch (s.next()) {

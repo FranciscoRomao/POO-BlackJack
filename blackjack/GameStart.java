@@ -8,6 +8,8 @@ public class GameStart implements State{
         boolean nextState = false;
         String action;
         action = player.readPlay();
+        if(context.game.mode == 'd')
+            System.out.println("-cmd "+action);
         try(Scanner s = new Scanner(action)) {
             switch (s.next()) {
                 case "$":                
