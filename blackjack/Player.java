@@ -6,7 +6,6 @@ import java.io.*;
 public class Player
 {
     public Game game;
-    public LinkedList<Chip> my_chips;
     public LinkedList<Hand> hands;
     public int hilo_count;
     public int ace5_count;
@@ -20,7 +19,6 @@ public class Player
     public boolean stand;
     public float bet;
     public float insuranceBet;
-    public  LinkedList<Chip> bet_chips;
 
     private Scanner s;
     private InputStream input;
@@ -36,7 +34,6 @@ public class Player
         this.balance = balance;
         bet = game.min_bet;
         insuranceBet = -1;
-        bet_chips = new LinkedList<Chip>();
         hands = new LinkedList<Hand>();
         hands.add(new Hand());
         stand = false;
