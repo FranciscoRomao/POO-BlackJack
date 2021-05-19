@@ -16,7 +16,6 @@ public class Player
     public float balance;
     public String action;
     public File cmdFile;
-    public boolean stand;
     public float bet;
     public float insuranceBet;
 
@@ -26,6 +25,7 @@ public class Player
     public int handNumber;
     private boolean splitted;
     public int nHands;
+    public boolean allBlackjack;
 
     //public Player(Game game, LinkedList<Chip> init_chips, int strat)
     public Player(Game game, int balance, String string)
@@ -36,7 +36,6 @@ public class Player
         insuranceBet = -1;
         hands = new LinkedList<Hand>();
         hands.add(new Hand());
-        stand = false;
 
         hilo_count = 0;
         ace5_count = 0;
@@ -44,6 +43,7 @@ public class Player
         handNumber = 0;
         splitted = false;
         nHands = 1;
+        allBlackjack = true;
 
         switch (this.game.mode) {
             case 'd':
@@ -96,24 +96,53 @@ public class Player
         }
         return action;
     }
-
-    public void hit()
+     /**
+      * 
+      * @param print indicates if "player hits" is printed or not
+      */
+    public void hit(boolean print)
     {
-        hands.getFirst().addCard(game.dealer.shoe.getCard());
-        System.out.println("player hits");
+        hands.get(handNumber).addCard(game.dealer.shoe.getCard());
+        if(print)
+            System.out.println("player hits");
         if(splitted){
-            System.out.println("player's hand ["+handNumber+"]"+hands.getFirst()+hands.getFirst().handSum());
+            System.out.println("player's hand ["+(handNumber+1)+"] "+hands.get(handNumber)+"("+hands.get(handNumber).handSum()+")");
         }
         else {
-            System.out.println("player's hand "+hands.getFirst()+"("+hands.getFirst().handSum()+")");
+            System.out.println("player's hand "+hands.get(handNumber)+"("+hands.get(handNumber).handSum()+")");
         }
     }
 
-    public void Split()
+    public void stand(){
+        if(!hands.get(handNumber).hasBlackjack())
+            allBlackjack = false;
+        System.out.print("player stands ");
+        if(nHands > 1 || handNumber > 0){
+            System.out.print("["+(game.player.handNumber + 1)+"]");
+        }
+        System.out.println();
+        if(nHands > 1){
+            game.dealer.playOtherHand();
+            return;
+        }
+        game.dealer.stand(false); 
+    }
+
+    public void split()
     {
+        if(!hands.get(handNumber).isSplittable() || handNumber == 2){
+            System.out.println("p: illegal command");
+            return;
+        }
+        System.out.println("player is splitting");
         hands.add(new Hand());
-        splitted = true;
         nHands++;
+        hands.get(nHands - 1).addCard(hands.get(handNumber).getCard(1));
+        hands.get(handNumber).removeCard(hands.get(handNumber).getCard(1));
+        splitted = true;
+        balance -= bet;
+        System.out.println("playing 1st hand...");
+        hit(false);
     }
 
     public void insure()
@@ -145,14 +174,14 @@ public class Player
     }
 
     public void doubleDown(){
-        if(hands.getFirst().handSum() < 9 || hands.getFirst().handSum() > 11){
+        if(hands.get(handNumber).handSum() < 9 || hands.get(handNumber).handSum() > 11){
             System.out.println("2: illegal command");
             return;
         }
         balance -= bet;
         bet += bet;
-        hit();
-        game.dealer.stand();
+        hit(false);
+        game.dealer.stand(false);
     }
 
     public String showAllHands(){

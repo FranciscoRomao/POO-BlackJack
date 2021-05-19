@@ -25,19 +25,19 @@ public class SideRulesState implements State {
                     context.setState(new GameStart());
                     break;
                 case "p":
-                    System.out.println("player splits");
+                    player.split();
                     break;
                 case "2":
                     player.doubleDown();
                     break;
                 case "h":
-                    player.hit();
-                    handStatus = dealer.bustCheck(player.hands.getFirst());
+                    player.hit(true);
+                    handStatus = dealer.bustCheck(player.hands.get(player.handNumber));
                     if(handStatus == 1) //nao foi blackjack nem bust
                         context.setState(new EndGameState());
                     break;
                 case "s":
-                    dealer.stand();
+                    player.stand();
                     break;
                 default:
                     System.out.println(action+": illegal command");
