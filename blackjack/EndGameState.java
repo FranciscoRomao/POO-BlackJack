@@ -18,11 +18,11 @@ public class EndGameState implements State {
                     System.out.println(player.balance+"$");
                     break;
                 case "h":
-                    player.hit();
-                    handStatus = dealer.bustCheck(player.hands.getFirst());
+                    player.hit(true);
+                    handStatus = dealer.bustCheck(player.hands.get(player.handNumber));
                     break;
                 case "s":
-                    dealer.stand();
+                    player.stand();
                     handStatus = -1;
                     break;
                 case "ad":

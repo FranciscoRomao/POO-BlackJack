@@ -24,7 +24,7 @@ public class Hand
             sum += cards.get(i).getValue();
         }
 
-        if(sum > 21 && HandhasAce())
+        if(sum > 21 && hasAce())
         {
             sum = sum - 10;
         }
@@ -37,7 +37,11 @@ public class Hand
         this.cards.add(to_add);
     }
 
-    public boolean HandhasAce() //Assuming all Aces value 11
+    public void removeCard(Card toRemove){
+        this.cards.remove(toRemove);
+    }
+
+    public boolean hasAce() //Assuming all Aces value 11
     {
         int rank = 0;
 
@@ -56,12 +60,20 @@ public class Hand
         return cards.get(index).rank;
     }
 
+    public Card getCard(int index){
+        return cards.get(index);
+    }
+
     public int getNumCards(){
         return cards.size();
     }
 
     public boolean hasBlackjack(){
             return (this.handSum() == 21 && this.getNumCards() == 2);
+    }
+
+    public boolean isSplittable(){
+        return (cards.getFirst().getValue() == cards.get(1).getValue() || cards.getFirst().showRank().equals(cards.get(1).showRank()));
     }
 
     @Override

@@ -91,7 +91,7 @@
 //                 }    
 //             }*/
             
-//             if(playerHand.HandhasAce() && playerHand.handSum()>21)
+//             if(playerHand.hasAce() && playerHand.handSum()>21)
 //                 mat=1;
 //             else
 //                 mat=2;
