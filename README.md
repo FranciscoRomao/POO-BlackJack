@@ -18,8 +18,8 @@
 - [x] Implementar função Stand do PDlayer
 - [x] Implementar função Insurance do Player
 - [x] Implementar função Surrender do Player
-- [ ] Implementar função Split do Player
-- [ ] Implementar função DoubleDown do Player
+- [x] Implementar função Split do Player
+- [x] Implementar função DoubleDown do Player
 - [ ] Implementar função Advice do Player - G
 - [ ] Implementar função Statistics do Player
 - [x] Implementar constructor do Shoe
@@ -41,7 +41,6 @@
 ## Notas
 
 - Link para compilar UML: https://www.planttext.com/ ou então usar extenção do PlantUML para o VS Code
-- Perguntar à prof sobre mudar a aposta
 - Temos de confirmar o que acontece quando o player perde insurance
 - Quando fazes insurance tira te dinheiro? (acho que sim se nao dava se insurance sempre)
 - Confirmar se o split funciona com as outras siderules

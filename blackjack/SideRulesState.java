@@ -18,6 +18,10 @@ public class SideRulesState implements State {
                     System.out.println(player.balance+"$");
                     break;
                 case "i":
+                    if(player.splitted){
+                        System.out.println("i: illegal command");
+                        break;
+                    }
                     player.insure();
                     break;
                 case "u":

@@ -16,14 +16,13 @@ public class Player
     public float balance;
     public String action;
     public File cmdFile;
-    public float bet;
     public float insuranceBet;
 
     private Scanner s;
     private InputStream input;
     private String delim;
     public int handNumber;
-    private boolean splitted;
+    public boolean splitted;
     public int nHands;
     public boolean allBlackjack;
 
@@ -32,10 +31,9 @@ public class Player
     {
         this.game = game;
         this.balance = balance;
-        bet = game.min_bet;
         insuranceBet = -1;
         hands = new LinkedList<Hand>();
-        hands.add(new Hand());
+        hands.add(new Hand(game.min_bet));
 
         hilo_count = 0;
         ace5_count = 0;
@@ -130,18 +128,26 @@ public class Player
 
     public void split()
     {
+        String th = "st";
         if(!hands.get(handNumber).isSplittable() || handNumber == 2){
             System.out.println("p: illegal command");
             return;
         }
         System.out.println("player is splitting");
-        hands.add(new Hand());
+        hands.add(new Hand(hands.get(handNumber).bet));
         nHands++;
-        hands.get(nHands - 1).addCard(hands.get(handNumber).getCard(1));
+        hands.get(handNumber+1).addCard(hands.get(handNumber).getCard(1));
         hands.get(handNumber).removeCard(hands.get(handNumber).getCard(1));
         splitted = true;
-        balance -= bet;
-        System.out.println("playing 1st hand...");
+        balance -= hands.get(handNumber).bet;
+        if((handNumber+1) == 2){
+            th = "nd";
+        } else if((handNumber+1) == 3){
+            th = "rd";
+        } else if((handNumber+1) > 3){
+            th = "th";
+        }
+        System.out.println("playing "+(handNumber+1)+th+" hand...");
         hit(false);
     }
 
@@ -152,7 +158,7 @@ public class Player
             return;
         }
         System.out.println("player is insuring");
-        insuranceBet = bet;
+        insuranceBet = hands.get(handNumber).bet;
         balance -= insuranceBet;
     }
 
@@ -163,14 +169,18 @@ public class Player
     public void surrender()
     {
         System.out.println("payer is surrendering");
-        balance += bet*0.5;
+        balance += hands.get(handNumber).bet*0.5;
         game.dealer.showHole();
         if(game.dealer.hand.hasBlackjack()){
             System.out.println("blackjack!!");   //todo meter esta condição numa função dependendo do que a prof responder
             game.dealer.insuranceCheck();
         }
         System.out.println("player loses and his current balance is "+game.player.balance);
-        game.dealer.newRound();
+        if(nHands > 1){
+            game.dealer.playOtherHand();
+            return;
+        }
+        game.dealer.stand(false);
     }
 
     public void doubleDown(){
@@ -178,9 +188,13 @@ public class Player
             System.out.println("2: illegal command");
             return;
         }
-        balance -= bet;
-        bet += bet;
+        balance -= hands.get(handNumber).bet;
+        hands.get(handNumber).bet += hands.get(handNumber).bet;
         hit(false);
+        if(nHands > 1){
+            game.dealer.playOtherHand();
+            return;
+        }
         game.dealer.stand(false);
     }
 
@@ -204,7 +218,7 @@ public class Player
     }
 
     public boolean placeBet(float value){
-        if(value > balance || (value == -1 && balance < bet)){
+        if(value > balance || (value == -1 && balance < hands.get(handNumber).bet)){
             System.out.println("Player doesn't have enough money to bet. Available balance: "+balance);
             return false;
         }
@@ -213,10 +227,10 @@ public class Player
             return false;
         }
         if(value != -1){
-            bet = value;
+            hands.get(handNumber).bet = value;
         }
-        System.out.println("player is betting "+bet);
-        balance -= bet;
+        System.out.println("player is betting "+hands.get(handNumber).bet);
+        balance -= hands.get(handNumber).bet;
         return true;
     }
 }
