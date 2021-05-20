@@ -1,6 +1,8 @@
 package blackjack;
 
 public class Game {
+    //?os atributos das classes não deveriam de ser private, package ou protected? nunca devem ser publicos segundo a prof
+    //TODO: mudar entao os que fizerem sentido ou para package ou para protected
     public char mode;
     public Player player;
     public Dealer dealer;
@@ -79,7 +81,7 @@ public class Game {
                     System.out.println("Percentage of shoe played has to be between 10 and 100");
                     System.exit(-1);
                 }
-                shuffle = Integer.parseInt(args[5]);
+                shuffle = Integer.parseInt(args[5]); //?nao devia de ser this.shuffle como this.shoe?
                 dealer = new Dealer(this);
                 player = new Player(this, Integer.parseInt(args[3]), this.strat);
                 context = new StateContext(this);

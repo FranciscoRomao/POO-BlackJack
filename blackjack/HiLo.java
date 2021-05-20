@@ -12,9 +12,9 @@ public class HiLo implements Strategy
 	}
 
     @Override
-    public int Advice(Hand playerHand, Card dealerCard)
+    public char playAdvice(Player player, Hand playerHand, Card dealerCard)
     {
-        int foo = 0;
+        char foo = '\0';
 
 		if(playerHand.handSum() == 16)
 
@@ -33,15 +33,15 @@ public class HiLo implements Strategy
 
 	public void Count(Card card)
 	{
-		int rank = card.rank;
+		int cardValue = card.getValue();
 
-		if(rank >= 2 && rank <=6)
+		if(cardValue >= 2 && cardValue <=6)
 		{
 			count++;
 		}
 		else
 		{
-			if(rank==0 || (rank >= 10 && rank <=13))
+			if(cardValue==1 || cardValue == 10)
 			{
 				count--;
 			}

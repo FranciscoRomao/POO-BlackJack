@@ -14,7 +14,7 @@ public class Hand
         bet = 0;
     }
 
-    public int handSum() //Assuming all Aces value 11
+    public int handSum() //Assuming all Aces value 11 //!totalmente mal feito (explicar desenho) p.ex. AA10Q continua a tirar 10 pq tem A e passou de 21 e nunca mais acaba 
     {
         int sum = 0;
         int rank = 0;
@@ -55,7 +55,7 @@ public class Hand
         return false;
     }
 
-    public int get(int index)
+    public int get(int index) //!isto aqui acho que esta obsoleto
     {
         return cards.get(index).rank;
     }
