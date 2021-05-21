@@ -2,13 +2,13 @@
 
 ### TODO
 
-- [ ] Implementar função Advice no HiLo
+- [x] Implementar função Advice no HiLo
 - [ ] Incluir HiLo no código
 - [x] Implementar função Advice no Basic
 - [ ] Incluir Basic no código
 - [ ] Implementar função Advice no Ace5
 - [ ] Incluir Ace5 no código
-- [ ] Implementar função Advice no Std_bet
+- [x] Implementar função Advice no Std_bet
 - [ ] Incluir Std_bet no código
 - [x] Implementar função Play do Player
 - [x] Implementar função Debug do Player

@@ -1,9 +1,9 @@
 // package blackjack;
 
-// class Ace5 implements Strategy
+// class Ace5 implements BetStrategy
 // {
 //     @Override
-//     public int Advice()
+//     public int Advice(Player player, Hand playerHand, Card dealerCard)
 //     {
 //         int foo = 0;
 //         //TODO
