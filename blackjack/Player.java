@@ -25,6 +25,8 @@ public class Player
     public boolean splitted;
     public int nHands;
     public boolean allBlackjack;
+    public int lastBet; //?nao sei se deve de ser protected ou public 
+    public int roundOutcome; //?nao sei se deve de ser protected ou public
 
     //public Player(Game game, LinkedList<Chip> init_chips, int strat)
     public Player(Game game, int balance, String string)
@@ -228,6 +230,7 @@ public class Player
         }
         if(value != -1){
             hands.get(handNumber).bet = value;
+            lastBet= (int) value; //!nao sei pq uma bet esta a float, acho que a prof diz explicitamente que quer as bets com inteiros
         }
         System.out.println("player is betting "+hands.get(handNumber).bet);
         balance -= hands.get(handNumber).bet;

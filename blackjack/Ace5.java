@@ -22,7 +22,7 @@ class Ace5 implements BetStrategy
         if(player.game.round == 0) //para saber se ja fez alguma aposta ou nao
             lastBet = startBet;
         else
-            lastBet = player.game.last_bet; //!preciso mesmo de saber qual foi a ultima aposta do jogador
+            lastBet = player.lastBet;
 
         if (count >= 2) {
             suggest = 2*lastBet;

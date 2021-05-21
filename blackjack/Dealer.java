@@ -168,6 +168,7 @@ public class Dealer
                     System.out.println("blackjack!!");
                     game.player.balance += playerHand.bet * 2.5;
                     System.out.print("player wins ");
+                    game.player.roundOutcome = 1; //win //*verificar com cuidado
                     if(game.player.splitted){
                         System.out.print("["+counter+"]");
                     }
@@ -176,6 +177,7 @@ public class Dealer
                 } 
                 game.player.balance += playerHand.bet * 2;
                 System.out.print("player wins ");
+                game.player.roundOutcome = 1; // win //*verificar com cuidado
                 if(game.player.splitted){
                     System.out.print("["+counter+"]");
                 }
@@ -184,6 +186,7 @@ public class Dealer
             } else
             if(playerHand.handSum() < hand.handSum() || playerHand.handSum() > 21){
                 System.out.print("player loses");
+                game.player.roundOutcome = -1; // lose //*verificar com cuidado
                 if(game.player.splitted){
                     System.out.print("["+counter+"]");
                 }
@@ -192,6 +195,7 @@ public class Dealer
             if(playerHand.handSum() == hand.handSum()){
                 game.player.balance += playerHand.bet;
                 System.out.print("player pushes ");
+                game.player.roundOutcome = 0; // push //*verificar com cuidado
                 if(game.player.splitted){
                     System.out.print("["+counter+"]");
                 }
