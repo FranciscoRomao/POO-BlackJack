@@ -5,6 +5,7 @@ import java.util.LinkedList;
 public class HiLo implements PlayStrategy
 {
 	private int count;
+
 	public HiLo() {
 		count = 0;
 	}
@@ -29,7 +30,7 @@ public class HiLo implements PlayStrategy
 		int cardValue = card.getValue();
 
 		if(cardValue >= 2 && cardValue <=6) count++;
-		else if (cardValue == 1 || cardValue == 10) count--;
+		else if (cardValue >= 10) count--; //?verificar isto aqui. o As vale 11 portanto nao fazia sentido fazer (cardValue==11 || cardValue==10) certo?
 	}	
 
 	public float getTrueCount(Shoe shoe) {
@@ -90,6 +91,13 @@ public class HiLo implements PlayStrategy
 		}
 
 		return _suggest;
+	}
+
+	/**
+	 * To reset the running count at the beggining of each deck/shoe
+	 */
+	public void resetCount() {
+		count = 0;
 	}
 
 	/**

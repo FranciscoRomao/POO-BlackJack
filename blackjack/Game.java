@@ -1,6 +1,6 @@
 package blackjack;
 
-public class Game {
+public class Game { // ?a classe game nao devia ser uma coisa abrasta? o jogo nao existe sozinho so com o dealer e player e que e alguma coisa
     //?os atributos das classes não deveriam de ser private, package ou protected? nunca devem ser publicos segundo a prof
     //TODO: mudar entao os que fizerem sentido ou para package ou para protected
     public char mode;
