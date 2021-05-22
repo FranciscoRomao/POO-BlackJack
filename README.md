@@ -33,7 +33,7 @@
 - [x] Implementar função checkBJ do Dealer
 - [x] Ler input e inicializar o jogo
 - [ ] Implementar o main
-- [ ] Mudar o handSum() e o hasAce() uegentemente para ver se no Basic fica mais facil e tb pq ta mal
+- [ ] Mudar o handSum() e o hasAce() urgentemente para ver se no Basic fica mais facil e tb pq ta mal
 
 ## Discutir
 

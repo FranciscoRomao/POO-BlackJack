@@ -10,6 +10,7 @@ public class GameStart implements State{
         action = player.readPlay();
         if(context.game.mode == 'd')
             System.out.println("-cmd "+action);
+        
         try(Scanner s = new Scanner(action)) {
             switch (s.next()) {
                 case "$":                
@@ -24,6 +25,9 @@ public class GameStart implements State{
                     }
                     if(context.game.mode == 'd' || nextState)             
                         context.setState(new DealState());
+                    break;
+                case "ad":
+                    //System.out.println("ace-five\t\tbet"+player.betStrat.Advice()) //!preciso de ajuda nao tou a entender ja tou com sono
                     break;
                 default:
                     System.out.println(action+": illegal command");

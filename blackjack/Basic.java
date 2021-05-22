@@ -111,11 +111,11 @@ public class Basic implements PlayStrategy
                 break;
         
             default: //*select from the pair table
-                suggest = pair[playerHand.get(0) - 2][dealerCard.getValue() - 2];
-                break;
-        }
+                suggest = pair[playerHand.getCard(0).getValue() - 2][dealerCard.getValue() - 2]; //*antes estava playerHand.get(0) - 2 mas assim so tinha em conta o rank 
+                break;                                                                           //*e os K, J e Q nao estavam incluidos na tabela dos pares
+        }                                                                                        //*tambem estava mal feito pq se fosse A,A ia buscar a primeira linha da tabela e nao a ultima
 
         return suggest;
-    }
+    } //TODO adicionar duas linjas nas tabelas har e soft pq se o pair for 2,2 ou A,A e nao der para fazer split nao tem para onde ir
 }
 

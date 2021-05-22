@@ -27,6 +27,9 @@ public class EndGameState implements State {
                     break;
                 case "ad":
                     System.out.println("player asks for advice");
+                    // *fazer a logicas antes de ler e decidir o que imprime dependendo das tabelas e tal
+                    // System.out.println("basic\t\t"+basicAdvice);
+                    // System.out.println("hi-lo\t\t"+hiloAdvice);
                     break;
                 case "st":
                     System.out.println("player asks for stats");

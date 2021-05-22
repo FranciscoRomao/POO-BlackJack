@@ -6,7 +6,7 @@ public class HiLo implements PlayStrategy
 {
 	private int count;
 
-	public HiLo() {
+	public HiLo() { //?acho que este construtor nao e preciso....
 		count = 0;
 	}
 
@@ -26,6 +26,9 @@ public class HiLo implements PlayStrategy
         return suggest;
     }
 
+	/**
+	 * Chamar cada vez que uma carta é mostrada no jogo, nao sei onde isso e feito
+	 */
 	public void Count(Card card) {
 		int cardValue = card.getValue();
 

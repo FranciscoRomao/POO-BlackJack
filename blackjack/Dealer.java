@@ -3,11 +3,11 @@ package blackjack;
 import java.util.Iterator;
 
 public class Dealer
-{
-    public Game game;
+{   //?aqui resta mesmo a duvida..package ou protected? depende se fazes tipo game.dealer a partir do player. Sera que da? o dealer e uma subclasse do game portanto deve 
+    protected Game game;
     private Card hole_card;
-    public Shoe shoe;
-    public Hand hand;
+    protected Shoe shoe;
+    protected Hand hand;
     
     public Dealer(Game game)
     {      

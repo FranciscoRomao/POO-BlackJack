@@ -19,10 +19,11 @@ class Ace5 implements BetStrategy
     public int Advice(Player player, Hand playerHand, Card dealerCard) {
         int suggest = 0;
 
-        if(player.game.round == 0) //para saber se ja fez alguma aposta ou nao
-            lastBet = startBet;
+        if(player.game.round != 0) //para saber se ja fez alguma aposta ou nao
+            lastBet = player.lastBet;    
         else
-            lastBet = player.lastBet;
+            lastBet = startBet; 
+            
 
         if (count >= 2) {
             suggest = 2*lastBet;

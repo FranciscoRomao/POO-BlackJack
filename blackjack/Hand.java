@@ -60,7 +60,7 @@ public class Hand
         return false;
     }
 
-    public int get(int index) //!isto aqui acho que esta obsoleto
+    public int get(int index) //!isto aqui acho que esta obsoleto. nao seria melhor dar o valor da carta em vez do rank? e igual ok
     {
         return cards.get(index).rank;
     }

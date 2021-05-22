@@ -13,6 +13,11 @@ public class Player
     //public Std_bet standard;
     //public Basic basic;
     //public Ace5 ace5;
+    private PlayStrategy playStrat;
+    private PlayStrategy HiLo;
+    private PlayStrategy Basic;
+    private BetStrategy betStrat;
+    
     public float balance;
     public String action;
     public File cmdFile;
@@ -36,7 +41,7 @@ public class Player
         insuranceBet = -1;
         hands = new LinkedList<Hand>();
         hands.add(new Hand(game.min_bet));
-
+        lastBet = game.min_bet;
         hilo_count = 0;
         ace5_count = 0;
 
@@ -47,8 +52,8 @@ public class Player
 
         switch (this.game.mode) {
             case 'd':
-                this.cmdFile = new File(string);      
-                if(!this.cmdFile.exists()){
+                cmdFile = new File(string);      
+                if(!cmdFile.exists()){
                     System.out.println("File doesn't exist");
                     System.exit(-1);
                 } 
@@ -63,9 +68,32 @@ public class Player
             case 'i':
                 input = System.in;
                 delim = "\n";
+                Basic = new Basic(); //tem que ser diferenciados pq aparece os dois conselhos
+                HiLo = new HiLo();
+                betStrat = new Ace5(game.min_bet, 16);
+                //betStrat = new StdBet(); //no exemplo que a prof da so aparece o ace-five ....mas nao deve de fazer mal nenhum
                 break;
             case 's':
-                //todo strat = string            
+                //todo
+                switch (string) {
+                    case "BS-AS":
+                        playStrat = new Basic();
+                        betStrat = new Ace5(game.min_bet, 16);
+                        break;
+                    case "HL":
+                        playStrat = new HiLo();
+                        //!temos que criar aqui um alterBet = Basic para quando o HiLo nao tiver solucao
+                        betStrat = new StdBet();
+                        break;
+                    case "HL-AS":
+                        playStrat = new HiLo();
+                        // !temos que criar aqui um alterBet = Basic para quando o HiLo nao tiver solucao
+                        betStrat = new Ace5(game.min_bet, 16); //?fica a duvida na mesma se usa o Basic ou nao
+                    default:
+                        playStrat = new Basic();
+                        betStrat = new StdBet();
+                        break;
+                }           
                 break;
             default:
                 break;
@@ -88,8 +116,14 @@ public class Player
                     System.out.println("Error reading from input");
                 }
                 break;
-            case 's':
-                //todo action = get advice
+            case 's': //todo verificar melhor
+                System.out.print("Command >> ");
+                if (game.round == 0) {
+                    action = "b";
+                }
+                //!temos que fazer para cada possibilidade pq a bet e so no inicio de cada ronda
+                //action = Character.toString(playAdvice) + Integer.toString(betAdvice); //!temos que ainda converter o que sai das tabelas as letras minusculas para maiusculas
+                //String.valueOf() qual diferenca
                 break;
             default:
                 break;
@@ -230,7 +264,7 @@ public class Player
         }
         if(value != -1){
             hands.get(handNumber).bet = value;
-            lastBet= (int) value; //!nao sei pq uma bet esta a float, acho que a prof diz explicitamente que quer as bets com inteiros
+            lastBet = (int) value; //!nao sei pq uma bet esta a float, acho que a prof diz explicitamente que quer as bets com inteiros
         }
         System.out.println("player is betting "+hands.get(handNumber).bet);
         balance -= hands.get(handNumber).bet;

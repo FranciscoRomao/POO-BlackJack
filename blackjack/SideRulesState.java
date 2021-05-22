@@ -43,6 +43,11 @@ public class SideRulesState implements State {
                 case "s":
                     player.stand();
                     break;
+                case "ad":
+                    //*fazer a logicas antes de ler e decidir o que imprime dependendo das tabelas e tal
+                    //System.out.println("basic\t\t"+basicAdvice);
+                    //System.out.println("hi-lo\t\t"+hiloAdvice);
+                    break;
                 default:
                     System.out.println(action+": illegal command");
                     break;
