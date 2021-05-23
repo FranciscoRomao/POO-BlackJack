@@ -6,6 +6,7 @@ import java.io.*;
 class Shoe
 {
     private LinkedList<Card> cards;
+    private int totalCards;
 
     /**
      * Shoe constructor
@@ -21,7 +22,8 @@ class Shoe
             aux = singleDeck();
             cards.addAll(aux);
         }
-        cards = Shuffle(); 
+        cards = Shuffle();
+        totalCards = cards.size(); 
     }
 
     public Shoe(String fileName)
@@ -42,6 +44,7 @@ class Shoe
             System.out.println("Error reading shoe file");
             System.exit(1);
         }
+        totalCards = cards.size();
     }
 
     public LinkedList<Card> singleDeck()
@@ -87,9 +90,14 @@ class Shoe
         return cards.pop();
     }
 
-    public int getNumCards() {
+    public int getPlayedCards() {
+        return totalCards - cards.size();
+    }
+
+    public int getNumCards(){
         return cards.size();
     }
+
 
     @Override
     public String toString(){

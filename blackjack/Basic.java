@@ -12,8 +12,10 @@ Dh - D
 Ds - d
  */
 
-public class Basic implements PlayStrategy
-{
+public class Basic //implements Strategy
+{   
+    private char suggest;
+
     private char[][] hard = {{ 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H'}, 
                              { 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H'},
                              { 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H'},
@@ -52,8 +54,9 @@ public class Basic implements PlayStrategy
                              { 'P', 'P', 'P', 'P', 'P', 'P', 'S', 'P', 'S', 'S'},
                              { 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S'},
                              { 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'}}; 
-    @Override
-    public char Advice(Player player, Hand playerHand, Card dealerCard)
+
+    
+    public void Advice(Game game, boolean print)
     {     
         ////playerHand.getFirst();
         ////playerHand.size();
@@ -70,10 +73,12 @@ public class Basic implements PlayStrategy
         //3. Se os Ases forem todos 1 é HARD
         //4. Se houver um par é PAIR
         
+        Hand playerHand = game.player.hands.get(game.player.handNumber);
+        Card dealerCard = game.dealer.hand.getCard(0);
         int HandSum = playerHand.handSum(); //soma da mao do jogador
         int nonAceSum = 0;
         int tableSelector = 0;
-        char suggest = '\0';
+        
         int aceCount = 0;
         int aceOf_1 = 0;
 
@@ -114,8 +119,75 @@ public class Basic implements PlayStrategy
                 suggest = pair[playerHand.getCard(0).getValue() - 2][dealerCard.getValue() - 2]; //*antes estava playerHand.get(0) - 2 mas assim so tinha em conta o rank 
                 break;                                                                           //*e os K, J e Q nao estavam incluidos na tabela dos pares
         }                                                                                        //*tambem estava mal feito pq se fosse A,A ia buscar a primeira linha da tabela e nao a ultima
-
-        return suggest;
+        if(print)
+            System.out.println(this);
     } //TODO adicionar duas linjas nas tabelas har e soft pq se o pair for 2,2 ou A,A e nao der para fazer split nao tem para onde ir
+
+    
+    /**
+     * Estou a fazer isto para que seja so preciso fazer print(hilo/basic)
+     */
+    @Override
+    public String toString() { //?faco isto ou faco no player returnAdvice e assim fica igual para todos e nao repete codigo
+        String advice = "--";
+
+        switch (suggest) {
+            case 'H':
+                advice = "hit";
+                break;
+            case 'S':
+                advice = "stand";
+                break;
+            case 'P':
+                advice = "split";
+                break;
+            case 'D':
+                advice = "double, if impossible hit";
+                break;
+            case 'd':
+                advice = "double, if impossible stand";
+                break;
+            case 'R':
+                advice = "surrender, hit if impossible";
+                break;    
+            ////default:
+                ////break;
+        }
+
+        return "basic\t\t" + advice;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public String simAction (){
+        String action = "--";
+
+        switch (suggest) {
+            case 'H':
+                action = "h";
+                break;
+            case 'S':
+                action = "s";
+                break;
+            case 'P':
+                action = "p";
+                break;
+            case 'D':
+                action = "2 h";
+                break;
+            case 'd':
+                action = "2 s";
+                break;
+            case 'R':
+                action = "u h";
+                break;
+            //// default:
+            //// break;
+        }
+
+        return action;
+    }
 }
 

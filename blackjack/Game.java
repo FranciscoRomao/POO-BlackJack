@@ -1,6 +1,6 @@
 package blackjack;
 
-public class Game { // ?a classe game nao devia ser uma coisa abrasta? o jogo nao existe sozinho so com o dealer e player e que e alguma coisa
+public class Game {
     //?os atributos das classes não deveriam de ser private, package ou protected? nunca devem ser publicos segundo a prof
     //TODO: mudar entao os que fizerem sentido ou para package ou para protected
     protected char mode;
@@ -68,7 +68,6 @@ public class Game { // ?a classe game nao devia ser uma coisa abrasta? o jogo na
                     System.exit(-1);
                 }
                 if (this.mode == 's') {
-                    // TODO verificação da strategy
                     this.strat = args[7];
                     this.shuffleNum = Integer.parseInt(args[6]);
                 }
@@ -81,10 +80,12 @@ public class Game { // ?a classe game nao devia ser uma coisa abrasta? o jogo na
                     System.out.println("Percentage of shoe played has to be between 10 and 100");
                     System.exit(-1);
                 }
-                shuffle = Integer.parseInt(args[5]);
+                float percentage = Float.parseFloat(args[5]);
                 dealer = new Dealer(this);
                 player = new Player(this, Integer.parseInt(args[3]), this.strat);
                 context = new StateContext(this);
+                percentage = (percentage / 100) * dealer.shoe.getNumCards();
+                shuffle = (int) percentage;
                 return;
             }
             if (this.mode == 'd') {
@@ -98,11 +99,17 @@ public class Game { // ?a classe game nao devia ser uma coisa abrasta? o jogo na
         }
     }
 
+    /**
+     * 
+     */
     @Override
     public String toString() {
         return mode + " " + min_bet + " " + max_bet + " " + this.player.balance + " " + shoe + " " + shuffle;
     }
 
+    /**
+     * 
+     */
     public void startGame(){
         boolean playing = true;
         while(playing){
@@ -111,6 +118,9 @@ public class Game { // ?a classe game nao devia ser uma coisa abrasta? o jogo na
         System.out.println("bye");
     }
 
+    /**
+     * 
+     */
     public void changeState(State newState){
         context.setState(newState);
     }

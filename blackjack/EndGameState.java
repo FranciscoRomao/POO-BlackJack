@@ -8,8 +8,8 @@ public class EndGameState implements State {
         Dealer dealer = context.game.dealer;
         String action;
         int handStatus = 1;
-        action = player.readPlay();
-        if(context.game.mode == 'd')
+        action = player.readPlay(3);
+        if(context.game.mode != 'i')
             System.out.println("-cmd "+action);
         try(Scanner s = new Scanner(action)) {
             //todo implement all siderules here
@@ -27,10 +27,9 @@ public class EndGameState implements State {
                     break;
                 case "ad":
                     System.out.println("player asks for advice");
-                    // *fazer a logicas antes de ler e decidir o que imprime dependendo das tabelas e tal
-                    // System.out.println("basic\t\t"+basicAdvice);
-                    // System.out.println("hi-lo\t\t"+hiloAdvice);
-                    break;
+                    player.basic.Advice(context.game, true);
+                    player.hilo.Advice(context.game, true);
+                    break;                    
                 case "st":
                     System.out.println("player asks for stats");
                     break;

@@ -7,16 +7,19 @@ public class Hand
 {
     private LinkedList<Card> cards;
     public float bet;
+    public boolean busted;
 
     public Hand()
     {
         cards = new LinkedList<Card>();
         bet = 0;
+        busted = false;
     }
     public Hand(float minBet)
     {
         cards = new LinkedList<Card>();
         bet = minBet;
+        busted = false;
     }
 
     public int handSum() //Assuming all Aces value 11 //!totalmente mal feito (explicar desenho) p.ex. AA10Q continua a tirar 10 pq tem A e passou de 21 e nunca mais acaba 

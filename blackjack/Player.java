@@ -9,14 +9,12 @@ public class Player
     public LinkedList<Hand> hands;
     public int hilo_count;
     public int ace5_count;
-    //public HiLo hilo;
-    //public Std_bet standard;
-    //public Basic basic;
-    //public Ace5 ace5;
-    private PlayStrategy playStrat;
-    private PlayStrategy HiLo;
-    private PlayStrategy Basic;
-    private BetStrategy betStrat;
+
+    protected HiLo hilo;
+    protected Basic basic;
+    protected Ace5 ace5;
+    protected StdBet stdbet;
+    protected String strat;
     
     public float balance;
     public String action;
@@ -30,8 +28,8 @@ public class Player
     public boolean splitted;
     public int nHands;
     public boolean allBlackjack;
-    public int lastBet; //?nao sei se deve de ser protected ou public 
-    public int roundOutcome; //?nao sei se deve de ser protected ou public
+    public int lastBet; 
+    public int roundOutcome; 
 
     //public Player(Game game, LinkedList<Chip> init_chips, int strat)
     public Player(Game game, int balance, String string)
@@ -50,6 +48,11 @@ public class Player
         nHands = 1;
         allBlackjack = true;
 
+        basic = new Basic();
+        hilo = new HiLo();
+        ace5 = new Ace5(game.min_bet, 16);
+        stdbet = new StdBet(); 
+
         switch (this.game.mode) {
             case 'd':
                 cmdFile = new File(string);      
@@ -67,41 +70,22 @@ public class Player
                 break;
             case 'i':
                 input = System.in;
-                delim = "\n";
-                Basic = new Basic(); //tem que ser diferenciados pq aparece os dois conselhos
-                HiLo = new HiLo();
-                betStrat = new Ace5(game.min_bet, 16);
-                //betStrat = new StdBet(); //no exemplo que a prof da so aparece o ace-five ....mas nao deve de fazer mal nenhum
+                delim = "\n";               
                 break;
             case 's':
-                //todo
-                switch (string) {
-                    case "BS-AS":
-                        playStrat = new Basic();
-                        betStrat = new Ace5(game.min_bet, 16);
-                        break;
-                    case "HL":
-                        playStrat = new HiLo();
-                        //!temos que criar aqui um alterBet = Basic para quando o HiLo nao tiver solucao
-                        betStrat = new StdBet();
-                        break;
-                    case "HL-AS":
-                        playStrat = new HiLo();
-                        // !temos que criar aqui um alterBet = Basic para quando o HiLo nao tiver solucao
-                        betStrat = new Ace5(game.min_bet, 16); //?fica a duvida na mesma se usa o Basic ou nao
-                    default:
-                        playStrat = new Basic();
-                        betStrat = new StdBet();
-                        break;
-                }           
+                strat = string;
                 break;
             default:
                 break;
         }
-        s = new Scanner(input).useDelimiter(delim); 
+        if(this.game.mode != 's')
+            s = new Scanner(input).useDelimiter(delim); 
     }
 
-    public String readPlay()
+    /**
+     * 
+     */
+    public String readPlay(int state)
     {
         switch (game.mode) {
             case 'i', 'd':
@@ -117,19 +101,65 @@ public class Player
                 }
                 break;
             case 's': //todo verificar melhor
-                System.out.print("Command >> ");
-                if (game.round == 0) {
-                    action = "b";
-                }
-                //!temos que fazer para cada possibilidade pq a bet e so no inicio de cada ronda
-                //action = Character.toString(playAdvice) + Integer.toString(betAdvice); //!temos que ainda converter o que sai das tabelas as letras minusculas para maiusculas
-                //String.valueOf() qual diferenca
+                action = simulation(strat, state);
                 break;
             default:
                 break;
         }
         return action;
     }
+
+     public String simulation(String strat, int state) {
+        String simString;
+
+        if(state == 1)
+            return "d";
+
+        switch (strat) {
+            case "BS-AS":
+                if(state == 0){
+                    ace5.Advice(game, true);
+                    return ace5.simAction();                
+                }
+                basic.Advice(game, true);
+                return basic.simAction();
+            case "HL":
+                if(state == 0){
+                    stdbet.Advice(game, true);
+                    return stdbet.simAction();
+                }
+                hilo.Advice(game, true);
+                simString = hilo.simAction();
+                if(action.equals("BASIC")){
+                    basic.Advice(game, true);
+                    simString = basic.simAction();
+                }                
+                return simString;
+            case "HL-AS":
+                if(state == 0) {
+                    ace5.Advice(game, true);
+                    return ace5.simAction();
+                }
+                hilo.Advice(game, true);
+                simString = hilo.simAction();
+                if(action.equals("BASIC"))
+                    simString = basic.simAction();
+                return simString;
+            case "BS":
+                if(state == 0) {
+                    stdbet.Advice(game, true);
+                    return stdbet.simAction();
+                }
+                basic.Advice(game, true);
+                return basic.simAction();
+            default:
+                System.out.println("Illegal strategy, exiting...");
+                System.exit(-1);
+        }
+        return null;
+    }
+
+
      /**
       * 
       * @param print indicates if "player hits" is printed or not
@@ -137,6 +167,9 @@ public class Player
     public void hit(boolean print)
     {
         hands.get(handNumber).addCard(game.dealer.shoe.getCard());
+        hilo.Count(game.dealer.shoe.getCard()); //ok problema grave.. estes todos sao do tipo strategy e ta se a queixar
+        ace5.Ace5Count(game.dealer.shoe.getCard());
+
         if(print)
             System.out.println("player hits");
         if(splitted){
@@ -146,7 +179,10 @@ public class Player
             System.out.println("player's hand "+hands.get(handNumber)+"("+hands.get(handNumber).handSum()+")");
         }
     }
-
+    
+    /**
+     * 
+     */
     public void stand(){
         if(!hands.get(handNumber).hasBlackjack())
             allBlackjack = false;
@@ -162,6 +198,9 @@ public class Player
         game.dealer.stand(false); 
     }
 
+    /**
+     * 
+     */
     public void split()
     {
         String th = "st";
@@ -187,6 +226,9 @@ public class Player
         hit(false);
     }
 
+    /**
+     * 
+     */
     public void insure()
     {
         if(game.dealer.hand.get(0) != 1){    //1==ACE
@@ -198,42 +240,58 @@ public class Player
         balance -= insuranceBet;
     }
 
+    /**
+     * 
+     */
     public boolean insured(){
         return (insuranceBet != -1);
     }
 
-    public void surrender()
-    {
+    /**
+     * 
+     */
+    public void surrender() {
         System.out.println("payer is surrendering");
         balance += hands.get(handNumber).bet*0.5;
-        game.dealer.showHole();
+        hands.get(handNumber).busted = true;
         if(game.dealer.hand.hasBlackjack()){
             System.out.println("blackjack!!");   //todo meter esta condição numa função dependendo do que a prof responder
             game.dealer.insuranceCheck();
         }
-        System.out.println("player loses and his current balance is "+game.player.balance);
         if(nHands > 1){
             game.dealer.playOtherHand();
             return;
         }
         game.dealer.stand(false);
     }
-
-    public void doubleDown(){
+    
+    public boolean doubleCheck(){
         if(hands.get(handNumber).handSum() < 9 || hands.get(handNumber).handSum() > 11){
             System.out.println("2: illegal command");
-            return;
+            return false;
         }
-        balance -= hands.get(handNumber).bet;
-        hands.get(handNumber).bet += hands.get(handNumber).bet;
-        hit(false);
-        if(nHands > 1){
-            game.dealer.playOtherHand();
-            return;
+        return true;
+    }
+    /**
+     * 
+     */
+    public void doubleDown(){
+        if(doubleCheck()){
+            balance -= hands.get(handNumber).bet;
+            hands.get(handNumber).bet += hands.get(handNumber).bet;
+            hit(false);
+            if(nHands > 1){
+                game.dealer.playOtherHand();
+                return;
+            }
+            game.dealer.stand(false);
         }
-        game.dealer.stand(false);
     }
 
+    /**
+     * 
+     * @return
+     */
     public String showAllHands(){
         StringBuilder str = new StringBuilder();
         str.append("player's hand ");
@@ -253,6 +311,9 @@ public class Player
         return str.toString();
     }
 
+    /**
+     * 
+     */
     public boolean placeBet(float value){
         if(value > balance || (value == -1 && balance < hands.get(handNumber).bet)){
             System.out.println("Player doesn't have enough money to bet. Available balance: "+balance);
@@ -270,4 +331,11 @@ public class Player
         balance -= hands.get(handNumber).bet;
         return true;
     }
+
+
+    //public String returnAdvice() {//!acho que assim nao da pq era preciso saber se era o de bet ou play em fazes diferentes
+        
+    //}
 }
+
+

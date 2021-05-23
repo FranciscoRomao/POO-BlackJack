@@ -5,10 +5,6 @@ public class Main {
     public static void main(String[] args)
     {
         Game newGame = new Game(args);
-        //System.out.println(newGame);
-        //newGame.player.readPlay();
-        //newGame.dealer.dealCards();
-        //System.out.println(newGame.player.hand);
         newGame.startGame();
     }
 }

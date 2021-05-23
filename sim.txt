@@ -1,0 +1,262 @@
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand 10H X
+player's hand 9C AC (20)
+basic		stand
+-cmd s
+player stands 
+dealer's hand 10H 3D (13)
+dealer hits
+dealer's hand 10H 3D 9S (22)
+dealer busts
+player wins  and his current balance is 505.0
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand 8D X
+player's hand 6H 5D (11)
+basic		double, if impossible hit
+-cmd 2 h
+player's hand 6H 5D 3C (14)
+dealer's hand 8D 10D (18)
+dealer stands
+player loses and his current balance is 495.0
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand AD X
+player's hand 2S 7D (9)
+basic		hit
+-cmd h
+player hits
+player's hand 2S 7D 9D (18)
+basic		stand
+-cmd s
+player stands 
+dealer's hand AD 8H (19)
+dealer stands
+player loses and his current balance is 490.0
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand 3H X
+player's hand AS QH (21)
+basic		stand
+-cmd s
+player stands 
+dealer's hand 3H 9C (12)
+dealer hits
+dealer's hand 3H 9C 9H (21)
+dealer stands
+player pushes  and his current balance is 490.0
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand QC X
+player's hand 5H 6S (11)
+basic		double, if impossible hit
+-cmd 2 h
+player's hand 5H 6S AH (12)
+dealer's hand QC 6S (16)
+dealer hits
+dealer's hand QC 6S 8C (24)
+dealer busts
+player wins  and his current balance is 500.0
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand 9S X
+player's hand 4S AC (15)
+basic		hit
+-cmd h
+player hits
+player's hand 4S AC AS (16)
+basic		hit
+-cmd h
+player hits
+player's hand 4S AC AS 3S (19)
+basic		stand
+-cmd s
+player stands 
+dealer's hand 9S JC (19)
+dealer stands
+player pushes  and his current balance is 500.0
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand 2S X
+player's hand 4S QC (14)
+basic		stand
+-cmd s
+player stands 
+dealer's hand 2S AD (13)
+dealer hits
+dealer's hand 2S AD 7C (20)
+dealer stands
+player loses and his current balance is 495.0
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand 3C X
+player's hand JH 4D (14)
+basic		stand
+-cmd s
+player stands 
+dealer's hand 3C KD (13)
+dealer hits
+dealer's hand 3C KD 9D (22)
+dealer busts
+player wins  and his current balance is 500.0
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand 6D X
+player's hand AS JD (21)
+basic		stand
+-cmd s
+player stands 
+dealer's hand 6D 8S (14)
+dealer hits
+dealer's hand 6D 8S KC (24)
+dealer busts
+blackjack!!
+player wins  and his current balance is 507.5
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand 10C X
+player's hand AD 8C (19)
+basic		stand
+-cmd s
+player stands 
+dealer's hand 10C 8D (18)
+dealer stands
+player wins  and his current balance is 512.5
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand 6S X
+player's hand QD JS (20)
+basic		stand
+-cmd s
+player stands 
+dealer's hand 6S 9D (15)
+dealer hits
+dealer's hand 6S 9D 8H (23)
+dealer busts
+player wins  and his current balance is 517.5
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand 10C X
+player's hand 10D 9H (19)
+basic		stand
+-cmd s
+player stands 
+dealer's hand 10C 7S (17)
+dealer stands
+player wins  and his current balance is 522.5
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand 4S X
+player's hand 5S QH (15)
+basic		stand
+-cmd s
+player stands 
+dealer's hand 4S 2H (6)
+dealer hits
+dealer's hand 4S 2H 2D (8)
+dealer hits
+dealer's hand 4S 2H 2D 8C (16)
+dealer hits
+dealer's hand 4S 2H 2D 8C 9C (25)
+dealer busts
+player wins  and his current balance is 527.5
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand JH X
+player's hand 2S 5C (7)
+basic		hit
+-cmd h
+player hits
+player's hand 2S 5C 5D (12)
+basic		hit
+-cmd h
+player hits
+player's hand 2S 5C 5D JS (22)
+player busts 
+dealer's hand JH QS (20)
+player loses and his current balance is 522.5
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand 2C X
+player's hand KD JD (20)
+basic		stand
+-cmd s
+player stands 
+dealer's hand 2C 5D (7)
+dealer hits
+dealer's hand 2C 5D KH (17)
+dealer stands
+player wins  and his current balance is 527.5
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand 9H X
+player's hand 7H 9C (16)
+basic		surrender, hit if impossible
+-cmd u h
+payer is surrendering
+dealer's hand 9H 5S (14)
+dealer hits
+dealer's hand 9H 5S 10C (24)
+dealer busts
+player wins  and his current balance is 535.0
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand 9S X
+player's hand JS JC (20)
+basic		stand
+-cmd s
+player stands 
+dealer's hand 9S 4C (13)
+dealer hits
+dealer's hand 9S 4C KH (23)
+dealer busts
+player wins  and his current balance is 540.0
+ace-five		bet 5
+-cmd b 5
+player is betting 5.0
+-cmd d
+dealer's hand 9H X
+player's hand 10S 9S (19)
+basic		stand
+-cmd s
+player stands 
+dealer's hand 9H 3C (12)
+dealer hits
+dealer's hand 9H 3C 10S (22)
+dealer busts
+player wins  and his current balance is 545.0

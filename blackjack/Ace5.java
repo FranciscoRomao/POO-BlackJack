@@ -1,29 +1,26 @@
 package blackjack;
 
-//import org.graalvm.compiler.nodes.IfNode; //?o que e isto quem meteu isto aqui
-
-class Ace5 implements BetStrategy
+public class Ace5 //implements Strategy
 {
     private int count;
     private int minBet;
     private int maxBet;
-    private int startBet;
     private int lastBet;
+    private int suggest;
 
     Ace5(int _minBet, int maxMulti) { //já não me lembro se se pode apostar só inteiros ou não
         minBet = _minBet;
         maxBet = _minBet*maxMulti; //*aqui recomendava fazer o multiplicador a 16x. Nao faz sentido ser 32x pq a maxBet nao pode ser mais que 20xminBet nas regras do jogo
+        count = 0;
     }
 
-    @Override
-    public int Advice(Player player, Hand playerHand, Card dealerCard) {
-        int suggest = 0;
-
-        if(player.game.round != 0) //para saber se ja fez alguma aposta ou nao
-            lastBet = player.lastBet;    
+    public void Advice(Game game, boolean print) {
+        if(game.round != 0) //para saber se ja fez alguma aposta ou nao
+            lastBet = game.player.lastBet;    
         else
-            lastBet = startBet; 
-            
+            lastBet = minBet; 
+        
+        suggest = lastBet;
 
         if (count >= 2) {
             suggest = 2*lastBet;
@@ -32,7 +29,8 @@ class Ace5 implements BetStrategy
         } else if (count < 2) 
             suggest = minBet;       
         
-        return suggest;
+        if(print)
+            System.out.println(this);
     }
 
     /**
@@ -51,7 +49,19 @@ class Ace5 implements BetStrategy
      * Call at the beggining of each deck/shoe
      */
     public void resetCount() {
-        startBet = minBet;
+        lastBet = minBet;
         count = 0;
+    }
+
+    /**
+     * Estou a fazer isto para que seja so preciso fazer print(hilo/basic)
+     */
+    @Override
+    public String toString() {
+        return "ace-five\t\tbet " + suggest;
+    }
+
+    public String simAction() {
+        return "b " + suggest;
     }
 }
