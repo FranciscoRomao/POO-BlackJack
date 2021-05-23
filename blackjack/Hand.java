@@ -7,16 +7,19 @@ public class Hand
 {
     private LinkedList<Card> cards;
     public float bet;
+    public boolean busted;
 
     public Hand()
     {
         cards = new LinkedList<Card>();
         bet = 0;
+        busted = false;
     }
     public Hand(float minBet)
     {
         cards = new LinkedList<Card>();
         bet = minBet;
+        busted = false;
     }
 
     public int handSum() //Assuming all Aces value 11 //!totalmente mal feito (explicar desenho) p.ex. AA10Q continua a tirar 10 pq tem A e passou de 21 e nunca mais acaba 
@@ -60,7 +63,7 @@ public class Hand
         return false;
     }
 
-    public int get(int index) //!isto aqui acho que esta obsoleto
+    public int get(int index) //!isto aqui acho que esta obsoleto. nao seria melhor dar o valor da carta em vez do rank? e igual ok
     {
         return cards.get(index).rank;
     }

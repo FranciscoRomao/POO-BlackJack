@@ -6,6 +6,7 @@ public class StateContext {
     
     public StateContext(Game game_) {
         game = game_;
+        game.round = 0;
         state = new GameStart();
     }
     /**

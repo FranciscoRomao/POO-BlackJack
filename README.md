@@ -2,14 +2,14 @@
 
 ### TODO
 
-- [ ] Implementar função Advice no HiLo
-- [ ] Incluir HiLo no código
+- [x] Implementar função Advice no HiLo
+- [x] Incluir HiLo no código
 - [x] Implementar função Advice no Basic
-- [ ] Incluir Basic no código
-- [ ] Implementar função Advice no Ace5
-- [ ] Incluir Ace5 no código
-- [ ] Implementar função Advice no Std_bet
-- [ ] Incluir Std_bet no código
+- [x] Incluir Basic no código
+- [x] Implementar função Advice no Ace5
+- [x] Incluir Ace5 no código
+- [x] Implementar função Advice no Std_bet
+- [x] Incluir Std_bet no código
 - [x] Implementar função Play do Player
 - [x] Implementar função Debug do Player
 - [ ] Implementar função Sim do Player
@@ -20,7 +20,7 @@
 - [x] Implementar função Surrender do Player
 - [x] Implementar função Split do Player
 - [x] Implementar função DoubleDown do Player
-- [ ] Implementar função Advice do Player - G
+- [x] Implementar função Advice do Player
 - [ ] Implementar função Statistics do Player
 - [x] Implementar constructor do Shoe
 - [x] Implementar função Shuffle do Shoe
@@ -32,7 +32,7 @@
 - [x] Implementar função dealCards do Dealer
 - [x] Implementar função checkBJ do Dealer
 - [x] Ler input e inicializar o jogo
-- [ ] Implementar o main
+- [ ] Mudar o handSum() e o hasAce() urgentemente para ver se no Basic fica mais facil e tb pq ta mal
 
 ## Discutir
 
@@ -44,25 +44,5 @@
 - Temos de confirmar o que acontece quando o player perde insurance
 - Quando fazes insurance tira te dinheiro? (acho que sim se nao dava se insurance sempre)
 - Confirmar se o split funciona com as outras siderules
-
-
-## HiLo
-
-|Player\Dealer|1     |2     |3      |4     |5     |6     |7     |8     |9      |10      |11     |12     |13     |
-|:-----------:|:----:|:----:|:-----:|:----:|:----:|:----:|:----:|:----:|:-----:|:------:|:-----:|:-----:|:-----:|
-|1            |      |      |       |      |      |      |      |      |       |        |       |       |       |
-|2            |      |      |       |      |      |      |      |      |       |        |       |       |       |
-|3            |      |      |       |      |      |      |      |      |       |        |       |       |       |
-|4            |      |      |       |      |      |      |      |      |       |        |       |       |       |
-|5            |      |      |       |      |      |      |      |      |       |        |       |       |       |
-|6            |      |      |       |      |      |      |      |      |       |        |       |       |       |
-|7            |      |      |       |      |      |      |      |      |       |        |       |       |       |
-|8            |      |      |       |      |      |      |      |      |       |        |       |       |       |
-|9            |      |      |       |      |      |      |      |      |       |        |       |       |       |
-|10           |      |      |       |      |      |      |      |      |       |4,Double|       |       |       |
-|11           |      |      |       |      |      |      |      |      |       |        |       |       |       |
-|12           |      |      |2,Stand|      |      |      |      |      |       |       |        |       |       |       |
-|13           |      |      |       |      |      |      |      |      |       |        |       |       |       |
-|14           |      |      |       |      |      |      |      |      |       |        |       |       |       |
-|15           |      |      |       |      |      |      |      |      |       |4,Stand |       |       |       |
-|16           |      |      |       |      |      |      |      |      |       |0,Stand |       |       |       |
+- double aumenta a aposta antiga             
+- sims falta fazer os do this if possible, otherwise do this                               

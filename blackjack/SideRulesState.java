@@ -8,8 +8,8 @@ public class SideRulesState implements State {
         Dealer dealer = context.game.dealer;
         String action;
         int handStatus = 1;
-        action = player.readPlay();
-        if(context.game.mode == 'd')
+        action = player.readPlay(2);
+        if(context.game.mode != 'i')
             System.out.println("-cmd "+action);
         try(Scanner s = new Scanner(action)) {
             //todo implement all siderules here
@@ -26,7 +26,6 @@ public class SideRulesState implements State {
                     break;
                 case "u":
                     player.surrender();
-                    context.setState(new GameStart());
                     break;
                 case "p":
                     player.split();
@@ -43,11 +42,17 @@ public class SideRulesState implements State {
                 case "s":
                     player.stand();
                     break;
+                case "ad":
+                    System.out.println("player asks for advice");
+                    player.basic.Advice(context.game, true);
+                    player.hilo.Advice(context.game, true);                  
+                    break;
                 default:
                     System.out.println(action+": illegal command");
                     break;
             }
         } catch (Exception e) {
+            System.out.println("deu shita");
             return true;
         } 
         if(handStatus != 1 && player.balance < context.game.min_bet){

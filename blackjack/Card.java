@@ -2,14 +2,14 @@ package blackjack;
 
 class Card
 {
-    public int rank;
+    int rank; //*package pq sei que mts vezes se usa card.get(i).rank e a solucao era fazer um metodo getRank()
     /*Ace - 0
     Two...Ten - 2...10
     Jacks - 11
     Queen - 12
     King - 13*/
 
-    public int suit;
+    private int suit;
     /*Clubs - 0
     Spades - 1
     Diamonds - 2

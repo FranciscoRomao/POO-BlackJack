@@ -3,26 +3,26 @@ package blackjack;
 public class Game {
     //?os atributos das classes não deveriam de ser private, package ou protected? nunca devem ser publicos segundo a prof
     //TODO: mudar entao os que fizerem sentido ou para package ou para protected
-    public char mode;
-    public Player player;
-    public Dealer dealer;
-    public String strat;
+    protected char mode;
+    protected Player player;
+    protected Dealer dealer;
+    protected String strat;
 
-    public int min_bet;
-    public int max_bet;
+    protected int min_bet;
+    protected int max_bet;
 
-    // public int init_bal;
+    // public int init_bal; //?ja nao precisas
 
     // Number of decks on the shoe
-    public int shoe;
+    protected int shoe;
 
     // Percentage of shoe used to shuffle again
-    public int shuffle;
+    protected int shuffle;
 
-    public int shuffleNum;
+    protected int shuffleNum;
 
     // Game round counter
-    public int round;
+    protected int round;
 
     private StateContext context;
 
@@ -68,7 +68,6 @@ public class Game {
                     System.exit(-1);
                 }
                 if (this.mode == 's') {
-                    // TODO verificação da strategy
                     this.strat = args[7];
                     this.shuffleNum = Integer.parseInt(args[6]);
                 }
@@ -76,15 +75,17 @@ public class Game {
                     System.out.println("The number of decks has to be between 4 and 8");
                     System.exit(-1);
                 }
-                this.shoe = Integer.parseInt(args[4]);
+                shoe = Integer.parseInt(args[4]);
                 if (Integer.parseInt(args[5]) < 10 || Integer.parseInt(args[5]) > 100) {
                     System.out.println("Percentage of shoe played has to be between 10 and 100");
                     System.exit(-1);
                 }
-                shuffle = Integer.parseInt(args[5]); //?nao devia de ser this.shuffle como this.shoe?
+                float percentage = Float.parseFloat(args[5]);
                 dealer = new Dealer(this);
                 player = new Player(this, Integer.parseInt(args[3]), this.strat);
                 context = new StateContext(this);
+                percentage = (percentage / 100) * dealer.shoe.getNumCards();
+                shuffle = (int) percentage;
                 return;
             }
             if (this.mode == 'd') {
@@ -98,11 +99,17 @@ public class Game {
         }
     }
 
+    /**
+     * 
+     */
     @Override
     public String toString() {
         return mode + " " + min_bet + " " + max_bet + " " + this.player.balance + " " + shoe + " " + shuffle;
     }
 
+    /**
+     * 
+     */
     public void startGame(){
         boolean playing = true;
         while(playing){
@@ -111,6 +118,9 @@ public class Game {
         System.out.println("bye");
     }
 
+    /**
+     * 
+     */
     public void changeState(State newState){
         context.setState(newState);
     }
