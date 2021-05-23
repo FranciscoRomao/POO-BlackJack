@@ -23,6 +23,7 @@ class Shoe
             cards.addAll(aux);
         }
         cards = Shuffle();
+        //System.out.println(cards);
         totalCards = cards.size(); 
     }
 
@@ -39,8 +40,11 @@ class Shoe
                 str = scan.next();
                 aux = new Card(str);
                 cards.add(aux);
-            }            
-        } catch (Exception e) {
+            }
+            scan.close();
+
+        } catch (Exception e)
+        {
             System.out.println("Error reading shoe file");
             System.exit(1);
         }
@@ -66,6 +70,8 @@ class Shoe
 
     public LinkedList<Card> Shuffle()
     {
+        System.out.printf("Shufffffffffle!!!!\n");
+
         int ncards = cards.size();
         int getCard_idx;
         LinkedList<Card> shuffled = new LinkedList<Card>();
@@ -81,7 +87,6 @@ class Shoe
 
             ncards--;
         }
-
         return shuffled;
     }
 
@@ -90,21 +95,24 @@ class Shoe
         return cards.pop();
     }
 
-    public int getPlayedCards() {
+    public int getPlayedCards()
+    {
         return totalCards - cards.size();
     }
 
-    public int getNumCards(){
+    public int getNumCards()
+    {
         return cards.size();
     }
 
-
     @Override
-    public String toString(){
+    public String toString()
+    {
         StringBuilder str = new StringBuilder();
         str.append("");
         Iterator<Card> it = cards.iterator();
-        while(it.hasNext()){
+        while(it.hasNext())
+        {
             Card c = it.next();
             str.append(c.showRank()+""+c.getSuit()+" ");
             str.append("\n");

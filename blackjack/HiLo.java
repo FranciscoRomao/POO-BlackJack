@@ -138,7 +138,7 @@ public class HiLo
 		return "hi-lo\t\t" + advice;
 	}
 
-	public String simAction() {
+	public String simAction(Player player, int state) {
 		String action = "--";
 
 		switch (suggest) {
@@ -152,7 +152,11 @@ public class HiLo
 				action = "p";
 				break;
 			case 'D':
-				action = "2";
+				if(player.doubleCheck() && state == 2){
+					action = "2";
+					break;
+				}
+				action = "h";
 				break;
 			case 'I': //insurance ainda nao esta feito
 				action = "i";

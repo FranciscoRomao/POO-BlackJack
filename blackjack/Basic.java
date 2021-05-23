@@ -76,11 +76,12 @@ public class Basic //implements Strategy
         Hand playerHand = game.player.hands.get(game.player.handNumber);
         Card dealerCard = game.dealer.hand.getCard(0);
         int HandSum = playerHand.handSum(); //soma da mao do jogador
-        int nonAceSum = 0;
         int tableSelector = 0;
         
-        int aceCount = 0;
-        int aceOf_1 = 0;
+        int aceCount = playerHand.hasAce();
+        int aceOf_1 = playerHand.getAceOf1();
+
+        System.out.println("aces----:"+aceCount+":"+aceOf_1);
 
         if ((playerHand.getNumCards() == 2) && (playerHand.get(0) == playerHand.get(1))) { //opening hand
                 tableSelector = 0; // pair        
@@ -89,22 +90,14 @@ public class Basic //implements Strategy
             //* values 11 refer to "Soft table". Hands without aces or where all aces value 1
             //* refer to "Hard table".
 
-            for (int i = 0; i < playerHand.getNumCards(); i++) { //verificar quantos ases tem para saber se eles valem 1 ou 11
-                if (playerHand.get(i) == 1) aceCount++;
-                else nonAceSum += playerHand.getCard(i).getValue();
-
-                if (nonAceSum+aceCount+(aceCount*10) > 21) {
-                    aceOf_1++;
-                    nonAceSum -= 10; //tirar pq agora vale 1         
-                }
-            }
-
-            if (playerHand.hasAce() == 0 || (aceCount-aceOf_1) == 0) { //ou nao tem ases ou todos os que tem valem 1 (aceCount-aceOf_1 = nmr ases 11/todos sao 1)
+            if (aceCount == 0 || aceOf_1 == aceCount) { //ou nao tem ases ou todos os que tem valem 1
                 tableSelector = 2;  //hard  
-            } else if (aceCount != 0 && aceCount != aceOf_1) { //tem 1 Ace que vale 11
+            } else if (aceCount != 0 && (aceCount - aceOf_1) == 1) { //tem 1 Ace que vale 11 (antes tava >0)
                 tableSelector = 1; //soft
             }                
         }
+
+        System.out.println("table-----:"+tableSelector);
 
         switch (tableSelector) {
             case 1: //*select from the soft table
@@ -128,7 +121,7 @@ public class Basic //implements Strategy
      * Estou a fazer isto para que seja so preciso fazer print(hilo/basic)
      */
     @Override
-    public String toString() { //?faco isto ou faco no player returnAdvice e assim fica igual para todos e nao repete codigo
+    public String toString() {
         String advice = "--";
 
         switch (suggest) {

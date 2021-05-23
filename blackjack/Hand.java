@@ -8,25 +8,28 @@ public class Hand
     private LinkedList<Card> cards;
     public float bet;
     public boolean busted;
+    private int aceOf_1;
 
-    public Hand()
-    {
-        cards = new LinkedList<Card>();
-        bet = 0;
-        busted = false;
-    }
+    // public Hand()
+    // {
+    //     cards = new LinkedList<Card>();
+    //     bet = 0;
+    //     busted = false;
+    // }
+
     public Hand(float minBet)
     {
         cards = new LinkedList<Card>();
         bet = minBet;
         busted = false;
+        aceOf_1 = 0;
     }
 
-    public int handSum() //Assuming all Aces value 11 //totalmente mal feito (explicar desenho) p.ex. AA10Q continua a tirar 10 pq tem A e passou de 21 e nunca mais acaba 
+    public int handSum() //Assuming all Aces value 11
     {
         int sum = 0;
-        int rank = 0;
         int aceCount = hasAce();
+        aceOf_1 = 0;
 
         for(int i=0; i<cards.size(); i++)
         {
@@ -35,8 +38,9 @@ public class Hand
 
         while(sum > 21 && aceCount>0)
         {
-            sum = sum - 10;
+            sum -= 10;
             aceCount--;
+            aceOf_1++;
         }
 
         return sum;
@@ -66,7 +70,7 @@ public class Hand
         return aceCount;
     }
 
-    public int get(int index) //!isto aqui acho que esta obsoleto. nao seria melhor dar o valor da carta em vez do rank? e igual ok
+    public int get(int index) 
     {
         return cards.get(index).rank;
     }
@@ -75,16 +79,23 @@ public class Hand
         return cards.get(index);
     }
 
-    public int getNumCards(){
+    public int getNumCards()
+    {
         return cards.size();
     }
 
-    public boolean hasBlackjack(){
+    public boolean hasBlackjack()
+    {
             return (this.handSum() == 21 && this.getNumCards() == 2);
     }
 
-    public boolean isSplittable(){
+    public boolean isSplittable()
+    {
         return (cards.getFirst().getValue() == cards.get(1).getValue() || cards.getFirst().showRank().equals(cards.get(1).showRank()));
+    }
+
+    public int getAceOf1() {
+        return aceOf_1;
     }
 
     @Override
