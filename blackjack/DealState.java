@@ -10,7 +10,8 @@ public class DealState implements State{
         action = player.readPlay(1);
         if(context.game.mode != 'i' )
             System.out.println("-cmd "+action);
-        try(Scanner s = new Scanner(action)) {
+        Scanner s = new Scanner(action);
+        //try(Scanner s = new Scanner(action)) {
             switch (s.next()) {
                 case "$":
                     if(context.game.mode == 'd' && firstInput)
@@ -24,7 +25,7 @@ public class DealState implements State{
                     context.setState(new SideRulesState());
                     break;
                 default:
-                    if(context.game.mode == 'd' && firstInput){                    
+                    if(context.game.mode == 'd' && firstInput){         
                         try {
                             if(!player.placeBet(Float.parseFloat(action))){
                                 context.setState(new GameStart());
@@ -35,12 +36,12 @@ public class DealState implements State{
                     }
                     System.out.println(action+": illegal command");
                     break;
-            }
-            firstInput = false;
-        } catch (Exception e) {
-            System.out.println("shitaaaaa");
-            return true;
-        } 
+            }            
+        // } catch (Exception e) {
+        //     System.out.println("shitaaaaa");
+        //     return true;
+        // } 
+        firstInput = false;
         return !action.equals("q");
     }
 }

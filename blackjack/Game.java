@@ -11,6 +11,14 @@ public class Game {
     protected int min_bet;
     protected int max_bet;
 
+    //Stats
+    protected int playerBJcount;
+    protected int dealerBJcount;
+    protected int winCount;
+    protected int loseCount;
+    protected int pushCount;
+
+
     // public int init_bal; //?ja nao precisas
 
     // Number of decks on the shoe
@@ -48,7 +56,7 @@ public class Game {
             System.out.println("Wrong number of parameters");
             System.exit(-1);
         }
-        try {
+        //try {
             this.min_bet = Integer.parseInt(args[1]);
             if (this.min_bet < 1) {
                 System.out.println("Minimum bet has to be more than 1$");
@@ -86,17 +94,23 @@ public class Game {
                 context = new StateContext(this);
                 percentage = (percentage / 100) * dealer.shoe.getNumCards();
                 shuffle = (int) percentage;
+                playerBJcount = 0;
+                dealerBJcount = 0;
+                winCount = 0;
+                loseCount = 0;
+                pushCount = 0;
                 return;
             }
             if (this.mode == 'd') {
                 this.dealer = new Dealer(this, args[4]);
                 this.player = new Player(this, Integer.parseInt(args[3]), args[5]);
+                shuffle = dealer.shoe.getNumCards() + 1;
                 context = new StateContext(this);
             }
-        } catch (Exception e) {
-            System.out.println("Please insert numbers only besides the mode and the strategy");
-            System.exit(-1);
-        }
+        // } catch (Exception e) {
+        //     System.out.println("Please insert numbers only besides the mode and the strategy");
+        //     System.exit(-1);
+        // }
     }
 
     /**
@@ -112,9 +126,9 @@ public class Game {
      */
     public void startGame(){
         boolean playing = true;
-        while(playing){
+        while(playing)
             playing = context.play();
-        }
+
         System.out.println("bye");
     }
 

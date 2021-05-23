@@ -99,7 +99,7 @@ public class Basic //implements Strategy
                 }
             }
 
-            if (!(playerHand.hasAce()) || (aceCount-aceOf_1) == 0) { //ou nao tem ases ou todos os que tem valem 1 (aceCount-aceOf_1 = nmr ases 11/todos sao 1)
+            if (playerHand.hasAce() == 0 || (aceCount-aceOf_1) == 0) { //ou nao tem ases ou todos os que tem valem 1 (aceCount-aceOf_1 = nmr ases 11/todos sao 1)
                 tableSelector = 2;  //hard  
             } else if (aceCount != 0 && aceCount != aceOf_1) { //tem 1 Ace que vale 11
                 tableSelector = 1; //soft
@@ -150,8 +150,8 @@ public class Basic //implements Strategy
             case 'R':
                 advice = "surrender, hit if impossible";
                 break;    
-            ////default:
-                ////break;
+            default:
+                break;
         }
 
         return "basic\t\t" + advice;
@@ -159,9 +159,11 @@ public class Basic //implements Strategy
 
     /**
      * 
-     * @return
+     * @param player 
+     * @param state indicates which state of the game it's currently on
+     * @return action simulated by this strategy
      */
-    public String simAction (){
+    public String simAction (Player player, int state){
         String action = "--";
 
         switch (suggest) {
@@ -175,16 +177,28 @@ public class Basic //implements Strategy
                 action = "p";
                 break;
             case 'D':
-                action = "2 h";
+                if(player.doubleCheck() && state == 2){
+                    action = "2";
+                    break;
+                }
+                action = "h";
                 break;
             case 'd':
-                action = "2 s";
+                if(player.doubleCheck() && state == 2){
+                    action = "2";
+                    break;
+                }
+                action = "s";
                 break;
             case 'R':
-                action = "u h";
+                if(state == 2){
+                    action = "u";
+                    break;
+                }
+                action = "h";
                 break;
-            //// default:
-            //// break;
+            default:
+            break;
         }
 
         return action;

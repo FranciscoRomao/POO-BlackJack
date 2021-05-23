@@ -122,6 +122,7 @@ public class Dealer
         game.player.hands.clear();
         hand = new Hand();
         game.player.hands.add(new Hand(oldBet));
+        game.player.handNumber = 0;
         game.changeState(new GameStart());
         if(shoe.getPlayedCards() > game.shuffle){
             shoe.Shuffle();

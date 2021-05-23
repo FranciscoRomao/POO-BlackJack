@@ -8,9 +8,15 @@ public class Ace5 //implements Strategy
     private int lastBet;
     private int suggest;
 
-    Ace5(int _minBet, int maxMulti) { //já não me lembro se se pode apostar só inteiros ou não
+    Ace5(int _minBet, int _maxBet) { //já não me lembro se se pode apostar só inteiros ou não
+        double aux = _maxBet + 1;
         minBet = _minBet;
-        maxBet = _minBet*maxMulti; //*aqui recomendava fazer o multiplicador a 16x. Nao faz sentido ser 32x pq a maxBet nao pode ser mais que 20xminBet nas regras do jogo
+        int i = 4;
+        while(aux > _maxBet){
+            aux = _minBet*Math.pow(2, i); //*aqui recomendava fazer o multiplicador a 16x. Nao faz sentido ser 32x pq a maxBet nao pode ser mais que 20xminBet nas regras do jogo
+            i--;
+        }
+        maxBet = (int) aux;
         count = 0;
     }
 

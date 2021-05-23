@@ -22,19 +22,21 @@ public class Hand
         busted = false;
     }
 
-    public int handSum() //Assuming all Aces value 11 //!totalmente mal feito (explicar desenho) p.ex. AA10Q continua a tirar 10 pq tem A e passou de 21 e nunca mais acaba 
+    public int handSum() //Assuming all Aces value 11 //totalmente mal feito (explicar desenho) p.ex. AA10Q continua a tirar 10 pq tem A e passou de 21 e nunca mais acaba 
     {
         int sum = 0;
         int rank = 0;
+        int aceCount = hasAce();
 
         for(int i=0; i<cards.size(); i++)
         {
             sum += cards.get(i).getValue();
         }
 
-        if(sum > 21 && hasAce())
+        while(sum > 21 && aceCount>0)
         {
             sum = sum - 10;
+            aceCount--;
         }
 
         return sum;
@@ -49,18 +51,19 @@ public class Hand
         this.cards.remove(toRemove);
     }
 
-    public boolean hasAce() //Assuming all Aces value 11
+    public int hasAce() //Assuming all Aces value 11
     {
         int rank = 0;
+        int aceCount = 0;
 
         for(int i=0; i<cards.size(); i++)
         {
             rank = cards.get(i).rank;
             
             if(rank == 1)
-                return true;
+                aceCount++;
         }
-        return false;
+        return aceCount;
     }
 
     public int get(int index) //!isto aqui acho que esta obsoleto. nao seria melhor dar o valor da carta em vez do rank? e igual ok

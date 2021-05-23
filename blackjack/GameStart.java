@@ -8,7 +8,7 @@ public class GameStart implements State{
         boolean nextState = false;
         String action;
         if(context.game.shuffleNum == 0 && context.game.mode == 's'){
-            return true;
+            return false;
         }
         action = player.readPlay(0);
         if(context.game.mode != 'i')
@@ -20,16 +20,16 @@ public class GameStart implements State{
                 System.out.println(player.balance+"$");
                 break;
                 case "b":                
-                    try {                       
-                        nextState = player.placeBet(Float.parseFloat(s.next()));                         
+                    try {
+                        nextState = player.placeBet(Float.parseFloat(s.next()));
                     } catch (Exception e) {
                         if(context.game.mode != 'd')
-                            nextState = player.placeBet(-1);  
+                            nextState = player.placeBet(-1);
                     }
-                    if(context.game.mode == 'd' || nextState)             
+                    if(context.game.mode == 'd' || nextState)
                         context.setState(new DealState());
                     break;
-                case "ad":                    
+                case "ad":
                     player.ace5.Advice(context.game, true);
                     player.stdbet.Advice(context.game, true);
                     break;

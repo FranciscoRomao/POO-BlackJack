@@ -109,7 +109,7 @@ public class Player
         return action;
     }
 
-     public String simulation(String strat, int state) {
+    public String simulation(String strat, int state) {
         String simString;
 
         if(state == 1)
@@ -122,7 +122,7 @@ public class Player
                     return ace5.simAction();                
                 }
                 basic.Advice(game, true);
-                return basic.simAction();
+                return basic.simAction(this, state);
             case "HL":
                 if(state == 0){
                     stdbet.Advice(game, true);
@@ -132,7 +132,7 @@ public class Player
                 simString = hilo.simAction();
                 if(action.equals("BASIC")){
                     basic.Advice(game, true);
-                    simString = basic.simAction();
+                    simString = basic.simAction(this, state);
                 }                
                 return simString;
             case "HL-AS":
@@ -143,7 +143,7 @@ public class Player
                 hilo.Advice(game, true);
                 simString = hilo.simAction();
                 if(action.equals("BASIC"))
-                    simString = basic.simAction();
+                    simString = basic.simAction(this, state);
                 return simString;
             case "BS":
                 if(state == 0) {
@@ -151,7 +151,7 @@ public class Player
                     return stdbet.simAction();
                 }
                 basic.Advice(game, true);
-                return basic.simAction();
+                return basic.simAction(this, state);
             default:
                 System.out.println("Illegal strategy, exiting...");
                 System.exit(-1);
@@ -198,46 +198,57 @@ public class Player
         game.dealer.stand(false); 
     }
 
+    public boolean splitCheck(){
+        if(!hands.get(handNumber).isSplittable() || handNumber == 2){
+            System.out.println("p: illegal command");
+            return false;
+        }
+        return true;
+    }
+
     /**
      * 
      */
     public void split()
     {
         String th = "st";
-        if(!hands.get(handNumber).isSplittable() || handNumber == 2){
-            System.out.println("p: illegal command");
-            return;
+        if(splitCheck()){
+            System.out.println("player is splitting");
+            hands.add(new Hand(hands.get(handNumber).bet));
+            nHands++;
+            hands.get(handNumber+1).addCard(hands.get(handNumber).getCard(1));
+            hands.get(handNumber).removeCard(hands.get(handNumber).getCard(1));
+            splitted = true;
+            balance -= hands.get(handNumber).bet;
+            if((handNumber+1) == 2){
+                th = "nd";
+            } else if((handNumber+1) == 3){
+                th = "rd";
+            } else if((handNumber+1) > 3){
+                th = "th";
+            }
+            System.out.println("playing "+(handNumber+1)+th+" hand...");
+            hit(false);
         }
-        System.out.println("player is splitting");
-        hands.add(new Hand(hands.get(handNumber).bet));
-        nHands++;
-        hands.get(handNumber+1).addCard(hands.get(handNumber).getCard(1));
-        hands.get(handNumber).removeCard(hands.get(handNumber).getCard(1));
-        splitted = true;
-        balance -= hands.get(handNumber).bet;
-        if((handNumber+1) == 2){
-            th = "nd";
-        } else if((handNumber+1) == 3){
-            th = "rd";
-        } else if((handNumber+1) > 3){
-            th = "th";
-        }
-        System.out.println("playing "+(handNumber+1)+th+" hand...");
-        hit(false);
     }
 
+    public boolean insuranceCheck(){
+        if(game.dealer.hand.get(0) != 1){    //1==ACE
+            System.out.println("i: illegal command");
+            return false;
+        }
+        return true;
+    }
     /**
      * 
      */
     public void insure()
     {
-        if(game.dealer.hand.get(0) != 1){    //1==ACE
-            System.out.println("i: illegal command");
-            return;
+        if(insuranceCheck()){
+            System.out.println("player is insuring");
+            insuranceBet = hands.get(handNumber).bet;
+            balance -= insuranceBet;
         }
-        System.out.println("player is insuring");
-        insuranceBet = hands.get(handNumber).bet;
-        balance -= insuranceBet;
     }
 
     /**
