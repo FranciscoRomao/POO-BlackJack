@@ -12,8 +12,7 @@ public class SideRulesState implements State
         int handStatus = 1;
 
         action = player.readPlay(2);
-    System.out.println("side");
-        if(context.game.mode != 'i')
+        if(context.game.mode == 'd')
             System.out.println("-cmd "+action);
             Scanner s = new Scanner(action);
         // try(Scanner s = new Scanner(action))
@@ -23,13 +22,7 @@ public class SideRulesState implements State
                 case "$":
                     System.out.println(player.balance+"$");
                     break;
-
                 case "i":
-                    if(player.splitted)
-                    {
-                        System.out.println("i: illegal command");
-                        break;
-                    }
                     player.insure();
                     break;
                 case "u":

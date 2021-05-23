@@ -35,136 +35,179 @@ package "blackjack"
 
     class Player
     {
-        +game:Game;
-        +hands:LinkedList<Hand>;
-        '+int hilo_count;
-        '+int ace5_count;
+        +game:Game
+        +hands:LinkedList<Hand>
+        +hilo_count:int
+        +ace5_count:int
 
-        'protected HiLo hilo;
-        'protected Basic basic;
-        'protected Ace5 ace5;
-        'protected StdBet stdbet;
-        'protected String strat;
+        #hilo:HiLo
+        #basic:Basic
+        #ace5:Ace5
+        #stdbet:StdBet
+        #strat:String
 
-        'public float balance;
-        'public String action;
-        'public File cmdFile;
-        'public float insuranceBet;
-        'public float initBalance;
+        +balance:float
+        +action:String
+        +cmdFile:File
+        +insuranceBet:float
+        +initBalance:float
 
-        'private Scanner s;
-        'private InputStream input;
-        'private String delim;
-        'public int handNumber;
-        'public boolean splitted;
-        'public int handsLeft;
-        'public int nHands;
-        'public boolean allBlackjack;
-        'public int lastBet; 
-        'public int roundOutcome;
+        -s:Scanner
+        -input:InputStream
+        -delim:String
+        +handNumber:int
+        +splitted:boolean
+        +handsLeft:int
+        +nHands:int
+        +allBlackjack:boolean
+        +lastBet:int
+        +roundOutcome:int
 
-        'public Player(Game game, int balance, String string)
-        'public void stats()
-        'public String readPlay(int state)
-        'public String simulation(String strat, int state)
-        'public void hit(boolean print)
-        'public void stand()
-        'public boolean splitCheck()
-        'public void split()
-        'public boolean insuranceCheck()
-        'public void insure()
-        'public boolean insured()
-        'public void surrender()
-        'public boolean doubleCheck()
-        'public void doubleDown()
-        'public String showAllHands()
-        'public boolean placeBet(int value)
+        +Player(game:Game, balance:int, string:String)
+        +stats()
+        +readPlay(state:int):String
+        +simulation(strat:String, state:int):String
+        +hit(print:boolean)
+        +stand()
+        +splitCheck():boolean
+        +split()
+        +insuranceCheck():boolean
+        +insure()
+        +insured():boolean
+        +surrender()
+        +doubleCheck():boolean
+        +doubleDown()
+        +showAllHands():String
+        +placeBet(value:int):boolean
+    }
+
+    class Dealer
+    {
+        #game:Game
+        +holeCard:Card
+        #Shoe shoe
+        #Hand hand
+        +nHands:int
+
+        +Dealer(game:Gamr)
+        +Dealer(game:Game, shoe:String)
+        +hit()
+        +dealCards()
+        +checkBJ():int
+        +bustCheck(Hand handToCheck):int
+        +playOtherHand()
+        +newRound()
+        +showHole()
+        +bust()
+        +stand(print:boolean)
+        +insuranceCheck()
+        -printEndScreen(dealerBust:boolean)
+        +showHand():String
     }
 
     class HiLo
     {
-        'private int count;
-	    'private char suggest;
+        -count:int
+	    -suggest:char
 '
-        'public HiLo()
-        'public void advice(Game game, boolean print)
-        'public void Count(Card card)
-        'public float getTrueCount(Shoe shoe)
-        'public char bestAction (Hand playerHand, Card dealerCard, float trueCount) 
-        'public void resetCount()
-        'public int getRunningCount()
-        'public String toString()
-        'public String simAction(Player player, int state
+        +HiLo()
+        +advice(Game game, boolean print)
+        +Count(Card card)
+        +getTrueCount(shoe:Shoe):float
+        +bestAction(playerHand:Hand, dealerCard:Card, trueCount:float):char
+        +resetCount()
+        +getRunningCount():int
+        +toString():String
+        +simAction(player:Player, state:int):String
     }
     
     class Basic
     {
-        +advice()
+        -suggest:char
+        -hard:char[][]
+        -soft:char[][]
+        -pair:char[][]
+
+        +advice(game:Game, print:boolean)
+        +simAction(player:Player, state:int):String
     }
     
     class Ace5
     {
-        +advice()
+        -count:int
+        -minBet:int
+        -maxBet:int
+        -lastBet:int
+        -suggest:int
+
+        +Ace5(minBeT:int, maxBeT:int)
+        +advice(game:Game, print:boolean)
+        +ace5Count(card:Card)
+        +resetCount()
+        +String simAction()
     }
     
     class Std_bet
     {
-        +advice()
-    }
-    
-    class Dealer
-    {
-        -hole_card:int
-        
-        +Dealer()
-        +hit()
-        +dealCards()
-        +checkBJ()
+        -int bet;
+        +advice(Game game, boolean print)
+        +increaseDecrease(roundOutcome:int, lastBet:int, minBet:int, maxBet:int):int
+        +simAction():String
     }
     
     class Shoe
-    {        
-        +Shoe(numDecks:int)
-        +Shuffle()
-        +GetCard()
-    }
-    
-    class Chip
     {
-        +value
-        
-        +Chip(value:int)
+        +cards:LinkedList<Card>;
+        +totalCards:int;
+        +Shoe(numDecks:int)
+        +Shoe(fileName:String)
+        +singleDeck():LinkedList<Card>
+        +LinkedList<Card> Shuffle()
+        +getCard():Card
+        +getPlayedCards():int
+        +getNumCards():int
     }
     
     class Card
     {
         +rank:int
-        'Ace - 0
-        'One...Ten - 1...10
-        'Jacks - 11
-        'Queen - 12
-        'King - 13
-        
-        +suit:int
-        'Clubs - 0
-        'Spades - 1
-        'Diamonds - 2
-        'Hearts - 3
+        -suit:int
         
         +Card(rank:int, suit:int)
+        +Card(cardCode:String)
+        +getSuit():char
+        +showRank():String
+        +getValue():int
     }
+
+    interface State
+    {
+        +play(context:StateContext):boolean
+    }
+
+    class GameStart implements State
+    {
+        +play(context:StateContext):boolean
+    }
+
+    class DealState implements State
+    {
+        -firstInput:boolean
+        +play(context:StateContext):boolean
+    }
+
+    class EndGameState implements State
+    {
+        +play(context:StateContext):boolean
+    }
+
+
     
     left to right direction
     
     Player x--->  "0..* cards" Card
     
-    Player x-->  "0..*\nstrats" Strategy
-    
     Dealer x---> "0..* cards" Card
-    
-    Player x--> "0..*\nmy_chips" Chip
-    
-    Player x--> "0..*\nbet_chips" Chip
     
     Game "1 player" --"1" Player
     

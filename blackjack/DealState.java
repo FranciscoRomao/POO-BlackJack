@@ -10,10 +10,8 @@ public class DealState implements State
     {
         Player player = context.game.player;
         String action;
-        System.out.println("dealstate");
-
         action = player.readPlay(1);
-        if(context.game.mode != 'i' )
+        if(context.game.mode == 'd' )
             System.out.println("-cmd "+action);
         Scanner s = new Scanner(action);
        // try(Scanner s = new Scanner(action))
@@ -50,7 +48,8 @@ public class DealState implements State
                             break;                  
                         } catch (Exception e){}
                     }
-                    System.out.println(action+": illegal command");
+                    if(context.game.mode != 's')
+                        System.out.println(action+": illegal command");
                     break;
             }
         // } catch (Exception e)

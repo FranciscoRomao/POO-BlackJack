@@ -14,7 +14,6 @@ public class HiLo
 		Hand playerHand = game.player.hands.get(game.player.handNumber);
 		
 		float trueCount = getTrueCount(game.player.game.dealer.shoe); 		
-		
 		suggest = bestAction(playerHand, game.dealer.hand.getCard(0), trueCount, game.player.insuranceCheck(), state);
 		
 		if(print)
@@ -145,7 +144,11 @@ public class HiLo
 				action = "s";
 				break;
 			case 'P':
-				action = "p";
+				if(player.splitCheck() && state == 2){
+					action = "p";
+					break;
+				}
+				action = "BASIC";
 				break;
 			case 'D':
 				if(player.doubleCheck() && state == 2){

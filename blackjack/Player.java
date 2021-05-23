@@ -116,6 +116,7 @@ public class Player
                 }
                 break;
             case 's': 
+                //System.out.println("player's hand "+hands.get(handNumber)+"("+hands.get(handNumber).handSum()+")");
                 action = simulation(strat, state);
                 break;
             default:
@@ -126,7 +127,7 @@ public class Player
 
     public void stats()
     {
-        float gains = ((balance-initBalance)/initBalance) * 100;
+        float gains = ((balance-initBalance)/initBalance) * 100f;
         System.out.printf("BJ P/D\t%.3f/%.3f%n", (float)game.playerBJcount/nHands, (float)game.dealerBJcount/game.dealer.nHands);
         System.out.printf("Win \t%.2f%n", (float)game.winCount/nHands);
         System.out.printf("Lose\t%.2f%n", (float)game.loseCount/nHands);
@@ -197,13 +198,15 @@ public class Player
         hilo.Count(game.dealer.shoe.getCard()); //ok problema grave.. estes todos sao do tipo strategy e ta se a queixar
         ace5.ace5Count(game.dealer.shoe.getCard());
 
-        if(print && game.mode != 's')
-            System.out.println("player hits");
-        if(splitted){
-            System.out.println("player's hand ["+(handNumber+1)+"] "+hands.get(handNumber)+"("+hands.get(handNumber).handSum()+")");
-        }
-        else {
-            System.out.println("player's hand "+hands.get(handNumber)+"("+hands.get(handNumber).handSum()+")");
+        if(game.mode != 's'){
+            if(print)
+                System.out.println("player hits");
+            if(splitted){
+                System.out.println("player's hand ["+(handNumber+1)+"] "+hands.get(handNumber)+"("+hands.get(handNumber).handSum()+")");
+            }
+            else {
+                System.out.println("player's hand "+hands.get(handNumber)+"("+hands.get(handNumber).handSum()+")");
+            }
         }
     }
     
@@ -212,12 +215,13 @@ public class Player
      */
     public void stand()
     {
-        System.out.print("player stands ");
+        if(game.mode != 's')
+            System.out.print("player stands ");
 
-        if(handsLeft > 1 || handNumber > 0)
-            System.out.print("["+(game.player.handNumber + 1)+"]");
-        
+        if((handsLeft > 1 || handNumber > 0) && game.mode != 's'){
+            System.out.print("["+(game.player.handNumber + 1)+"]");        
             System.out.println();
+        }
 
         if(handsLeft > 1)
         {
@@ -229,7 +233,8 @@ public class Player
 
     public boolean splitCheck(){
         if(!hands.get(handNumber).isSplittable() || splitNumber > 3){
-            System.out.println("p: illegal command");
+            if(game.mode != 's')
+                System.out.println("p: illegal command");
             return false;
         }
         return true;
@@ -242,7 +247,7 @@ public class Player
     {
         String th = "st";
         if(splitCheck()){
-    //print   if(game.mode != 's')
+       if(game.mode != 's')
                 System.out.println("player is splitting");
             nHands++;
             hands.add(new Hand(hands.get(handNumber).bet));
@@ -258,7 +263,7 @@ public class Player
             } else if((handNumber+1) > 3){
                 th = "th";
             }
-    //print   if(game.mode != 's')
+       if(game.mode != 's')
                 System.out.println("playing "+(handNumber+1)+th+" hand...");
             hit(false);
         }
@@ -266,9 +271,9 @@ public class Player
     }
 
     public boolean insuranceCheck(){
-        if(game.dealer.hand.get(0) != 1 || insuranceBet != -1){    //1==ACE
-    //print   if(game.mode != 's')
-                System.out.println("sdfadfsadfasdfasdfasdfasdfsdfsad");
+        if(game.dealer.hand.get(0) != 1 || insuranceBet != -1 || splitted){    //1==ACE
+            if(game.mode != 's')
+                System.out.println("i: illegal command");
             return false;
         }
         return true;
@@ -278,9 +283,8 @@ public class Player
      */
     public void insure()
     {
-        System.out
         if(insuranceCheck()){
-    //print   if(game.mode != 's')
+       if(game.mode != 's')
                 System.out.println("player is insuring");
             insuranceBet = hands.get(handNumber).bet;
             balance -= insuranceBet;
@@ -298,12 +302,12 @@ public class Player
      * 
      */
     public void surrender() {
-//print   if(game.mode != 's')        
+        if(game.mode != 's')        
             System.out.println("payer is surrendering");
         balance += hands.get(handNumber).bet*0.5;
         hands.get(handNumber).busted = true;
         if(game.dealer.hand.hasBlackjack()){
-    //print   if(game.mode != 's')
+            if(game.mode != 's')
                 System.out.println("blackjack!!");  
             game.dealer.insuranceCheck();
         }
@@ -316,7 +320,7 @@ public class Player
     
     public boolean doubleCheck(){
         if(hands.get(handNumber).handSum() < 9 || hands.get(handNumber).handSum() > 11){
-    //print   if(game.mode != 's')
+       if(game.mode != 's')
                 System.out.println("2: illegal command");
             return false;
         }
@@ -365,13 +369,13 @@ public class Player
      * 
      */
     public boolean placeBet(int value){
-        //if(value > balance || (value == -1 && balance < hands.get(handNumber).bet)){
-    //print   if(game.mode != 's')
-             //   System.out.println("Player doesn't have enough money to bet. Available balance: "+balance);
-         //   return false;
-      //  }
+        /*if(value > balance || (value == -1 && balance < hands.get(handNumber).bet)){
+       if(game.mode != 's')
+            System.out.println("Player doesn't have enough money to bet. Available balance: "+balance);
+            return false;
+        }*/
         if(value != -1 && (value < game.min_bet || value > game.max_bet)){
-    //print   if(game.mode != 's')
+       if(game.mode != 's')
                 System.out.println("Invalid bet ammount. Has to be greater than "+game.min_bet+" and smaller than "+game.max_bet);
             return false;
         }
@@ -380,7 +384,7 @@ public class Player
             lastBet = value; 
         }
         hands.get(handNumber).bet = lastBet;
-//print   if(game.mode != 's')
+   if(game.mode != 's')
             System.out.println("player is betting "+hands.get(handNumber).bet);
         balance -= hands.get(handNumber).bet;
         return true;

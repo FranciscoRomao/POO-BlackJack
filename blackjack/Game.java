@@ -79,6 +79,7 @@ public class Game {
             playing = context.play(); //Primeiro entra no GameStart -> DealState
         if(mode == 's'){
             player.stats();
+            return;
         }
         System.out.println("bye");
     }

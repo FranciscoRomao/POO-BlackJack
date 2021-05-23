@@ -13,9 +13,8 @@ public class GameStart implements State
             return false;
 
         action = player.readPlay(0);
-        if(context.game.mode != 'i')
+        if(context.game.mode == 'd')
             System.out.println("-cmd "+action);
-        System.out.println("gamstart");
         try(Scanner s = new Scanner(action))
         {
             switch (s.next())

@@ -10,10 +10,9 @@ public class EndGameState implements State
         Dealer dealer = context.game.dealer;
         String action;
         int handStatus = 1;
-        System.out.println("endgame");
         action = player.readPlay(3);
 
-        if(context.game.mode != 'i')
+        if(context.game.mode == 'd')
             System.out.println("-cmd "+action);
 
         try(Scanner s = new Scanner(action))
@@ -35,7 +34,8 @@ public class EndGameState implements State
                     break;
 
                 case "ad":
-                    System.out.println("player asks for advice");
+                    if(context.game.mode != 's')
+                        System.out.println("player asks for advice");
                     player.basic.advice(context.game, true);
                     player.hilo.advice(context.game, true, 3);
                     break;
@@ -45,7 +45,8 @@ public class EndGameState implements State
                     break;
 
                 default:
-                    System.out.println(action+": illegal command");
+                    if(context.game.mode != 's')
+                        System.out.println(action+": illegal command");
                     break;
             }
         } catch (Exception e) {return true;}
