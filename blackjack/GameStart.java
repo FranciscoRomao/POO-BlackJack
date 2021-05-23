@@ -15,7 +15,7 @@ public class GameStart implements State
         action = player.readPlay(0);
         if(context.game.mode != 'i')
             System.out.println("-cmd "+action);
-        
+        System.out.println("gamstart");
         try(Scanner s = new Scanner(action))
         {
             switch (s.next())

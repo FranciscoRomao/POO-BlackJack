@@ -9,13 +9,13 @@ public class HiLo
 		count = 0;
 	}
 
-    public void advice(Game game, boolean print)
+    public void advice(Game game, boolean print, int state)
     {
 		Hand playerHand = game.player.hands.get(game.player.handNumber);
 		
 		float trueCount = getTrueCount(game.player.game.dealer.shoe); 		
 		
-		suggest = bestAction(playerHand, game.dealer.hand.getCard(0), trueCount);
+		suggest = bestAction(playerHand, game.dealer.hand.getCard(0), trueCount, game.player.insuranceCheck(), state);
 		
 		if(print)
 			System.out.println(this);
@@ -38,7 +38,7 @@ public class HiLo
 		//return (float)(Math.round(_trueCount/0.5) * 0.5); //*no slack a prof disse para mandarmos o float mesmo, e acho que aqui era (int) n float xD tavamos a dormir
 	}
 
-	public char bestAction (Hand playerHand, Card dealerCard, float trueCount) { 
+	public char bestAction (Hand playerHand, Card dealerCard, float trueCount, boolean insure, int state) { 
 		int handSum = playerHand.handSum(); 
 		String dealerRank = dealerCard.showRank();
 		boolean pair10 = false;
@@ -47,6 +47,11 @@ public class HiLo
 		if ((playerHand.getNumCards() == 2) && playerHand.getCard(0).showRank() == "10" && playerHand.getCard(1).showRank() == "10") //check if opening hand is a pair of 10s
                 pair10 = true;      
         
+		if (insure && state == 2 && trueCount >= 3) {
+			suggesT = 'I';
+			return suggesT;
+		}
+
 		//Illustrious18 //!falta o insurance
 		suggesT = (handSum==16 && dealerRank.equals("10")) ? ((trueCount >= 0) ? 'S' : 'H' ):
 				  (pair10 && dealerRank.equals("5")) ? ((trueCount >= 5) ? 'P' : 'S' ):
@@ -149,12 +154,8 @@ public class HiLo
 				}
 				action = "BASIC";
 				break;
-			case 'I': //insurance ainda nao esta feito
-				if(state == 2 && !player.splitted){
-					action = "i";
-					break;
-				}
-				action = "BASIC";
+			case 'I': 
+				action = "i";
 				break;
 			case 'R':
 				if(state == 2){

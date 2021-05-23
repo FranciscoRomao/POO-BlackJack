@@ -4,7 +4,7 @@ MAIN=main/Main.java
 RUN=java
 INT=-i 5 75 500 4 60
 DBUG=-d 5 50 1000 testShoe.txt testCmd.txt
-SIM=-s 5 75 500 4 50 3000 HL-AF
+SIM=-s 5 75 500 4 50 10000 HL
 CLEAN=rm blackjack/*.class main/*.class
 runi:
 	$(CC) $(OBJS) $(MAIN)

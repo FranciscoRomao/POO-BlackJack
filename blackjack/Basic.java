@@ -46,7 +46,7 @@ public class Basic //implements Strategy
                              { 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'}}; 
 
     
-    public void advice(Game game, boolean print, boolean split)
+    public void advice(Game game, boolean print)
     {             
         Hand playerHand = game.player.hands.get(game.player.handNumber);
         Card dealerCard = game.dealer.hand.getCard(0);
@@ -80,7 +80,7 @@ public class Basic //implements Strategy
                 break;
         
             default: //*select from the pair table
-                if (split) {
+                if (game.player.splitCheck()) {
                     suggest = pair[playerHand.getCard(0).getValue() - 2][dealerCard.getValue() - 2];                    
                 } else {
                     if (handSum == 12) {

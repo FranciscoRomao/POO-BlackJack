@@ -21,24 +21,24 @@ package "blackjack"
         #round:int
         #context:StateContext
 
-        '+Game(String[] args)
-        '+startGame()
-        '+changeState(State newState)
-        '-initMode(String args[])
-        '-initBet(String min, String max)
-        '-initSim(String args[])
-        '-errorChecking(String args[])
-        '-initCounts(String args[])
-        '-initNotDbug(String args[])
-        '-initDbug(String args[])
+        +Game(args:String[])
+        +startGame()
+        +changeState(newState:State)
+        -initMode(args:String)
+        -initBet(min:String, max:String)
+        -initSim(args:String[])
+        -errorChecking(args:String[])
+        -initCounts(args:String[])
+        -initNotDbug(args:String[])
+        -initDbug(args:String[])
     }
 
     class Player
     {
-        'public Game game;
-        'public LinkedList<Hand> hands;
-        'public int hilo_count;
-        'public int ace5_count;
+        +game:Game;
+        +hands:LinkedList<Hand>;
+        '+int hilo_count;
+        '+int ace5_count;
 
         'protected HiLo hilo;
         'protected Basic basic;

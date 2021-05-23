@@ -10,9 +10,9 @@ public class DealState implements State
     {
         Player player = context.game.player;
         String action;
+        System.out.println("dealstate");
 
         action = player.readPlay(1);
-        
         if(context.game.mode != 'i' )
             System.out.println("-cmd "+action);
         Scanner s = new Scanner(action);

@@ -10,6 +10,7 @@ public class EndGameState implements State
         Dealer dealer = context.game.dealer;
         String action;
         int handStatus = 1;
+        System.out.println("endgame");
         action = player.readPlay(3);
 
         if(context.game.mode != 'i')
@@ -35,8 +36,8 @@ public class EndGameState implements State
 
                 case "ad":
                     System.out.println("player asks for advice");
-                    player.basic.advice(context.game, true, player.splitCheck());
-                    player.hilo.advice(context.game, true);
+                    player.basic.advice(context.game, true);
+                    player.hilo.advice(context.game, true, 3);
                     break;
 
                 case "st":

@@ -12,7 +12,7 @@ public class SideRulesState implements State
         int handStatus = 1;
 
         action = player.readPlay(2);
-
+    System.out.println("side");
         if(context.game.mode != 'i')
             System.out.println("-cmd "+action);
             Scanner s = new Scanner(action);
@@ -52,8 +52,8 @@ public class SideRulesState implements State
                     break;
                 case "ad":
                     System.out.println("player asks for advice");
-                    player.basic.advice(context.game, true, player.splitCheck());
-                    player.hilo.advice(context.game, true);                  
+                    player.basic.advice(context.game, true);
+                    player.hilo.advice(context.game, true, 2);                  
                     break;                
                 case "st":
                     player.stats(); //#aqui

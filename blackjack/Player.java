@@ -146,17 +146,17 @@ public class Player
                     ace5.advice(game, false);
                     return ace5.simAction();                
                 }
-                basic.advice(game, false, this.splitCheck());
+                basic.advice(game, false);
                 return basic.simAction(this, state);
             case "HL":
                 if(state == 0){
                     stdbet.advice(game, false);
                     return stdbet.simAction();
                 }
-                hilo.advice(game, false);
+                hilo.advice(game, false, state);
                 simString = hilo.simAction(this, state);
                 if(simString.equals("BASIC")){
-                    basic.advice(game, false, this.splitCheck());
+                    basic.advice(game, false);
                     simString = basic.simAction(this, state);
                 }                
                 return simString;
@@ -165,10 +165,10 @@ public class Player
                     ace5.advice(game, false);
                     return ace5.simAction();
                 }
-                hilo.advice(game, false);
+                hilo.advice(game, false, state);
                 simString = hilo.simAction(this, state);
                 if(simString.equals("BASIC")){
-                    basic.advice(game, false, this.splitCheck());
+                    basic.advice(game, false);
                     simString = basic.simAction(this, state);
                 } 
                 return simString; 
@@ -177,7 +177,7 @@ public class Player
                     stdbet.advice(game, false);
                     return stdbet.simAction();
                 }
-                basic.advice(game, false, this.splitCheck());
+                basic.advice(game, false);
                 return basic.simAction(this, state);
             default:
                 System.out.println("Illegal strategy, exiting...");
@@ -266,9 +266,9 @@ public class Player
     }
 
     public boolean insuranceCheck(){
-        if(game.dealer.hand.get(0) != 1){    //1==ACE
+        if(game.dealer.hand.get(0) != 1 || insuranceBet != -1){    //1==ACE
     //print   if(game.mode != 's')
-                System.out.println("i: illegal command");
+                System.out.println("sdfadfsadfasdfasdfasdfasdfsdfsad");
             return false;
         }
         return true;
@@ -278,6 +278,7 @@ public class Player
      */
     public void insure()
     {
+        System.out
         if(insuranceCheck()){
     //print   if(game.mode != 's')
                 System.out.println("player is insuring");
