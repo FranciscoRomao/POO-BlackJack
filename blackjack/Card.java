@@ -83,7 +83,7 @@ class Card
         return retSuit;
     }
     public String showRank(){
-        char retSuit = '\0';
+        char retSuit;
         switch (rank)
         {
             case 1:

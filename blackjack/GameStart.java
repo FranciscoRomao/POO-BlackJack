@@ -26,7 +26,7 @@ public class GameStart implements State
                 case "b":
                     try
                     {
-                        nextState = player.placeBet(Float.parseFloat(s.next()));
+                        nextState = player.placeBet(Integer.parseInt(s.next()));
                     } 
                     catch (Exception e)
                     {
@@ -40,8 +40,8 @@ public class GameStart implements State
                     break;
 
                 case "ad":
-                    player.ace5.Advice(context.game, true);
-                    player.stdbet.Advice(context.game, true);
+                    player.ace5.advice(context.game, true);
+                    player.stdbet.advice(context.game, true);
                     break;
 
                 case "st":

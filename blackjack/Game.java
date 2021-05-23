@@ -148,7 +148,7 @@ public class Game {
     }
 
     private void initNotDbug(String args[]){
-        float percentage = Float.parseFloat(args[5]);
+        float percentage = Integer.parseInt(args[5]);
         shoe = Integer.parseInt(args[4]);
         dealer = new Dealer(this);
         player = new Player(this, Integer.parseInt(args[3]), this.strat);

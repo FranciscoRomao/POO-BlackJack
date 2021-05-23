@@ -21,6 +21,7 @@ public class Player
     public File cmdFile;
     public float insuranceBet;
     public float initBalance;
+    public int splitNumber;
 
     private Scanner s;
     private InputStream input;
@@ -46,6 +47,8 @@ public class Player
         hilo_count = 0;
         ace5_count = 0;
 
+        splitNumber = 0;
+        nHands = 0;
         handNumber = 0;
         splitted = false;
         handsLeft = 1;
@@ -65,7 +68,6 @@ public class Player
                     System.out.println("File doesn't exist");
                     System.exit(-1);
                 }
-
                 try
                 {
                     input = new FileInputStream(cmdFile);                
@@ -77,16 +79,13 @@ public class Player
                 }
                 delim = " |\\n";
                 break;
-
             case 'i':
                 input = System.in;
                 delim = "\n";               
                 break;
-
             case 's':
                 strat = string;
                 break;
-
             default:
                 break;
         }
@@ -116,7 +115,7 @@ public class Player
                     System.out.println("Error reading from input");
                 }
                 break;
-            case 's': //todo verificar melhor
+            case 's': 
                 action = simulation(strat, state);
                 break;
             default:
@@ -128,14 +127,11 @@ public class Player
     public void stats()
     {
         float gains = ((balance-initBalance)/initBalance) * 100;
-        System.out.printf("BJ P\\D\t %.4f\\%.4f\n", (float)game.playerBJcount/nHands, (float)game.dealerBJcount/game.dealer.nHands);
-        //System.out.println("BJ P\\D\t"+(float)(game.playerBJcount/nHands)+"\\"+ (float)(game.dealerBJcount/game.dealer.nHands));
-        System.out.println("Win \t"+ (float)game.winCount/nHands);
-        System.out.println("Lose\t"+ (float)game.loseCount/nHands);
-        System.out.println("Push\t"+ (float)game.pushCount/nHands);
-        System.out.println("Balance\t"+balance+"("+gains+"%)");
-
-        return;
+        System.out.printf("BJ P/D\t%.3f/%.3f%n", (float)game.playerBJcount/nHands, (float)game.dealerBJcount/game.dealer.nHands);
+        System.out.printf("Win \t%.2f%n", (float)game.winCount/nHands);
+        System.out.printf("Lose\t%.2f%n", (float)game.loseCount/nHands);
+        System.out.printf("Push\t%.2f%n", (float)game.pushCount/nHands);
+        System.out.printf("Balance\t%.2f(%.2f%%)%n", balance, gains);
     }
 
     public String simulation(String strat, int state) {
@@ -145,41 +141,43 @@ public class Player
             return "d";
 
         switch (strat) {
-            case "BS-AS":
+            case "BS-AF":
                 if(state == 0){
-                    ace5.Advice(game, true);
+                    ace5.advice(game, false);
                     return ace5.simAction();                
                 }
-                basic.Advice(game, true);
+                basic.advice(game, false, this.splitCheck());
                 return basic.simAction(this, state);
             case "HL":
                 if(state == 0){
-                    stdbet.Advice(game, true);
+                    stdbet.advice(game, false);
                     return stdbet.simAction();
                 }
-                hilo.Advice(game, true);
+                hilo.advice(game, false);
                 simString = hilo.simAction(this, state);
-                if(action.equals("BASIC")){
-                    basic.Advice(game, true);
+                if(simString.equals("BASIC")){
+                    basic.advice(game, false, this.splitCheck());
                     simString = basic.simAction(this, state);
                 }                
                 return simString;
-            case "HL-AS":
+            case "HL-AF":
                 if(state == 0) {
-                    ace5.Advice(game, true);
+                    ace5.advice(game, false);
                     return ace5.simAction();
                 }
-                hilo.Advice(game, true);
+                hilo.advice(game, false);
                 simString = hilo.simAction(this, state);
-                if(action.equals("BASIC"))
+                if(simString.equals("BASIC")){
+                    basic.advice(game, false, this.splitCheck());
                     simString = basic.simAction(this, state);
-                return simString;
+                } 
+                return simString; 
             case "BS":
                 if(state == 0) {
-                    stdbet.Advice(game, true);
+                    stdbet.advice(game, false);
                     return stdbet.simAction();
                 }
-                basic.Advice(game, true);
+                basic.advice(game, false, this.splitCheck());
                 return basic.simAction(this, state);
             default:
                 System.out.println("Illegal strategy, exiting...");
@@ -197,9 +195,9 @@ public class Player
     {
         hands.get(handNumber).addCard(game.dealer.shoe.getCard());
         hilo.Count(game.dealer.shoe.getCard()); //ok problema grave.. estes todos sao do tipo strategy e ta se a queixar
-        ace5.Ace5Count(game.dealer.shoe.getCard());
+        ace5.ace5Count(game.dealer.shoe.getCard());
 
-        if(print)
+        if(print && game.mode != 's')
             System.out.println("player hits");
         if(splitted){
             System.out.println("player's hand ["+(handNumber+1)+"] "+hands.get(handNumber)+"("+hands.get(handNumber).handSum()+")");
@@ -230,7 +228,7 @@ public class Player
     }
 
     public boolean splitCheck(){
-        if(!hands.get(handNumber).isSplittable() || handNumber > 3){
+        if(!hands.get(handNumber).isSplittable() || splitNumber > 3){
             System.out.println("p: illegal command");
             return false;
         }
@@ -244,12 +242,13 @@ public class Player
     {
         String th = "st";
         if(splitCheck()){
-            System.out.println("player is splitting");
+    //print   if(game.mode != 's')
+                System.out.println("player is splitting");
             nHands++;
             hands.add(new Hand(hands.get(handNumber).bet));
-            handsLeft++;
-            hands.get(handNumber+1).addCard(hands.get(handNumber).getCard(1));
+            hands.get(handNumber+handsLeft).addCard(hands.get(handNumber).getCard(1));
             hands.get(handNumber).removeCard(hands.get(handNumber).getCard(1));
+            handsLeft++;
             splitted = true;
             balance -= hands.get(handNumber).bet;
             if((handNumber+1) == 2){
@@ -259,14 +258,17 @@ public class Player
             } else if((handNumber+1) > 3){
                 th = "th";
             }
-            System.out.println("playing "+(handNumber+1)+th+" hand...");
+    //print   if(game.mode != 's')
+                System.out.println("playing "+(handNumber+1)+th+" hand...");
             hit(false);
         }
+        splitNumber++;
     }
 
     public boolean insuranceCheck(){
         if(game.dealer.hand.get(0) != 1){    //1==ACE
-            System.out.println("i: illegal command");
+    //print   if(game.mode != 's')
+                System.out.println("i: illegal command");
             return false;
         }
         return true;
@@ -277,7 +279,8 @@ public class Player
     public void insure()
     {
         if(insuranceCheck()){
-            System.out.println("player is insuring");
+    //print   if(game.mode != 's')
+                System.out.println("player is insuring");
             insuranceBet = hands.get(handNumber).bet;
             balance -= insuranceBet;
         }
@@ -294,11 +297,13 @@ public class Player
      * 
      */
     public void surrender() {
-        System.out.println("payer is surrendering");
+//print   if(game.mode != 's')        
+            System.out.println("payer is surrendering");
         balance += hands.get(handNumber).bet*0.5;
         hands.get(handNumber).busted = true;
         if(game.dealer.hand.hasBlackjack()){
-            System.out.println("blackjack!!");   //todo meter esta condição numa função dependendo do que a prof responder
+    //print   if(game.mode != 's')
+                System.out.println("blackjack!!");  
             game.dealer.insuranceCheck();
         }
         if(handsLeft > 1){
@@ -310,7 +315,8 @@ public class Player
     
     public boolean doubleCheck(){
         if(hands.get(handNumber).handSum() < 9 || hands.get(handNumber).handSum() > 11){
-            System.out.println("2: illegal command");
+    //print   if(game.mode != 's')
+                System.out.println("2: illegal command");
             return false;
         }
         return true;
@@ -357,21 +363,24 @@ public class Player
     /**
      * 
      */
-    public boolean placeBet(float value){
-        if(value > balance || (value == -1 && balance < hands.get(handNumber).bet)){
-            System.out.println("Player doesn't have enough money to bet. Available balance: "+balance);
-            return false;
-        }
+    public boolean placeBet(int value){
+        //if(value > balance || (value == -1 && balance < hands.get(handNumber).bet)){
+    //print   if(game.mode != 's')
+             //   System.out.println("Player doesn't have enough money to bet. Available balance: "+balance);
+         //   return false;
+      //  }
         if(value != -1 && (value < game.min_bet || value > game.max_bet)){
-            System.out.println("Invalid bet ammount. Has to be greater than "+game.min_bet+" and smaller than "+game.max_bet);
+    //print   if(game.mode != 's')
+                System.out.println("Invalid bet ammount. Has to be greater than "+game.min_bet+" and smaller than "+game.max_bet);
             return false;
         }
         if(value != -1){
             hands.get(handNumber).bet = value;
-            lastBet = (int) value; //!nao sei pq uma bet esta a float, acho que a prof diz explicitamente que quer as bets com inteiros
+            lastBet = value; 
         }
         hands.get(handNumber).bet = lastBet;
-        System.out.println("player is betting "+hands.get(handNumber).bet);
+//print   if(game.mode != 's')
+            System.out.println("player is betting "+hands.get(handNumber).bet);
         balance -= hands.get(handNumber).bet;
         return true;
     }

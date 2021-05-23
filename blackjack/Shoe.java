@@ -23,7 +23,6 @@ class Shoe
             cards.addAll(aux);
         }
         cards = Shuffle();
-        //System.out.println(cards);
         totalCards = cards.size(); 
     }
 
@@ -33,16 +32,13 @@ class Shoe
         cards = new LinkedList<Card>();
         String str;
         Card aux;
-        try {
-            Scanner scan = new Scanner(shoeFile).useDelimiter(" ");
+        try(Scanner scan = new Scanner(shoeFile).useDelimiter(" ")) {
             while (scan.hasNext())
             {
                 str = scan.next();
                 aux = new Card(str);
                 cards.add(aux);
             }
-            scan.close();
-
         } catch (Exception e)
         {
             System.out.println("Error reading shoe file");
@@ -70,8 +66,6 @@ class Shoe
 
     public LinkedList<Card> Shuffle()
     {
-        System.out.printf("Shufffffffffle!!!!\n");
-
         int ncards = cards.size();
         int getCard_idx;
         LinkedList<Card> shuffled = new LinkedList<Card>();

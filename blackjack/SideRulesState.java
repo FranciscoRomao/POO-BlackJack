@@ -15,9 +15,9 @@ public class SideRulesState implements State
 
         if(context.game.mode != 'i')
             System.out.println("-cmd "+action);
-
-        try(Scanner s = new Scanner(action))
-        {
+            Scanner s = new Scanner(action);
+        // try(Scanner s = new Scanner(action))
+        // {
             switch (s.next())
             {
                 case "$":
@@ -32,36 +32,29 @@ public class SideRulesState implements State
                     }
                     player.insure();
                     break;
-
                 case "u":
                     player.surrender();
                     break;
-
                 case "p":
                     player.split();
                     break;
-
                 case "2":
                     player.doubleDown();
                     break;
-
                 case "h":
                     player.hit(true);
                     handStatus = dealer.bustCheck(player.hands.get(player.handNumber));
                     if(handStatus == 1) //nao foi blackjack nem bust
                         context.setState(new EndGameState());
                     break;
-
                 case "s":
                     player.stand();
                     break;
-
                 case "ad":
                     System.out.println("player asks for advice");
-                    player.basic.Advice(context.game, true);
-                    player.hilo.Advice(context.game, true);                  
-                    break;
-                
+                    player.basic.advice(context.game, true, player.splitCheck());
+                    player.hilo.advice(context.game, true);                  
+                    break;                
                 case "st":
                     player.stats(); //#aqui
                     break;
@@ -70,17 +63,17 @@ public class SideRulesState implements State
                     System.out.println(action+": illegal command");
                     break;
             }
-        } catch (Exception e)
-        {
-            System.out.println("deu shita");
-            return true;
-        }
+        // } catch (Exception e)
+        // {
+        //     System.out.println("deu shita");
+        //     return true;
+        // }
 
-        if(handStatus != 1 && player.balance < context.game.min_bet)
-        {
-            System.out.println("Player doesn't have enough money to start a new game");
-            return false;
-        }
+        // if(handStatus != 1 && player.balance < context.game.min_bet)
+        // {
+        //     System.out.println("Player doesn't have enough money to start a new game");
+        //     return false;
+        // }
 
         return !action.equals("q");
     }

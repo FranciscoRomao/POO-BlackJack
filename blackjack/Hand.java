@@ -6,18 +6,11 @@ import java.util.Iterator;
 public class Hand
 {
     private LinkedList<Card> cards;
-    public float bet;
+    public int bet;
     public boolean busted;
     private int aceOf_1;
 
-    // public Hand()
-    // {
-    //     cards = new LinkedList<Card>();
-    //     bet = 0;
-    //     busted = false;
-    // }
-
-    public Hand(float minBet)
+    public Hand(int minBet)
     {
         cards = new LinkedList<Card>();
         bet = minBet;

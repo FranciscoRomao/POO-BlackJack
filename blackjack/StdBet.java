@@ -1,27 +1,21 @@
 package blackjack;
 
 public class StdBet {
-    private int startBet;
     private int bet;
 
-    public void Advice(Game game, boolean print) // mandar vir para aqui o minBet, maxBet e Bet = lastBet
-    {    
-        startBet = game.min_bet;
+    public void advice(Game game, boolean print) // mandar vir para aqui o minBet, maxBet e Bet = lastBet
+    {       
         if (game.round == 0) { // para saber se ja fez alguma aposta ou nao
-            bet = startBet;
-            // return startBet;
+            bet = game.min_bet;
         } else {
-            bet = Increase_Decrease(game.player.roundOutcome, game.player.lastBet, game.min_bet, game.max_bet);
-
-            // return Increase_Decrease(player.roundOutcome, player.lastBet,
-            // player.game.min_bet, player.game.max_bet);
+            bet = increaseDecrease(game.player.roundOutcome, game.player.lastBet, game.min_bet, game.max_bet);
         }
 
         if (print)
             System.out.println(this);
     }
 
-    public int Increase_Decrease(int roundOutcome, int lastBet, int minBet, int maxBet) {
+    public int increaseDecrease(int roundOutcome, int lastBet, int minBet, int maxBet) {
         int newBet = 0;
 
         if (roundOutcome == 1) { // win

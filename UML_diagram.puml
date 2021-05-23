@@ -1,0 +1,178 @@
+@startuml
+
+package "blackjack"
+{
+    class Game
+    {
+        #mode:char
+        #player:Player
+        #dealer:Dealer
+        #strat:String
+        #min_bet:int
+        #max_bet:int
+        #playerBJcount:int
+        #dealerBJcount:int
+        #winCount:int
+        #loseCount:int
+        #pushCount:int
+        #shoe:int
+        #shuffle:int
+        #shuffleNum:int
+        #round:int
+        #context:StateContext
+
+        '+Game(String[] args)
+        '+startGame()
+        '+changeState(State newState)
+        '-initMode(String args[])
+        '-initBet(String min, String max)
+        '-initSim(String args[])
+        '-errorChecking(String args[])
+        '-initCounts(String args[])
+        '-initNotDbug(String args[])
+        '-initDbug(String args[])
+    }
+
+    class Player
+    {
+        'public Game game;
+        'public LinkedList<Hand> hands;
+        'public int hilo_count;
+        'public int ace5_count;
+
+        'protected HiLo hilo;
+        'protected Basic basic;
+        'protected Ace5 ace5;
+        'protected StdBet stdbet;
+        'protected String strat;
+
+        'public float balance;
+        'public String action;
+        'public File cmdFile;
+        'public float insuranceBet;
+        'public float initBalance;
+
+        'private Scanner s;
+        'private InputStream input;
+        'private String delim;
+        'public int handNumber;
+        'public boolean splitted;
+        'public int handsLeft;
+        'public int nHands;
+        'public boolean allBlackjack;
+        'public int lastBet; 
+        'public int roundOutcome;
+
+        'public Player(Game game, int balance, String string)
+        'public void stats()
+        'public String readPlay(int state)
+        'public String simulation(String strat, int state)
+        'public void hit(boolean print)
+        'public void stand()
+        'public boolean splitCheck()
+        'public void split()
+        'public boolean insuranceCheck()
+        'public void insure()
+        'public boolean insured()
+        'public void surrender()
+        'public boolean doubleCheck()
+        'public void doubleDown()
+        'public String showAllHands()
+        'public boolean placeBet(int value)
+    }
+
+    class HiLo
+    {
+        'private int count;
+	    'private char suggest;
+'
+        'public HiLo()
+        'public void advice(Game game, boolean print)
+        'public void Count(Card card)
+        'public float getTrueCount(Shoe shoe)
+        'public char bestAction (Hand playerHand, Card dealerCard, float trueCount) 
+        'public void resetCount()
+        'public int getRunningCount()
+        'public String toString()
+        'public String simAction(Player player, int state
+    }
+    
+    class Basic
+    {
+        +advice()
+    }
+    
+    class Ace5
+    {
+        +advice()
+    }
+    
+    class Std_bet
+    {
+        +advice()
+    }
+    
+    class Dealer
+    {
+        -hole_card:int
+        
+        +Dealer()
+        +hit()
+        +dealCards()
+        +checkBJ()
+    }
+    
+    class Shoe
+    {        
+        +Shoe(numDecks:int)
+        +Shuffle()
+        +GetCard()
+    }
+    
+    class Chip
+    {
+        +value
+        
+        +Chip(value:int)
+    }
+    
+    class Card
+    {
+        +rank:int
+        'Ace - 0
+        'One...Ten - 1...10
+        'Jacks - 11
+        'Queen - 12
+        'King - 13
+        
+        +suit:int
+        'Clubs - 0
+        'Spades - 1
+        'Diamonds - 2
+        'Hearts - 3
+        
+        +Card(rank:int, suit:int)
+    }
+    
+    left to right direction
+    
+    Player x--->  "0..* cards" Card
+    
+    Player x-->  "0..*\nstrats" Strategy
+    
+    Dealer x---> "0..* cards" Card
+    
+    Player x--> "0..*\nmy_chips" Chip
+    
+    Player x--> "0..*\nbet_chips" Chip
+    
+    Game "1 player" --"1" Player
+    
+    Game "1" -- "1" Dealer
+    
+    Dealer x--> "1 shoe" Shoe
+    
+    Shoe x--> "0..*\n cards" Card
+    
+}
+@enduml

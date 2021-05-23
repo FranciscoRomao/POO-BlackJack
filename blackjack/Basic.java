@@ -1,22 +1,11 @@
 package blackjack;
-//import java.util.*;
-/**
- * hard – hands without aces, or where all aces value 1, and without an opening deal of a
-pair of aces.
-• soft – hands with aces where at least one ace values 11 and without an opening deal of a
-pair of aces.
-• pairs – both cards in the opening deal are of the same value.
-The
-
-Dh - D
-Ds - d
- */
 
 public class Basic //implements Strategy
 {   
     private char suggest;
 
-    private char[][] hard = {{ 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H'}, 
+    private char[][] hard = {{ 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H'}, //linha extra (quando temos 22 e nao pode fazer split e um hard 4)
+                             { 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H'}, 
                              { 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H'},
                              { 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H'},
                              { 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H'},
@@ -34,7 +23,8 @@ public class Basic //implements Strategy
                              { 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S'},
                              { 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S'}};
 
-    private char[][] soft = {{ 'H', 'H', 'H', 'D', 'D', 'H', 'H', 'H', 'H' ,'H'},
+    private char[][] soft = {{ 'H', 'H', 'H', 'D', 'D', 'H', 'H', 'H', 'H' ,'H'}, //linha extra (quando temos AA e nao pode fazer mais split e um soft 12)
+                             { 'H', 'H', 'H', 'D', 'D', 'H', 'H', 'H', 'H' ,'H'},
                              { 'H', 'H', 'H', 'D', 'D', 'H', 'H', 'H', 'H' ,'H'},
                              { 'H', 'H', 'D', 'D', 'D', 'H', 'H', 'H', 'H' ,'H'},
                              { 'H', 'H', 'D', 'D', 'D', 'H', 'H', 'H', 'H' ,'H'},
@@ -56,32 +46,15 @@ public class Basic //implements Strategy
                              { 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'}}; 
 
     
-    public void Advice(Game game, boolean print)
-    {     
-        ////playerHand.getFirst();
-        ////playerHand.size();
-        ////playerHand.get(1);
-        /*Ace - 1
-        two...Ten - 2...10
-        Jacks - 11
-        Queen - 12
-        King - 13*/
-
-        //1. Confirmar se há Ases
-        //2. Se sim verificar se o Ás pode ser 11 sem a soma passar 21, se sim é um SOFT, se não e HARD
-        //3. Se não há Ases é um HARD
-        //3. Se os Ases forem todos 1 é HARD
-        //4. Se houver um par é PAIR
-        
+    public void advice(Game game, boolean print, boolean split)
+    {             
         Hand playerHand = game.player.hands.get(game.player.handNumber);
         Card dealerCard = game.dealer.hand.getCard(0);
-        int HandSum = playerHand.handSum(); //soma da mao do jogador
+        int handSum = playerHand.handSum(); //soma da mao do jogador
         int tableSelector = 0;
         
         int aceCount = playerHand.hasAce();
-        int aceOf_1 = playerHand.getAceOf1();
-
-        System.out.println("aces----:"+aceCount+":"+aceOf_1);
+        int aceOf1 = playerHand.getAceOf1();
 
         if ((playerHand.getNumCards() == 2) && (playerHand.get(0) == playerHand.get(1))) { //opening hand
                 tableSelector = 0; // pair        
@@ -90,31 +63,37 @@ public class Basic //implements Strategy
             //* values 11 refer to "Soft table". Hands without aces or where all aces value 1
             //* refer to "Hard table".
 
-            if (aceCount == 0 || aceOf_1 == aceCount) { //ou nao tem ases ou todos os que tem valem 1
+            if (aceCount == 0 || aceOf1 == aceCount) { //ou nao tem ases ou todos os que tem valem 1
                 tableSelector = 2;  //hard  
-            } else if (aceCount != 0 && (aceCount - aceOf_1) == 1) { //tem 1 Ace que vale 11 (antes tava >0)
+            } else if (aceCount != 0 && (aceCount - aceOf1) == 1) { //tem 1 Ace que vale 11 (antes tava >0)
                 tableSelector = 1; //soft
             }                
         }
 
-        System.out.println("table-----:"+tableSelector);
-
         switch (tableSelector) {
             case 1: //*select from the soft table
-                suggest = soft[HandSum - 13][dealerCard.getValue() - 2];
+                suggest = soft[handSum - 12][dealerCard.getValue() - 2];
                 break;
 
             case 2: //*select from the hard table
-                suggest = hard[HandSum - 5][dealerCard.getValue() - 2];
+                suggest = hard[handSum - 4][dealerCard.getValue() - 2];
                 break;
         
             default: //*select from the pair table
-                suggest = pair[playerHand.getCard(0).getValue() - 2][dealerCard.getValue() - 2]; //*antes estava playerHand.get(0) - 2 mas assim so tinha em conta o rank 
-                break;                                                                           //*e os K, J e Q nao estavam incluidos na tabela dos pares
-        }                                                                                        //*tambem estava mal feito pq se fosse A,A ia buscar a primeira linha da tabela e nao a ultima
+                if (split) {
+                    suggest = pair[playerHand.getCard(0).getValue() - 2][dealerCard.getValue() - 2];                    
+                } else {
+                    if (handSum == 12) {
+                        suggest = soft[handSum - 12][dealerCard.getValue() - 2];
+                    } else {
+                        suggest = hard[handSum - 4][dealerCard.getValue() - 2];
+                    }
+                }
+                break;                                                                           
+        }                                                                                        
         if(print)
             System.out.println(this);
-    } //TODO adicionar duas linjas nas tabelas har e soft pq se o pair for 2,2 ou A,A e nao der para fazer split nao tem para onde ir
+    } 
 
     
     /**

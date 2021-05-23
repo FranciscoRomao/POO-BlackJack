@@ -44,7 +44,7 @@ public class DealState implements State
                     {         
                         try
                         {
-                            if(!player.placeBet(Float.parseFloat(action)))
+                            if(!player.placeBet(Integer.parseInt(action)))
                                 context.setState(new GameStart());
 
                             break;                  

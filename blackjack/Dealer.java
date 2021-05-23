@@ -5,7 +5,7 @@ import java.util.Iterator;
 public class Dealer
 {   
     protected Game game;
-    private Card hole_card;
+    private Card holeCard;
     protected Shoe shoe;
     protected Hand hand;
     public int nHands;
@@ -16,7 +16,6 @@ public class Dealer
         this.hand = new Hand(0);
         this.shoe = new Shoe(this.game.shoe);
     }
-    
     public Dealer(Game game, String shoe)
     {
         this.game = game;
@@ -32,9 +31,10 @@ public class Dealer
         Card aux;
         aux = shoe.getCard();
         hand.addCard(aux);
-        System.out.println("dealer hits");
+//print   if(game.mode != 's')
+            System.out.println("dealer hits");
         game.player.hilo.Count(aux); 
-        game.player.ace5.Ace5Count(aux);
+        game.player.ace5.ace5Count(aux);
     }
 
     /**
@@ -45,23 +45,23 @@ public class Dealer
         Card aux;
         for(int i=0; i<2; i++)
         {
-            System.out.printf("aqui---------------\n");
             aux = shoe.getCard();
-            System.out.printf("aqui----------11-----\n");
             game.player.hands.get(game.player.handNumber).addCard(aux);
             game.player.hilo.Count(aux);
-            game.player.ace5.Ace5Count(aux);
+            game.player.ace5.ace5Count(aux);
         }
         aux = shoe.getCard();
         
-        hole_card = aux;
+        holeCard = aux;
         
         aux = shoe.getCard();
         game.player.hilo.Count(aux);
-        game.player.ace5.Ace5Count(aux);
+        game.player.ace5.ace5Count(aux);
         hand.addCard(aux);
-        System.out.println(showHand()+"X");
-        System.out.println("player's hand "+game.player.hands.get(game.player.handNumber)+"("+game.player.hands.get(game.player.handNumber).handSum()+")");
+//print   if(game.mode != 's'){
+            System.out.println(showHand()+"X");
+            System.out.println("player's hand "+game.player.hands.get(game.player.handNumber)+"("+game.player.hands.get(game.player.handNumber).handSum()+")");
+    //print    }
     }
 
     /**
@@ -85,13 +85,14 @@ public class Dealer
     {
         if(handToCheck.handSum() > 21)
         {
-            System.out.print("player busts ");
+    //print   if(game.mode != 's')
+                System.out.print("player busts ");
             game.player.hands.get(game.player.handNumber).busted = true;
 
-            if(game.player.splitted)
+            if(game.player.splitted && game.mode != 's')
                 System.out.print("["+(game.player.handNumber + 1)+"]");
-            
-            System.out.println();
+    //print   if(game.mode != 's')
+                System.out.println();
 
             if(game.player.handsLeft > 1)
             {
@@ -113,7 +114,6 @@ public class Dealer
 
         game.player.handsLeft--;
         game.player.handNumber++;
-
         if((game.player.handNumber+1) == 3)
         {
             th = "rd";
@@ -121,8 +121,8 @@ public class Dealer
         {
             th = "th";
         }
-
-        System.out.println("playing "+(game.player.handNumber + 1)+th+" hand...");
+//print   if(game.mode != 's')
+            System.out.println("playing "+(game.player.handNumber + 1)+th+" hand...");
         game.player.hit(false);
         game.changeState(new SideRulesState());
     }
@@ -133,7 +133,9 @@ public class Dealer
     public void newRound(){
         game.round++;
         game.player.nHands++;
-        float oldBet = game.player.hands.get(game.player.handNumber).bet;    
+        game.player.insuranceBet = -1;
+        game.player.splitNumber = 0;
+        int oldBet = game.player.hands.get(game.player.handNumber).bet;    
         game.player.hands.clear();
         hand = new Hand(0);
         nHands++; //number of dealer hands
@@ -152,10 +154,11 @@ public class Dealer
      * 
      */
     public void showHole(){
-        hand.addCard(hole_card);
-        game.player.hilo.Count(hole_card);
-        game.player.ace5.Ace5Count(hole_card);
-        System.out.println(showHand()+"("+hand.handSum()+")");
+        hand.addCard(holeCard);
+        game.player.hilo.Count(holeCard);
+        game.player.ace5.ace5Count(holeCard);
+//print   if(game.mode != 's')
+            System.out.println(showHand()+"("+hand.handSum()+")");
     }
 
     /**
@@ -190,24 +193,29 @@ public class Dealer
         if(hand.hasBlackjack())
         {
             game.dealerBJcount++;
-            System.out.println("dealer stands");
-            System.out.println("blackjack!!");
+    //print   if(game.mode != 's'){
+                System.out.println("dealer stands");
+                System.out.println("blackjack!!");
+            }
             insuranceCheck();
-        } 
+     //print   } 
         while(hand.handSum() < 17)
         {
             hit();
-            System.out.println(showHand()+"("+hand.handSum()+")");
+    //print   if(game.mode != 's')
+                System.out.println(showHand()+"("+hand.handSum()+")");
         }        
         
         if(hand.handSum() > 21)
         {
             busts = true;
-            System.out.println("dealer busts");
+    //print   if(game.mode != 's')
+                System.out.println("dealer busts");
         }
         else
         {
-            System.out.println("dealer stands");
+    //print   if(game.mode != 's')
+                System.out.println("dealer stands");
         }                                
         printEndScreen(busts);
         newRound();
@@ -222,79 +230,82 @@ public class Dealer
         {
             game.player.balance += game.player.insuranceBet*2;
             game.player.insuranceBet = -1;
-            System.out.println("player wins insurance");
+    //print   if(game.mode != 's')
+                System.out.println("player wins insurance");
             return;
         }
-
-        if(!hand.hasBlackjack() && game.player.insured())
+        if(!hand.hasBlackjack() && game.player.insured() && game.mode != 's')
             System.out.println("players loses insurance");
-
     }
 
     /**
      * 
      * @param dealerBust
      */
-    private void printEndScreen(boolean dealerBust) 
-    {
+    private void printEndScreen(boolean dealerBust) {
         String lastString = " and his current balance is ";
-
         Iterator<Hand> it = game.player.hands.iterator();
         Hand playerHand;
-        int counter = 0;
-         
+        int counter = 0;         
         while (it.hasNext()) {
             playerHand = it.next();
             counter++;
             if ((playerHand.handSum() > hand.handSum() && !playerHand.busted) || dealerBust) {
                 if (playerHand.hasBlackjack()) {
                     game.playerBJcount++;
-                    game.winCount++;                   
-                    System.out.println("blackjack!!");
+                    game.winCount++;         
+            //print   if(game.mode != 's')          
+                        System.out.println("blackjack!!");
                     game.player.balance += playerHand.bet * 2.5;
-                    System.out.print("player wins ");
+            //print   if(game.mode != 's')
+                        System.out.print("player wins ");
                     game.player.roundOutcome = 1; // win //*verificar com cuidado
 
-                    if (game.player.splitted)
+                    if (game.player.splitted && game.mode != 's')
                         System.out.print("[" + counter + "]");
-
-                    System.out.println(lastString + game.player.balance);
+            //print   if(game.mode != 's')
+                        System.out.println(lastString + game.player.balance);
+                    
                     continue;
                 }
-
                 game.winCount++;
                 game.player.balance += playerHand.bet * 2;
-                System.out.print("player wins ");
+        //print   if(game.mode != 's')
+                    System.out.print("player wins ");
                 game.player.roundOutcome = 1; // win //*verificar com cuidado
 
-                if (game.player.splitted)
-                    System.out.print("[" + counter + "]");
-                System.out.println(lastString + game.player.balance);
+        //print   if(game.mode != 's'){
+                    if (game.player.splitted)
+                        System.out.print("[" + counter + "]");
+                    System.out.println(lastString + game.player.balance);
+         //print       }
 
             } else if (playerHand.handSum() < hand.handSum() || playerHand.busted) {
                 game.loseCount++;
 
-                System.out.print("player loses");
+        //print   if(game.mode != 's')
+                    System.out.print("player loses");
                 game.player.roundOutcome = -1; // lose //*verificar com cuidado
-
-                if (game.player.splitted) {
-                    System.out.print("[" + counter + "]");
-                }
-                System.out.println(lastString + game.player.balance);
+        //print   if(game.mode != 's'){
+                    if (game.player.splitted) {
+                        System.out.print("[" + counter + "]");
+                    }
+                    System.out.println(lastString + game.player.balance);
+           //print     }
             } else if (playerHand.handSum() == hand.handSum()) {
                 game.pushCount++;
-
                 game.player.balance += playerHand.bet;
-                System.out.print("player pushes ");
+        //print   if(game.mode != 's')
+                    System.out.print("player pushes ");
                 game.player.roundOutcome = 0; // push //*verificar com cuidado
-
-                if (game.player.splitted) {
-                    System.out.print("[" + counter + "]");
-                }
-                System.out.println(lastString + game.player.balance);
+        //print   if(game.mode != 's'){
+                    if (game.player.splitted) {
+                        System.out.print("[" + counter + "]");
+                    }
+                    System.out.println(lastString + game.player.balance);
+          //print      }
             }
         }
-        System.out.println("GAMEEEE COUNTTTSSSSS------\n-----------BJcount "+game.playerBJcount+"--------winCount"+game.winCount+"-------losecount "+game.loseCount+"----------Pushcount"+game.pushCount);
     }
 
      /**

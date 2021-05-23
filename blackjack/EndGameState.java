@@ -35,8 +35,8 @@ public class EndGameState implements State
 
                 case "ad":
                     System.out.println("player asks for advice");
-                    player.basic.Advice(context.game, true);
-                    player.hilo.Advice(context.game, true);
+                    player.basic.advice(context.game, true, player.splitCheck());
+                    player.hilo.advice(context.game, true);
                     break;
 
                 case "st":
@@ -49,11 +49,11 @@ public class EndGameState implements State
             }
         } catch (Exception e) {return true;}
 
-        if(handStatus != 1 && player.balance < context.game.min_bet)
-        {
-            System.out.println("Player doesn't have enough money to start a new game");
-            return false;
-        }
+        // if(handStatus != 1 && player.balance < context.game.min_bet)
+        // {
+        //     System.out.println("Player doesn't have enough money to start a new game");
+        //     return false;
+        // }
 
         return !action.equals("q");
     }
