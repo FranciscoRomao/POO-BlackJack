@@ -1,12 +1,15 @@
 package blackjack;
 
 import java.util.*;
+
+import blackjack.strategies.*;
+
 import java.io.*;
 
 public class Player
 {
     public Game game;
-    public LinkedList<Hand> hands;
+    protected LinkedList<Hand> hands;
     public int hilo_count;
     public int ace5_count;
 
@@ -270,9 +273,9 @@ public class Player
         splitNumber++;
     }
 
-    public boolean insuranceCheck(){
+    public boolean insuranceCheck(boolean print){
         if(game.dealer.hand.get(0) != 1 || insuranceBet != -1 || splitted){    //1==ACE
-            if(game.mode != 's')
+            if(game.mode != 's'&& print)
                 System.out.println("i: illegal command");
             return false;
         }
@@ -283,7 +286,7 @@ public class Player
      */
     public void insure()
     {
-        if(insuranceCheck()){
+        if(insuranceCheck(true)){
        if(game.mode != 's')
                 System.out.println("player is insuring");
             insuranceBet = hands.get(handNumber).bet;
@@ -318,9 +321,9 @@ public class Player
         game.dealer.stand(false);
     }
     
-    public boolean doubleCheck(){
+    public boolean doubleCheck(boolean print){
         if(hands.get(handNumber).handSum() < 9 || hands.get(handNumber).handSum() > 11){
-       if(game.mode != 's')
+            if(game.mode != 's' && print)
                 System.out.println("2: illegal command");
             return false;
         }
@@ -330,7 +333,7 @@ public class Player
      * 
      */
     public void doubleDown(){
-        if(doubleCheck()){
+        if(doubleCheck(true)){
             balance -= hands.get(handNumber).bet;
             hands.get(handNumber).bet += hands.get(handNumber).bet;
             hit(false);
@@ -388,6 +391,23 @@ public class Player
             System.out.println("player is betting "+hands.get(handNumber).bet);
         balance -= hands.get(handNumber).bet;
         return true;
+    }
+
+    public LinkedList<Hand> getHands(){
+        return hands;
+    }
+
+    public HiLo getHilo(){
+        return hilo;
+    }
+    public Basic getBasic(){
+        return basic;
+    }
+    public Ace5 getAce5(){
+        return ace5;
+    }
+    public StdBet getStdBet(){
+        return stdbet;
     }
 }
 

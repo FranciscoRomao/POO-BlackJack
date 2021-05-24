@@ -1,6 +1,7 @@
 package blackjack;
 
 import java.util.LinkedList;
+import blackjack.deck.*;
 import java.util.Iterator;
 
 public class Hand
@@ -55,7 +56,7 @@ public class Hand
 
         for(int i=0; i<cards.size(); i++)
         {
-            rank = cards.get(i).rank;
+            rank = cards.get(i).getRank();
             
             if(rank == 1)
                 aceCount++;
@@ -65,7 +66,7 @@ public class Hand
 
     public int get(int index) 
     {
-        return cards.get(index).rank;
+        return cards.get(index).getRank();
     }
 
     public Card getCard(int index){

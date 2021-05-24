@@ -1,5 +1,7 @@
 package blackjack;
 
+import blackjack.state_pattern.*;
+
 public class Game {
     protected char mode;
     protected Player player;
@@ -89,7 +91,7 @@ public class Game {
         context.setState(newState);
     }
 
-    private void initMode(String args[]){
+    private void initMode(String[] args){
         if (args[0].charAt(0) != '-') {
             System.out.println("Specify the mode like this -<mode>");
             System.exit(-1);
@@ -119,14 +121,14 @@ public class Game {
         }
     }
 
-    private void initSim(String args[]){
+    private void initSim(String[] args){
         if (this.mode == 's') {
             this.strat = args[7];
             this.shuffleNum = Integer.parseInt(args[6]);
         }
     }
 
-    private void errorChecking(String args[]){
+    private void errorChecking(String[] args){
         if (Integer.parseInt(args[3]) < 50 * this.min_bet) {
             System.out.println("Balance has to be a value greater than " + 50 * this.min_bet+ " if the minimum bet is " + this.min_bet);
             System.exit(-1);
@@ -140,7 +142,7 @@ public class Game {
             System.exit(-1);
         }
     }
-    private void initCounts(String args[]){        
+    private void initCounts(String[] args){        
         playerBJcount = 0;
         dealerBJcount = 0;
         winCount = 0;
@@ -148,7 +150,7 @@ public class Game {
         pushCount = 0;
     }
 
-    private void initNotDbug(String args[]){
+    private void initNotDbug(String[] args){
         float percentage = Integer.parseInt(args[5]);
         shoe = Integer.parseInt(args[4]);
         dealer = new Dealer(this);
@@ -158,10 +160,38 @@ public class Game {
         shuffle = (int) percentage;
     }
 
-    private void initDbug(String args[]){
+    private void initDbug(String[] args){
         this.dealer = new Dealer(this, args[4]);
         this.player = new Player(this, Integer.parseInt(args[3]), args[5]);
         shuffle = dealer.shoe.getNumCards() + 1;
         context = new StateContext(this);
+    }
+
+    public Player getPlayer(){
+        return player;
+    }
+
+    public Dealer getDealer(){
+        return dealer;
+    }
+
+    public int getRound(){
+        return round;
+    }
+    public void setRound(int value){
+        round = value;
+    }
+
+    public int getMinBet(){
+        return min_bet;
+    }
+    public int getMaxBet(){
+        return max_bet;
+    }
+    public char getMode(){
+        return mode;
+    }
+    public int getShuffleNum(){
+        return shuffleNum;
     }
 }

@@ -1,0 +1,58 @@
+@startuml
+
+package strategies
+{
+	+class HiLo
+    {
+        -count:int
+	    -suggest:char
+
+        +HiLo()
+        +advice(Game game, boolean print)
+        +Count(Card card)
+        +getTrueCount(shoe:Shoe):float
+        +bestAction(playerHand:Hand, dealerCard:Card, trueCount:float):char
+        +resetCount()
+        +getRunningCount():int
+        +toString():String
+        +simAction(player:Player, state:int):String
+    }
+    
+    +class Basic
+    {
+        -suggest:char
+        -hard:char[][]
+        -soft:char[][]
+        -pair:char[][]
+
+        +advice(game:Game, print:boolean)
+        +simAction(player:Player, state:int):String
+    }
+    
+    +class Ace5
+    {
+        -count:int
+        -minBet:int
+        -maxBet:int
+        -lastBet:int
+        -suggest:int
+
+        +Ace5(minBeT:int, maxBeT:int)
+        +advice(game:Game, print:boolean)
+        +ace5Count(card:Card)
+        +resetCount()
+        +String simAction()
+    }
+    
+    +class StdBet
+    {
+        -int bet;
+        +advice(Game game, boolean print)
+        +increaseDecrease(roundOutcome:int, lastBet:int, minBet:int, maxBet:int):int
+        +simAction():String
+    }
+}
+
+
+
+@enduml

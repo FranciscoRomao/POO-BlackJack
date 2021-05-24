@@ -1,0 +1,33 @@
+@startuml
+
+package deck
+{
+	+class Shoe
+    {
+        +totalCards:int
+
+        +Shoe(numDecks:int)
+        +Shoe(fileName:String)
+        +singleDeck():LinkedList<Card>
+        +LinkedList<Card> Shuffle()
+        +getCard():Card
+        +getPlayedCards():int
+        +getNumCards():int
+    }
+    
+    +class Card
+    {
+        +rank:int
+        -suit:int
+        
+        +Card(rank:int, suit:int)
+        +Card(cardCode:String)
+        +getSuit():char
+        +showRank():String
+        +getValue():int
+    }
+
+	Shoe x--> "0..*\n cards" Card
+}
+
+@enduml
