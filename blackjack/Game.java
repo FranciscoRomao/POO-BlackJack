@@ -87,10 +87,18 @@ public class Game {
     }
 
     
+    
+    /** 
+     * @param newState
+     */
     public void changeState(State newState){
         context.setState(newState);
     }
 
+    
+    /** 
+     * @param args
+     */
     private void initMode(String[] args){
         if (args[0].charAt(0) != '-') {
             System.out.println("Specify the mode like this -<mode>");
@@ -107,6 +115,11 @@ public class Game {
         } 
     }
 
+    
+    /** 
+     * @param min
+     * @param max
+     */
     private void initBet(String min, String max){
         min_bet = Integer.parseInt(min);
         if (min_bet < 1) {
@@ -121,6 +134,10 @@ public class Game {
         }
     }
 
+    
+    /** 
+     * @param args
+     */
     private void initSim(String[] args){
         if (this.mode == 's') {
             this.strat = args[7];
@@ -128,6 +145,10 @@ public class Game {
         }
     }
 
+    
+    /** 
+     * @param args
+     */
     private void errorChecking(String[] args){
         if (Integer.parseInt(args[3]) < 50 * this.min_bet) {
             System.out.println("Balance has to be a value greater than " + 50 * this.min_bet+ " if the minimum bet is " + this.min_bet);
@@ -142,6 +163,10 @@ public class Game {
             System.exit(-1);
         }
     }
+    
+    /** 
+     * @param args
+     */
     private void initCounts(String[] args){        
         playerBJcount = 0;
         dealerBJcount = 0;
@@ -150,6 +175,10 @@ public class Game {
         pushCount = 0;
     }
 
+    
+    /** 
+     * @param args
+     */
     private void initNotDbug(String[] args){
         float percentage = Integer.parseInt(args[5]);
         shoe = Integer.parseInt(args[4]);
@@ -160,6 +189,10 @@ public class Game {
         shuffle = (int) percentage;
     }
 
+    
+    /** 
+     * @param args
+     */
     private void initDbug(String[] args){
         this.dealer = new Dealer(this, args[4]);
         this.player = new Player(this, Integer.parseInt(args[3]), args[5]);
@@ -167,30 +200,62 @@ public class Game {
         context = new StateContext(this);
     }
 
+    
+    /** 
+     * @return Player
+     */
     public Player getPlayer(){
         return player;
     }
 
+    
+    /** 
+     * @return Dealer
+     */
     public Dealer getDealer(){
         return dealer;
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getRound(){
         return round;
     }
+    
+    /** 
+     * @param value
+     */
     public void setRound(int value){
         round = value;
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getMinBet(){
         return min_bet;
     }
+    
+    /** 
+     * @return int
+     */
     public int getMaxBet(){
         return max_bet;
     }
+    
+    /** 
+     * @return char
+     */
     public char getMode(){
         return mode;
     }
+    
+    /** 
+     * @return int
+     */
     public int getShuffleNum(){
         return shuffleNum;
     }

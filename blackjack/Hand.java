@@ -19,6 +19,10 @@ public class Hand
         aceOf_1 = 0;
     }
 
+    
+    /** 
+     * @return int
+     */
     public int handSum() //Assuming all Aces value 11
     {
         int sum = 0;
@@ -40,15 +44,27 @@ public class Hand
         return sum;
     }
 
+    
+    /** 
+     * @param to_add
+     */
     public void addCard(Card to_add)
     {
         this.cards.add(to_add);
     }
 
+    
+    /** 
+     * @param toRemove
+     */
     public void removeCard(Card toRemove){
         this.cards.remove(toRemove);
     }
 
+    
+    /** 
+     * @return int
+     */
     public int hasAce() //Assuming all Aces value 11
     {
         int rank = 0;
@@ -64,34 +80,64 @@ public class Hand
         return aceCount;
     }
 
+    
+    /** 
+     * @param index
+     * @return int
+     */
     public int get(int index) 
     {
         return cards.get(index).getRank();
     }
 
+    
+    /** 
+     * @param index
+     * @return Card
+     */
     public Card getCard(int index){
         return cards.get(index);
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getNumCards()
     {
         return cards.size();
     }
 
+    
+    /** 
+     * @return boolean
+     */
     public boolean hasBlackjack()
     {
             return (this.handSum() == 21 && this.getNumCards() == 2);
     }
 
+    
+    /** 
+     * @return boolean
+     */
     public boolean isSplittable()
     {
         return (cards.getFirst().getValue() == cards.get(1).getValue() || cards.getFirst().showRank().equals(cards.get(1).showRank()));
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getAceOf1() {
         return aceOf_1;
     }
 
+    
+    /** 
+     * @return String
+     */
     @Override
     public String toString(){
         StringBuilder str = new StringBuilder();

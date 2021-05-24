@@ -12,7 +12,10 @@ public class Dealer
     protected Shoe shoe;
     protected Hand hand;
     public int nHands;
-    
+    /**
+     * 
+     * @param game
+     */
     public Dealer(Game game)
     {      
         this.game = game;
@@ -321,9 +324,17 @@ public class Dealer
         return "dealer's hand "+hand;
     }
 
+    
+    /** 
+     * @return Hand
+     */
     public Hand getHand(){
         return hand;
     }
+    
+    /** 
+     * @return Shoe
+     */
     public Shoe getShoe(){
         return shoe;
     }

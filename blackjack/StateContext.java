@@ -21,9 +21,17 @@ public class StateContext {
         state = newState;
     }
 
+    
+    /** 
+     * @return boolean
+     */
     public boolean play() {        
         return state.play(this);
     }
+    
+    /** 
+     * @return Game
+     */
     public Game getGame(){
         return game;
     }

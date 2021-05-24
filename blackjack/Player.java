@@ -138,6 +138,12 @@ public class Player
         System.out.printf("Balance\t%.2f(%.2f%%)%n", balance, gains);
     }
 
+    
+    /** 
+     * @param strat
+     * @param state
+     * @return String
+     */
     public String simulation(String strat, int state) {
         String simString;
 
@@ -234,6 +240,10 @@ public class Player
         game.dealer.stand(false); 
     }
 
+    
+    /** 
+     * @return boolean
+     */
     public boolean splitCheck(){
         if(!hands.get(handNumber).isSplittable() || splitNumber > 3){
             if(game.mode != 's')
@@ -273,6 +283,11 @@ public class Player
         splitNumber++;
     }
 
+    
+    /** 
+     * @param print
+     * @return boolean
+     */
     public boolean insuranceCheck(boolean print){
         if(game.dealer.hand.get(0) != 1 || insuranceBet != -1 || splitted){    //1==ACE
             if(game.mode != 's'&& print)
@@ -321,6 +336,11 @@ public class Player
         game.dealer.stand(false);
     }
     
+    
+    /** 
+     * @param print
+     * @return boolean
+     */
     public boolean doubleCheck(boolean print){
         if(hands.get(handNumber).handSum() < 9 || hands.get(handNumber).handSum() > 11){
             if(game.mode != 's' && print)
@@ -393,19 +413,39 @@ public class Player
         return true;
     }
 
+    
+    /** 
+     * @return LinkedList<Hand>
+     */
     public LinkedList<Hand> getHands(){
         return hands;
     }
 
+    
+    /** 
+     * @return HiLo
+     */
     public HiLo getHilo(){
         return hilo;
     }
+    
+    /** 
+     * @return Basic
+     */
     public Basic getBasic(){
         return basic;
     }
+    
+    /** 
+     * @return Ace5
+     */
     public Ace5 getAce5(){
         return ace5;
     }
+    
+    /** 
+     * @return StdBet
+     */
     public StdBet getStdBet(){
         return stdbet;
     }

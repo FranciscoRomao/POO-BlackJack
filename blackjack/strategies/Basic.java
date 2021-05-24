@@ -49,6 +49,11 @@ public class Basic //implements Strategy
                              { 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'}}; 
 
     
+    
+    /** 
+     * @param game
+     * @param print
+     */
     public void advice(Game game, boolean print)
     {             
         Hand playerHand = game.getPlayer().getHands().get(game.getPlayer().handNumber);

@@ -12,7 +12,13 @@ public class HiLo
 		count = 0;
 	}
 
-    public void advice(Game game, boolean print, int state)
+    
+	/** 
+	 * @param game
+	 * @param print
+	 * @param state
+	 */
+	public void advice(Game game, boolean print, int state)
     {
 		Hand playerHand = game.getPlayer().getHands().get(game.getPlayer().handNumber);
 		
@@ -32,6 +38,11 @@ public class HiLo
 		else if (cardValue >= 10) count--;
 	}	
 
+	
+	/** 
+	 * @param shoe
+	 * @return float
+	 */
 	public float getTrueCount(Shoe shoe) {
 		float remainDecks = shoe.getNumCards()/52;
 
@@ -40,6 +51,15 @@ public class HiLo
 		//return (float)(Math.round(_trueCount/0.5) * 0.5); //*no slack a prof disse para mandarmos o float mesmo, e acho que aqui era (int) n float xD tavamos a dormir
 	}
 
+	
+	/** 
+	 * @param playerHand
+	 * @param dealerCard
+	 * @param trueCount
+	 * @param insure
+	 * @param state
+	 * @return char
+	 */
 	public char bestAction (Hand playerHand, Card dealerCard, float trueCount, boolean insure, int state) { 
 		int handSum = playerHand.handSum(); 
 		String dealerRank = dealerCard.showRank();
@@ -136,6 +156,12 @@ public class HiLo
 		return "hi-lo\t\t" + advice;
 	}
 
+	
+	/** 
+	 * @param player
+	 * @param state
+	 * @return String
+	 */
 	public String simAction(Player player, int state) {
 		String action;
 

@@ -5,6 +5,11 @@ import blackjack.*;
 
 public class GameStart implements State
 {
+    
+    /** 
+     * @param context
+     * @return boolean
+     */
     @Override
     public boolean play(StateContext context)
     {
@@ -13,14 +18,14 @@ public class GameStart implements State
         String action;
         if(context.getGame().getShuffleNum() == 0 && context.getGame().getMode() == 's')
             return false;
-        action = player.readPlay(0);
-        if(context.getGame().getMode() == 'd')
-            System.out.println("-cmd "+action);
+        action = player.readPlay(0);        
         try(Scanner s = new Scanner(action))
         {
             switch (s.next())
             {
                 case "$":
+                    if(context.getGame().getMode() == 'd')
+                        System.out.println("-cmd $");
                     System.out.println(player.balance+"$");
                     break;
                 case "b":
@@ -47,7 +52,8 @@ public class GameStart implements State
                 case "st":
                     player.stats(); //#aqui
                     break;
-
+                case "q":
+                    return false;
                 default:
                     System.out.println(action+": illegal command");
                     break;

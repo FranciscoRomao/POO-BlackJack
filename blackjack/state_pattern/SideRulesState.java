@@ -5,6 +5,11 @@ import blackjack.*;
 
 public class SideRulesState implements State
 {
+    
+    /** 
+     * @param context
+     * @return boolean
+     */
     @Override
     public boolean play(StateContext context)
     {
@@ -53,7 +58,8 @@ public class SideRulesState implements State
                 case "st":
                     player.stats(); //#aqui
                     break;
-                
+                case "q":
+                    return false;
                 default:
                     System.out.println(action+": illegal command");
                     break;

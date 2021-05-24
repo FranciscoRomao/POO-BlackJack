@@ -23,6 +23,11 @@ public class Ace5 //implements Strategy
         count = 0;
     }
 
+    
+    /** 
+     * @param game
+     * @param print
+     */
     public void advice(Game game, boolean print) {
         if(game.getRound() != 0)
             lastBet = game.getPlayer().lastBet;    
@@ -70,6 +75,10 @@ public class Ace5 //implements Strategy
         return "ace-five\t\tbet " + suggest;
     }
 
+    
+    /** 
+     * @return String
+     */
     public String simAction() {
         return "b " + suggest;
     }

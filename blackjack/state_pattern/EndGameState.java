@@ -5,6 +5,11 @@ import blackjack.*;
 
 public class EndGameState implements State
 {
+    
+    /** 
+     * @param context
+     * @return boolean
+     */
     @Override
     public boolean play(StateContext context)
     {
@@ -45,7 +50,8 @@ public class EndGameState implements State
                 case "st":
                     player.stats(); //#aqui
                     break;
-
+                case "q":
+                    return false;
                 default:
                     if(context.getGame().getMode() != 's')
                         System.out.println(action+": illegal command");

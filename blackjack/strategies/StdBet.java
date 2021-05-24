@@ -5,6 +5,11 @@ import blackjack.Game;
 public class StdBet {
     private int bet;
 
+    
+    /** 
+     * @param game
+     * @param print
+     */
     public void advice(Game game, boolean print) // mandar vir para aqui o minBet, maxBet e Bet = lastBet
     {       
         if (game.getRound() == 0) { // para saber se ja fez alguma aposta ou nao
@@ -17,6 +22,14 @@ public class StdBet {
             System.out.println(this);
     }
 
+    
+    /** 
+     * @param roundOutcome
+     * @param lastBet
+     * @param minBet
+     * @param maxBet
+     * @return int
+     */
     public int increaseDecrease(int roundOutcome, int lastBet, int minBet, int maxBet) {
         int newBet = 0;
 
@@ -43,6 +56,10 @@ public class StdBet {
         return "std-bet\t\tbet " + bet;
     }
 
+    
+    /** 
+     * @return String
+     */
     public String simAction() {
         return "b " + bet;
     }

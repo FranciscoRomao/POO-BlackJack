@@ -60,10 +60,18 @@ public class Card
                 break;
         }
     }
+    
+    /** 
+     * @return int
+     */
     public int getRank(){
         return rank;
     }
 
+    
+    /** 
+     * @return char
+     */
     public char getSuit(){
         char retSuit = '\0';
         switch (suit)
@@ -85,6 +93,10 @@ public class Card
         }
         return retSuit;
     }
+    
+    /** 
+     * @return String
+     */
     public String showRank(){
         char retSuit;
         switch (rank)
@@ -107,6 +119,10 @@ public class Card
         return Character.toString(retSuit);
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getValue()
     {
         if(rank == 1)

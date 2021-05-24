@@ -47,6 +47,10 @@ public class Shoe
         totalCards = cards.size();
     }
 
+    
+    /** 
+     * @return LinkedList<Card>
+     */
     public LinkedList<Card> singleDeck()
     {
         LinkedList<Card> deck = new LinkedList<Card>();
@@ -64,6 +68,10 @@ public class Shoe
         return deck;
     }
 
+    
+    /** 
+     * @return LinkedList<Card>
+     */
     public LinkedList<Card> Shuffle()
     {
         int ncards = cards.size();
@@ -84,21 +92,37 @@ public class Shoe
         return shuffled;
     }
 
+    
+    /** 
+     * @return Card
+     */
     public Card getCard()
     {
         return cards.pop();
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getPlayedCards()
     {
         return totalCards - cards.size();
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getNumCards()
     {
         return cards.size();
     }
 
+    
+    /** 
+     * @return String
+     */
     @Override
     public String toString()
     {
