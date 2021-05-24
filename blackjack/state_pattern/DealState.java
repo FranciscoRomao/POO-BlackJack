@@ -19,9 +19,8 @@ public class DealState implements State
         action = player.readPlay(1);
         if(context.getGame().getMode() == 'd' && !firstInput)
             System.out.println("-cmd "+action);
-        Scanner s = new Scanner(action);
-       // try(Scanner s = new Scanner(action))
-       // {
+        try(Scanner s = new Scanner(action))
+        {
             switch (s.next())
             {
                 case "$":
@@ -46,7 +45,7 @@ public class DealState implements State
                     break;
 
                 case "st":
-                    player.stats(); //#aqui
+                    context.getGame().stats(); //#aqui
                     break;
                 case "q":
                     return false;
@@ -66,11 +65,11 @@ public class DealState implements State
                         System.out.println(action+": illegal command");
                     break;
             }
-        // } catch (Exception e)
-        // {
-        //     System.out.println("shitaaaaa");
-        //     return true;
-        // } 
+        } catch (Exception e)
+        {
+            System.out.println("shitaaaaa");
+            return true;
+        } 
         firstInput = false;
         return true;
     }

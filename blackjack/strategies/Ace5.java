@@ -3,14 +3,23 @@ package blackjack.strategies;
 import blackjack.*;
 import blackjack.deck.*;
 
-public class Ace5 //implements Strategy
-{
+/**
+ * Class that implements the Ace-five counting strategy to help the player bet
+ * Its associated to the player object
+ * A player as a reference to this type of object
+ */
+public class Ace5 {
     private int count;
     private int minBet;
     private int maxBet;
     private int lastBet;
     private int suggest;
 
+    /**
+     * Ace-five strategy constructor
+     * @param minBeT Amount that will be the minimum recommended by the strategy
+     * @param maxBeT Max amount of bet in the game. Used to calculate the max amount of bet recommended
+     */
     public Ace5(int minBeT, int maxBeT) {
         double aux = (double) maxBeT + 1;
         minBet = minBeT;
@@ -24,9 +33,13 @@ public class Ace5 //implements Strategy
     }
 
     
-    /** 
-     * @param game
-     * @param print
+    /**
+     * Method that computes the next bet amount. When called prints to the player
+     * this amount
+     * 
+     * @param game  Reference to the game Object
+     * @param print Variable that dictactes if the bet suggestion should be printed
+     *              or not
      */
     public void advice(Game game, boolean print) {
         if(game.getRound() != 0)
@@ -49,7 +62,7 @@ public class Ace5 //implements Strategy
 
     /**
      * Make Ace5 strategy count and update it depending if the card shown is a 5 or an Ace
-     * @param card The card that was just revealed in the game to check its value
+     * @param card The card that was just revealed in the game, check its value
      */
     public void ace5Count(Card card) {
         int cardValue = card.getValue();
@@ -68,7 +81,8 @@ public class Ace5 //implements Strategy
     }
 
     /**
-     * Estou a fazer isto para que seja so preciso fazer print(hilo/basic)
+     * Method Override to make the print of the advice of this strategy
+     * @return String to be printed by the print and println methods
      */
     @Override
     public String toString() {
@@ -77,7 +91,9 @@ public class Ace5 //implements Strategy
 
     
     /** 
-     * @return String
+     * Method that returns the next bet move with an amount
+     * Used in the simulation mode to get the next bet move automatically from this strategy
+     * @return String: command "b " + bet amount
      */
     public String simAction() {
         return "b " + suggest;

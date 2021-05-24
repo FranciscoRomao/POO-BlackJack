@@ -19,9 +19,9 @@ public class SideRulesState implements State
         action = player.readPlay(2);
         if(context.getGame().getMode() == 'd')
             System.out.println("-cmd "+action);
-            Scanner s = new Scanner(action);
-        // try(Scanner s = new Scanner(action))
-        // {
+
+        try(Scanner s = new Scanner(action))
+        {
             switch (s.next())
             {
                 case "$":
@@ -54,7 +54,7 @@ public class SideRulesState implements State
                     player.getHilo().advice(context.getGame(), true, 2);                  
                     break;                
                 case "st":
-                    player.stats(); //#aqui
+                    context.getGame().stats(); 
                     break;
                 case "q":
                     return false;
@@ -62,11 +62,11 @@ public class SideRulesState implements State
                     System.out.println(action+": illegal command");
                     break;
             }
-        // } catch (Exception e)
-        // {
-        //     System.out.println("deu shita");
-        //     return true;
-        // }
+        } catch (Exception e)
+        {
+            System.out.println("deu shita");
+            return true;
+        }
 
         // if(handStatus != 1 && player.balance < context.getGame().min_bet)
         // {

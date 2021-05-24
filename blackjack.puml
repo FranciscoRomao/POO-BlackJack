@@ -5,188 +5,56 @@ package "blackjack"
 {
     left to right direction
 
-    +class Game
-    {
-        #mode:char
-        #player:Player
-        #dealer:Dealer
-        #strat:String
-        #min_bet:int
-        #max_bet:int
-        #playerBJcount:int
-        #dealerBJcount:int
-        #winCount:int
-        #loseCount:int
-        #pushCount:int
-        #shoe:int
-        #shuffle:int
-        #shuffleNum:int
-        #round:int
-        #context:StateContext
-
-        +Game(args:String[])
-        +startGame()
-        +changeState(newState:State)
-        -initMode(args:String)
-        -initBet(min:String, max:String)
-        -initSim(args:String[])
-        -errorChecking(args:String[])
-        -initCounts(args:String[])
-        -initNotDbug(args:String[])
-        -initDbug(args:String[])
-    }
-
-    +class Player
-    {
-        +game:Game
-        +hands:LinkedList<Hand>
-        +hilo_count:int
-        +ace5_count:int
-
-        #hilo:HiLo
-        #basic:Basic
-        #ace5:Ace5
-        #stdbet:StdBet
-        #strat:String
-
-        +balance:float
-        +action:String
-        +cmdFile:File
-        +insuranceBet:float
-        +initBalance:float
-
-        -s:Scanner
-        -input:InputStream
-        -delim:String
-        +handNumber:int
-        +splitted:boolean
-        +handsLeft:int
-        +nHands:int
-        +allBlackjack:boolean
-        +lastBet:int
-        +roundOutcome:int
-
-        +Player(game:Game, balance:int, string:String)
-        +stats()
-        +readPlay(state:int):String
-        +simulation(strat:String, state:int):String
-        +hit(print:boolean)
-        +stand()
-        +splitCheck():boolean
-        +split()
-        +insuranceCheck():boolean
-        +insure()
-        +insured():boolean
-        +surrender()
-        +doubleCheck():boolean
-        +doubleDown()
-        +showAllHands():String
-        +placeBet(value:int):boolean
-    }
-
-    +class Dealer
-    {
-        #game:Game
-        +holeCard:Card
-        #Shoe shoe
-        #Hand hand
-        +nHands:int
-
-        +Dealer(game:Gamr)
-        +Dealer(game:Game, shoe:String)
-        +hit()
-        +dealCards()
-        +bustCheck(Hand handToCheck):int
-        +playOtherHand()
-        +newRound()
-        +showHole()
-        +bust()
-        +stand(print:boolean)
-        +insuranceCheck()
-        -printEndScreen(dealerBust:boolean)
-        +showHand():String
-    }
-
-    +class Hand
-    {
-        -cards:LinkedList<Card>
-        +bet:int
-        +busted:boolean
-        +aceOf_1:int
-
-        +Hand(minBet:int)
-        +handSum():int
-        +addCard(to_add:Card)
-        +removeCard(toRemove:Card)
-        +hasAce():int
-        +get(index:int):int
-        +getCard(index:int):Card
-        +getNumCards():int
-        +hasBlackjack():boolean
-        +isSplittable():boolean
-        +getAceOf1():int
-    }
-
-    +class StateContext
-    {
-        -state:State
-        +game:Game
-        
-        +StateContext(game_:Game) 
-        +setState(newState:State)
-        +play():boolean
-    }
-
     package strategies
     {
         +class HiLo
         {
-            -count:int
-	        -suggest:char
+            -count: int
+	        -suggest: char
 
             +HiLo()
-            +advice(Game game, boolean print)
-            +Count(Card card)
-            +getTrueCount(shoe:Shoe):float
-            +bestAction(playerHand:Hand, dealerCard:Card, trueCount:float):char
+            +advice(game: Game, print: boolean, state: int)
+            +Count(card: Card)
+            +getTrueCount(shoe: Shoe): float
+            +bestAction(playerHand: Hand, dealerCard: Card, trueCount: float): char
             +resetCount()
-            +getRunningCount():int
-            +toString():String
-            +simAction(player:Player, state:int):String
+            +getRunningCount(): int
+            +simAction(player: Player, state: int): String
         }
 
         +class Basic
         {
-            -suggest:char
-            -hard:char[][]
-            -soft:char[][]
-            -pair:char[][]
+            -suggest: char
+            -hard: char[][]
+            -soft: char[][]
+            -pair: char[][]
 
-            +advice(game:Game, print:boolean)
-            +simAction(player:Player, state:int):String
+            +advice(game: Game, print: boolean)
+            +simAction(player: Player, state: int): String
         }
 
         +class Ace5
         {
-            -count:int
-            -minBet:int
-            -maxBet:int
-            -lastBet:int
-        -suggest:int
+            -count: int
+            -minBet: int
+            -maxBet: int
+            -lastBet: int
+            -suggest: int
 
-        +Ace5(minBeT:int, maxBeT:int)
-        +advice(game:Game, print:boolean)
-        +ace5Count(card:Card)
-        +resetCount()
-        +String simAction()
+            +Ace5(minBeT: int, maxBeT: int)
+            +advice(game: Game, print: boolean)
+            +ace5Count(card: Card)
+            +resetCount()
+            +String simAction()
         }
     
         +class StdBet
         {
             -int bet;
-            +advice(Game game, boolean print)
-            +increaseDecrease(roundOutcome:int, lastBet:int, minBet:int, maxBet:int):int
-            +simAction():String
+
+            +advice(game: Game, print: boolean)
+            +increaseDecrease(roundOutcome: int, lastBet: int, minBet: int, maxBet: int): int
+            +simAction(): String
         }
     }
 
@@ -194,7 +62,7 @@ package "blackjack"
     {
         +interface State
         {
-            +boolean play(context:StateContext);
+            +play(context: StateContext): boolean
         }
 
         +class GameStart implements State
@@ -203,7 +71,7 @@ package "blackjack"
 
         +class DealState implements State
         {
-            -firstInput:boolean
+            -firstInput: boolean
         }
 
         +class EndGameState implements State
@@ -214,48 +82,165 @@ package "blackjack"
         {
         }    
     }
-    
+
     package deck
     {
     	+class Shoe
         {
-            +totalCards:int
+            +totalCards: int
 
-            +Shoe(numDecks:int)
-            +Shoe(fileName:String)
-            +singleDeck():LinkedList<Card>
-            +LinkedList<Card> Shuffle()
-            +getCard():Card
-            +getPlayedCards():int
-            +getNumCards():int
+            +Shoe(numDecks: int)
+            +Shoe(fileName: String)
+            +singleDeck(): LinkedList<Card>
+            +Shuffle(): LinkedList<Card>
+            +getCard(): Card
+            +getPlayedCards(): int
+            +getNumCards(): int
         }
 
         +class Card
         {
-            +rank:int
-            -suit:int
+            +rank: int
+            -suit: int
 
-            +Card(rank:int, suit:int)
-            +Card(cardCode:String)
-            +getSuit():char
-            +showRank():String
-            +getValue():int
+            +Card(rank: int, suit: int)
+            +Card(cardCode: String)
+            +getSuit(): char
+            +showRank(): String
+            +getValue(): int
         }
 
-    	Shoe x--> "0..*\n cards" Card
+    	Shoe *---x "0..*" Card
     }
 
-    StateContext x---> "0..*" State
-    
-    'Player x--->  "0..* cards" Card
-    
-    'Dealer x---> "0..* cards" Card
-    
-    'Game "1 player" --"1" Player
-    
-    'Game "1" -- "1" Dealer
-    
-    'Dealer x--> "1 shoe" Shoe
+    +class Game
+    {
+        #strat: String
+        #min_bet: int
+        #max_bet: int
+        #playerBJcount: int
+        #dealerBJcount: int
+        #winCount: int
+        #loseCount: int
+        #pushCount: int
+        #shoe: int
+        #shuffle: int
+        #shuffleNum: int
+        #round: int
+        #mode: char
+
+        +Game(args: String[])
+        +startGame()
+        +stats()
+        +changeState(newState: State)
+        -initMode(args: String)
+        -initBet(min: String, max: String)
+        -initSim(args: String[])
+        -errorChecking(args: String[])
+        -initCounts(args: String[])
+        -initNotDbug(args: String[])
+        -initDbug(args: String[])
+    }
+
+    Game "1" --- "1" Player
+    Game "1" --- "1" Dealer
+    Game "1" --- "1" StateContext
+
+    +class Player
+    {
+
+        +cmdFile: File
+        -s: Scanner
+        -input: InputStream
+        #strat: String
+        +action: String
+        -delim: String
+        +balance: float
+        +insuranceBet: float
+        +initBalance: float
+        +splitted: boolean
+        +allBlackjack: boolean
+        +handNumber: int
+        +handsLeft: int
+        +nHands: int
+        +lastBet: int
+        +roundOutcome: int
+
+        +Player(game: Game, balance: int, string: String)
+        +readPlay(state: int): String
+        +simulation(strat: String, state: int): String
+        +hit(print: boolean)
+        +stand()
+        +splitCheck(): boolean
+        +split()
+        +insuranceCheck(): boolean
+        +insure()
+        +insured(): boolean
+        +surrender()
+        +doubleCheck(): boolean
+        +doubleDown()
+        +showAllHands(): String
+        +placeBet(value: int): boolean
+    }
+
+    Player o---x "1" Hand
+    Player o---x "1" HiLo
+    Player o---x "1" Ace5
+    Player o---x "1" StdBet
+    Player o---x "1" Basic
+
+    +class Dealer
+    {
+        +nHands: int
+
+        +Dealer(game: Game)
+        +Dealer(game: Game, shoe: String)
+        +hit()
+        +dealCards()
+        +bustCheck(Hand handToCheck): int
+        +playOtherHand()
+        +newRound()
+        +showHole()
+        +bust()
+        +stand(print: boolean)
+        +insuranceCheck()
+        -printEndScreen(dealerBust: boolean)
+        +showHand(): String
+    }
+
+    Dealer o---x "1" Hand
+    Dealer o---x "1" Card
+    Dealer o---x "1" Shoe
+
+    +class Hand
+    {
+        +bet: int
+        +aceOf_1: int
+        +busted: boolean
+
+        +Hand(minBet: int)
+        +handSum(): int
+        +addCard(to_add: Card)
+        +removeCard(toRemove: Card)
+        +hasAce(): int
+        +get(index: int): int
+        +getCard(index: int): Card
+        +getNumCards(): int
+        +hasBlackjack(): boolean
+        +isSplittable(): boolean
+        +getAceOf1(): int
+    }
+
+    Hand *---x "0..*" Card
+
+    +class StateContext
+    {
+        +StateContext(game_: Game) 
+        +setState(newState: State)
+        +play(): boolean
+    }
+
+    StateContext o---x "1" State
 }
 
 @enduml

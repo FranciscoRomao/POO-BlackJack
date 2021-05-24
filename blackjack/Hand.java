@@ -3,7 +3,10 @@ package blackjack;
 import java.util.LinkedList;
 import blackjack.deck.*;
 import java.util.Iterator;
-
+/**
+ * Class that implements one hand.
+ * <p>It contains a list of cards, the bet associated with the hand, and the number of aces that value 1
+ */
 public class Hand
 {
     private LinkedList<Card> cards;
@@ -11,6 +14,10 @@ public class Hand
     public boolean busted;
     private int aceOf_1;
 
+    /**
+     * Hand constructor
+     * @param minBet The minimum bet allowed in this game 
+     */
     public Hand(int minBet)
     {
         cards = new LinkedList<Card>();
@@ -21,7 +28,8 @@ public class Hand
 
     
     /** 
-     * @return int
+     * Returns the sum of the hand
+     * @return int Sum of the hand
      */
     public int handSum() //Assuming all Aces value 11
     {
@@ -46,7 +54,8 @@ public class Hand
 
     
     /** 
-     * @param to_add
+     * Adds a card to the hand
+     * @param to_add Card to add to the hand
      */
     public void addCard(Card to_add)
     {
@@ -63,7 +72,8 @@ public class Hand
 
     
     /** 
-     * @return int
+     * Checks the hand for aces
+     * @return int Number of aces in hand
      */
     public int hasAce() //Assuming all Aces value 11
     {
@@ -77,13 +87,15 @@ public class Hand
             if(rank == 1)
                 aceCount++;
         }
+        
         return aceCount;
     }
 
     
     /** 
-     * @param index
-     * @return int
+     * Returns the rank of the specified card
+     * @param index Index of the card
+     * @return int Rank of the specified card
      */
     public int get(int index) 
     {
@@ -92,16 +104,18 @@ public class Hand
 
     
     /** 
-     * @param index
-     * @return Card
+     * Returns the specified card
+     * @param index Index of the card
+     * @return Card Card wanted
      */
     public Card getCard(int index){
         return cards.get(index);
     }
 
     
-    /** 
-     * @return int
+    /**  
+     * Returns the number of cards in the hand
+     * @return int Number of cards
      */
     public int getNumCards()
     {
@@ -110,7 +124,8 @@ public class Hand
 
     
     /** 
-     * @return boolean
+     * Checks if the hand has a blackjack or not
+     * @return boolean True if there is a blackjack, false otherwise
      */
     public boolean hasBlackjack()
     {
@@ -118,8 +133,10 @@ public class Hand
     }
 
     
-    /** 
-     * @return boolean
+    /**
+     * Checks if the hand is splittable
+     * 
+     * @return Boolean that indicates if the hand is splittable
      */
     public boolean isSplittable()
     {
@@ -128,15 +145,19 @@ public class Hand
 
     
     /** 
-     * @return int
+     * Get the number of aces that value 1 in the hand
+     * 
+     * @return Integer aceOf_1
      */
     public int getAceOf1() {
         return aceOf_1;
     }
 
     
-    /** 
-     * @return String
+    /**
+     * Method Override to make the print of the asked hand
+     * 
+     * @return String to be printed by the print and println methods
      */
     @Override
     public String toString(){

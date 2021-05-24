@@ -5,7 +5,7 @@ MAIN=main/Main.java
 RUN=java
 INT=-i 5 75 500 4 60
 DBUG=-d 5 50 500 shoe-file-prof.txt cmd-file-prof.txt
-SIM=-s 5 50 500 8 50 500 HL
+SIM=-s 5 50 500 8 80 10000 HL
 CLEAN=rm blackjack/*.class main/*.class
 
 compile:

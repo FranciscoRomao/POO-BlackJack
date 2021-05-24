@@ -3,8 +3,13 @@ package blackjack.strategies;
 import blackjack.*;
 import blackjack.deck.*;
 
-public class Basic //implements Strategy
-{   
+/**
+ * Class that implements the Basic strategy to help the player decide the next action, 
+ * solely based on statistics and not what has already been played
+ * Its associated to the player object
+ * A player as a reference to this type of object
+ */
+public class Basic {   
     private char suggest;
 
     private char[][] hard = {{ 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H'}, //linha extra (quando temos 22 e nao pode fazer split e um hard 4)
@@ -50,15 +55,22 @@ public class Basic //implements Strategy
 
     
     
-    /** 
-     * @param game
-     * @param print
+    /**
+     * Method that advises the player on what should be is next move. This suggestion 
+     * is based on pre-defined tables (hard, soft or pair).
+     * These tables dictate what the statistical best move is, according to the player's
+     * hand value and the dealer's hole card.
+     * When called prints to the player the action he should take.
+     * 
+     * @param game  Reference to the game Object
+     * @param print Variable that dictactes if the play suggestion should be printed
+     *              or not
      */
     public void advice(Game game, boolean print)
     {             
         Hand playerHand = game.getPlayer().getHands().get(game.getPlayer().handNumber);
         Card dealerCard = game.getDealer().getHand().getCard(0);
-        int handSum = playerHand.handSum(); //soma da mao do jogador
+        int handSum = playerHand.handSum();
         int tableSelector = 0;
         
         int aceCount = playerHand.hasAce();
@@ -105,7 +117,9 @@ public class Basic //implements Strategy
 
     
     /**
-     * Estou a fazer isto para que seja so preciso fazer print(hilo/basic)
+     * Method Override to make the print of the advice of this strategy
+     * 
+     * @return String to be printed by the print and println methods
      */
     @Override
     public String toString() {
@@ -138,10 +152,12 @@ public class Basic //implements Strategy
     }
 
     /**
+     * Method that returns the next play move. Used in the simulation
+     * mode to get the next play move automatically from this strategy.
      * 
-     * @param player 
-     * @param state indicates which state of the game it's currently on
-     * @return action simulated by this strategy
+     * @param player Reference to the player Object
+     * @param state  Indicates which state of the game it's currently on
+     * @return Action to be executed
      */
     public String simAction (Player player, int state){
         String action = "--";

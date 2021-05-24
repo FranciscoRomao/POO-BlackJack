@@ -1,17 +1,17 @@
 package blackjack;
 
 import java.util.*;
-
 import blackjack.strategies.*;
-
 import java.io.*;
 
+/**
+ * Class that implements the player of the game
+ *<p> It contains the methods corresponding to player moves and necessary atributes
+ */
 public class Player
 {
     public Game game;
     protected LinkedList<Hand> hands;
-    public int hilo_count;
-    public int ace5_count;
 
     protected HiLo hilo;
     protected Basic basic;
@@ -37,7 +37,12 @@ public class Player
     public int lastBet; 
     public int roundOutcome; 
 
-    //public Player(Game game, LinkedList<Chip> init_chips, int strat)
+    /**
+     * Player constructor
+     * @param game Game this player is playing
+     * @param balance Player's balance
+     * @param string Command file name(in debug mode) or strategy(in simulation mode)
+     */
     public Player(Game game, int balance, String string)
     {
         this.game = game;
@@ -47,8 +52,6 @@ public class Player
         hands = new LinkedList<Hand>();
         hands.add(new Hand(game.min_bet));
         lastBet = game.min_bet;
-        hilo_count = 0;
-        ace5_count = 0;
 
         splitNumber = 0;
         nHands = 0;
@@ -59,7 +62,7 @@ public class Player
 
         basic = new Basic();
         hilo = new HiLo();
-        ace5 = new Ace5(game.min_bet, 16);
+        ace5 = new Ace5(game.min_bet, game.max_bet);
         stdbet = new StdBet(); 
 
         switch (this.game.mode)
@@ -97,7 +100,9 @@ public class Player
     }
 
     /**
-     * 
+     * Method that reads the next player action, whether it's in debub, interactice or simulation mode
+     * @param state The current state of the game
+     * @return String The command to be played
      */
     public String readPlay(int state)
     {
@@ -127,21 +132,11 @@ public class Player
         }
         return action;
     }
-
-    public void stats()
-    {
-        float gains = ((balance-initBalance)/initBalance) * 100f;
-        System.out.printf("BJ P/D\t%.3f/%.3f%n", (float)game.playerBJcount/nHands, (float)game.dealerBJcount/game.dealer.nHands);
-        System.out.printf("Win \t%.2f%n", (float)game.winCount/nHands);
-        System.out.printf("Lose\t%.2f%n", (float)game.loseCount/nHands);
-        System.out.printf("Push\t%.2f%n", (float)game.pushCount/nHands);
-        System.out.printf("Balance\t%.2f(%.2f%%)%n", balance, gains);
-    }
-
     
     /** 
-     * @param strat
-     * @param state
+     * Method that calls strategies methods in order to obtain the next move according to those strategies
+     * @param strat Strategy to be used in simulation
+     * @param state Current state of the game
      * @return String
      */
     public String simulation(String strat, int state) {
@@ -198,7 +193,7 @@ public class Player
 
 
      /**
-      * 
+      * Method that processes the hit command. It takes one card from the deck and adds it to the player's hand
       * @param print indicates if "player hits" is printed or not
       */
     public void hit(boolean print)
@@ -220,7 +215,7 @@ public class Player
     }
     
     /**
-     * 
+     * Method that processes the stand command
      */
     public void stand()
     {
@@ -242,7 +237,8 @@ public class Player
 
     
     /** 
-     * @return boolean
+     * Checks if the player can split or not
+     * @return boolean Returns true if player can split, false otherwise
      */
     public boolean splitCheck(){
         if(!hands.get(handNumber).isSplittable() || splitNumber > 3){
@@ -254,13 +250,13 @@ public class Player
     }
 
     /**
-     * 
+     * Implements the split siderule
      */
     public void split()
     {
         String th = "st";
         if(splitCheck()){
-       if(game.mode != 's')
+        if(game.mode != 's')
                 System.out.println("player is splitting");
             nHands++;
             hands.add(new Hand(hands.get(handNumber).bet));
@@ -285,8 +281,9 @@ public class Player
 
     
     /** 
-     * @param print
-     * @return boolean
+     * Check if the player can insure or not
+     * @param print indicates if "illegal command" is printed or not
+     * @return boolean True if player can insure, false otherwise
      */
     public boolean insuranceCheck(boolean print){
         if(game.dealer.hand.get(0) != 1 || insuranceBet != -1 || splitted){    //1==ACE
@@ -297,27 +294,28 @@ public class Player
         return true;
     }
     /**
-     * 
+     * Implements the insure siderule
      */
     public void insure()
     {
         if(insuranceCheck(true)){
-       if(game.mode != 's')
-                System.out.println("player is insuring");
-            insuranceBet = hands.get(handNumber).bet;
-            balance -= insuranceBet;
+        if(game.mode != 's')
+            System.out.println("player is insuring");
+        insuranceBet = hands.get(handNumber).bet;
+        balance -= insuranceBet;
         }
     }
 
     /**
-     * 
+     * Method that indicates if the player insured or not in the current round
+     * @return boolean True if player insured in this round, false otherwise
      */
     public boolean insured(){
         return (insuranceBet != -1);
     }
 
     /**
-     * 
+     * Implements the surrender siderule
      */
     public void surrender() {
         if(game.mode != 's')        
@@ -338,8 +336,9 @@ public class Player
     
     
     /** 
-     * @param print
-     * @return boolean
+     * Checks if the player can double or not
+     * @param print indicates if "illegal command" is printed or not
+     * @return boolean True if player can double, false otherwise
      */
     public boolean doubleCheck(boolean print){
         if(hands.get(handNumber).handSum() < 9 || hands.get(handNumber).handSum() > 11){
@@ -350,7 +349,7 @@ public class Player
         return true;
     }
     /**
-     * 
+     * Implements the double siderule
      */
     public void doubleDown(){
         if(doubleCheck(true)){
@@ -366,8 +365,8 @@ public class Player
     }
 
     /**
-     * 
-     * @return
+     * Shows all of the player's hands
+     * @return String Player's hands
      */
     public String showAllHands(){
         StringBuilder str = new StringBuilder();
@@ -389,7 +388,9 @@ public class Player
     }
 
     /**
-     * 
+     * Implements the bet command
+     * @param value Ammount of money to bet
+     * @return boolean True if betting the specified ammount is possible, false otherwise
      */
     public boolean placeBet(int value){
         /*if(value > balance || (value == -1 && balance < hands.get(handNumber).bet)){
@@ -415,7 +416,8 @@ public class Player
 
     
     /** 
-     * @return LinkedList<Hand>
+     * Returns player hands
+     * @return LinkedList<Hand> Player hands
      */
     public LinkedList<Hand> getHands(){
         return hands;
@@ -423,20 +425,23 @@ public class Player
 
     
     /** 
-     * @return HiLo
+     * Returns hi-lo strategy
+     * @return HiLo Strategy
      */
     public HiLo getHilo(){
         return hilo;
     }
     
     /** 
-     * @return Basic
+     * Returns basic strategy
+     * @return Basic Strategy
      */
     public Basic getBasic(){
         return basic;
     }
     
     /** 
+     * Returns ace-five strategy
      * @return Ace5
      */
     public Ace5 getAce5(){
@@ -444,7 +449,8 @@ public class Player
     }
     
     /** 
-     * @return StdBet
+     * Returns standard bet strategy 
+     * @return StdBet Strategy
      */
     public StdBet getStdBet(){
         return stdbet;

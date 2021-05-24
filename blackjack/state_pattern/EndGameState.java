@@ -45,7 +45,7 @@ public class EndGameState implements State
                     break;
 
                 case "st":
-                    player.stats(); //#aqui
+                    context.getGame().stats(); //#aqui
                     break;
                 case "q":
                     return false;

@@ -1,7 +1,10 @@
 package blackjack;
 
 import blackjack.state_pattern.*;
-
+/**
+ * Class that implements the game.
+ * <p> It contains a player, a dealer and the initial arguments
+ */
 public class Game {
     protected char mode;
     protected Player player;
@@ -19,8 +22,6 @@ public class Game {
     public int pushCount;
 
 
-    // public int init_bal; //?ja nao precisas
-
     // Number of decks on the shoe
     protected int shoe;
 
@@ -35,8 +36,8 @@ public class Game {
     private StateContext context;
 
     /**
-     * 
-     * @param args Input Parameters
+     * Game constructor. Initializes all the atributes according to the program parameters
+     * @param args Program parameters
      */
     public Game(String[] args) {        
         if (args.length == 0) { // args vazio
@@ -44,7 +45,7 @@ public class Game {
             System.exit(-1);
         }
         initMode(args);       
-        //try {
+        try {
             initBet(args[1], args[2]);
             this.round = 0;
             if (this.mode != 'd') {                
@@ -58,29 +59,26 @@ public class Game {
                 initCounts(args);
                 initDbug(args);
             }
-        // } catch (Exception e) {
-        //     System.out.println("Please insert numbers only besides the mode and the strategy");
-        //     System.exit(-1);
-        // }
+        } catch (Exception e) {
+            System.out.println("Please insert numbers only besides the mode and the strategy");
+            System.exit(-1);
+        }
     }
 
-    /**
-     * 
-     */
     @Override
     public String toString() {
         return mode + " " + min_bet + " " + max_bet + " " + this.player.balance + " " + shoe + " " + shuffle;
     }
 
     /**
-     * 
+     * Initiates a game, calling the play method which gets the command from the player, file or simulation
      */
     public void startGame(){
         boolean playing = true;
         while(playing)
             playing = context.play(); //Primeiro entra no GameStart -> DealState
         if(mode == 's'){
-            player.stats();
+            stats();
             return;
         }
         System.out.println("bye");
@@ -89,6 +87,7 @@ public class Game {
     
     
     /** 
+     * Changes the current game state
      * @param newState
      */
     public void changeState(State newState){
@@ -97,7 +96,8 @@ public class Game {
 
     
     /** 
-     * @param args
+     * Initializes the game mode
+     * @param args Program parameters
      */
     private void initMode(String[] args){
         if (args[0].charAt(0) != '-') {
@@ -117,8 +117,9 @@ public class Game {
 
     
     /** 
-     * @param min
-     * @param max
+     * Initializes the bets
+     * @param min Minimum bet
+     * @param max Maximum bet
      */
     private void initBet(String min, String max){
         min_bet = Integer.parseInt(min);
@@ -136,7 +137,8 @@ public class Game {
 
     
     /** 
-     * @param args
+     * Initializes the simulation
+     * @param args Program parameters
      */
     private void initSim(String[] args){
         if (this.mode == 's') {
@@ -147,7 +149,8 @@ public class Game {
 
     
     /** 
-     * @param args
+     * Checks for bad parameters
+     * @param args Program parameters
      */
     private void errorChecking(String[] args){
         if (Integer.parseInt(args[3]) < 50 * this.min_bet) {
@@ -165,6 +168,7 @@ public class Game {
     }
     
     /** 
+     * Initiliazes counters for statistics
      * @param args
      */
     private void initCounts(String[] args){        
@@ -177,6 +181,7 @@ public class Game {
 
     
     /** 
+     * Initialization of atributes for the interactive and simulation modes
      * @param args
      */
     private void initNotDbug(String[] args){
@@ -191,6 +196,7 @@ public class Game {
 
     
     /** 
+     * Initialization of atributes for the debug mode
      * @param args
      */
     private void initDbug(String[] args){
@@ -200,9 +206,22 @@ public class Game {
         context = new StateContext(this);
     }
 
+    /**
+     * Method that prints the statistics of the game 
+     */
+    public void stats()
+    {
+        float gains = ((player.balance-player.initBalance)/player.initBalance) * 100f;
+        System.out.printf("BJ P/D\t%.3f/%.3f%n", (float)playerBJcount/player.nHands, (float)dealerBJcount/dealer.nHands);
+        System.out.printf("Win \t%.2f%n", (float)winCount/player.nHands);
+        System.out.printf("Lose\t%.2f%n", (float)loseCount/player.nHands);
+        System.out.printf("Push\t%.2f%n", (float)pushCount/player.nHands);
+        System.out.printf("Balance\t%.2f(%.2f%%)%n", player.balance, gains);
+    }
     
     /** 
-     * @return Player
+     * Returns the player
+     * @return Player player
      */
     public Player getPlayer(){
         return player;
@@ -210,7 +229,8 @@ public class Game {
 
     
     /** 
-     * @return Dealer
+     * Returns the dealer
+     * @return Dealer dealer
      */
     public Dealer getDealer(){
         return dealer;
@@ -218,14 +238,16 @@ public class Game {
 
     
     /** 
-     * @return int
+     * Returns the round
+     * @return int round
      */
     public int getRound(){
         return round;
     }
     
     /** 
-     * @param value
+     * Sets the round
+     * @param value Value to set the round to
      */
     public void setRound(int value){
         round = value;
@@ -233,28 +255,32 @@ public class Game {
 
     
     /** 
-     * @return int
+     * Returns the minimum bet
+     * @return int minimum bet
      */
     public int getMinBet(){
         return min_bet;
     }
     
     /** 
-     * @return int
+     * Returns the maximum bet
+     * @return int maximum bet
      */
     public int getMaxBet(){
         return max_bet;
     }
     
     /** 
-     * @return char
+     * Returns the game mode
+     * @return char game mode
      */
     public char getMode(){
         return mode;
     }
     
     /** 
-     * @return int
+     * Returns the number of shuffles
+     * @return int number of shuffles
      */
     public int getShuffleNum(){
         return shuffleNum;

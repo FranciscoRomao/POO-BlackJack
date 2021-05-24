@@ -3,20 +3,29 @@ package blackjack.strategies;
 import blackjack.*;
 import blackjack.deck.*;
 
-public class HiLo
-{
+/**
+ * Class that implements the Hi-Lo counting strategy, adviving the player what is the next 
+ * best move according to what has already been played. Its associated to the player object.
+ * A player as a reference to this type of object
+ */
+public class HiLo {
 	private int count;
 	private char suggest;
 
-	public HiLo() { //?acho que este construtor nao e preciso....
+	public HiLo() {
 		count = 0;
 	}
 
     
-	/** 
-	 * @param game
-	 * @param print
-	 * @param state
+	/**
+	 * Method that advises the player on what should be is best move. The advice
+	 * is dictated by 2 sets of rules: Illustrious 18 and Fab 4. These rules check
+	 * the player's hand, the dealer hole card and the true count.
+	 * 
+	 * @param game  Reference to the game Object
+	 * @param print Variable that dictactes if the play suggestion should be printed
+	 *              or not
+	 * @param state Indicates which state of the game it's currently on
 	 */
 	public void advice(Game game, boolean print, int state)
     {
@@ -30,7 +39,10 @@ public class HiLo
     }
 
 	/**
-	 * Chamar cada vez que uma carta é mostrada no jogo, nao sei onde isso e feito
+	 * Method called everytime a new card is shown from the shoe. Checks the card
+	 * value. The strategy count is updated according to the face value of the card
+	 * 
+	 * @param card Reference of the card to be checked
 	 */
 	public void Count(Card card) {
 		int cardValue = card.getValue();
@@ -38,27 +50,30 @@ public class HiLo
 		else if (cardValue >= 10) count--;
 	}	
 
-	
-	/** 
+	/**
+	 * Calculates the true count. This is done dividing the count by the number of
+	 * remaining decks.
+	 * 
 	 * @param shoe
-	 * @return float
+	 * @return
 	 */
 	public float getTrueCount(Shoe shoe) {
 		float remainDecks = shoe.getNumCards()/52;
 
 		return count/remainDecks;
-
-		//return (float)(Math.round(_trueCount/0.5) * 0.5); //*no slack a prof disse para mandarmos o float mesmo, e acho que aqui era (int) n float xD tavamos a dormir
 	}
 
-	
-	/** 
-	 * @param playerHand
-	 * @param dealerCard
-	 * @param trueCount
-	 * @param insure
-	 * @param state
-	 * @return char
+	/**
+	 * Computes the best action to execute next by checking all the possible cases
+	 * that the Illustrious 18 and Fab 4 rules have. It checks the player's hand value,
+	 * the dealer hole card and the true count to make this decision. 
+	 * 
+	 * @param playerHand Reference to the player hand when he asks for advice
+	 * @param dealerCard Reference to dealer hole card
+	 * @param trueCount  True Coun variable
+	 * @param insure     Variable that checks if it is possible to insure
+	 * @param state      Indicates which state of the game it's currently on
+	 * @return 			 Character that indicates the next best action
 	 */
 	public char bestAction (Hand playerHand, Card dealerCard, float trueCount, boolean insure, int state) { 
 		int handSum = playerHand.handSum(); 
@@ -74,7 +89,7 @@ public class HiLo
 			return suggesT;
 		}
 
-		//Illustrious18 //!falta o insurance
+		//Illustrious18
 		suggesT = (handSum==16 && dealerRank.equals("10")) ? ((trueCount >= 0) ? 'S' : 'H' ):
 				  (pair10 && dealerRank.equals("5")) ? ((trueCount >= 5) ? 'P' : 'S' ):
 				  (pair10 && dealerRank.equals("6")) ? ((trueCount >= 4) ? 'P' : 'S' ):
@@ -117,14 +132,18 @@ public class HiLo
 	}
 
 	/**
-	 * Nao sei para que isto vai servir mas fica aqui seclahar da jeito no futuro
+	 * Method to get the current Hi-Lo running count
+	 * 
+	 * @return Integer of the running count
 	 */
 	public int getRunningCount() {
 		return count;
 	}
 
 	/**
-	 * Estou a fazer isto para que seja so preciso fazer print(hilo/basic)
+	 * Method Override to make the print of the advice of this strategy
+	 * 
+	 * @return String to be printed by the print and println methods
 	 */
 	@Override
 	public String toString() {
@@ -157,10 +176,13 @@ public class HiLo
 	}
 
 	
-	/** 
-	 * @param player
-	 * @param state
-	 * @return String
+	/**
+	 * Method that returns the next play move. Used in the simulation mode to get
+	 * the next play move automatically from this strategy.
+	 * 
+	 * @param player Reference to the player Object
+	 * @param state  Indicates which state of the game it's currently on
+	 * @return Action to be executed
 	 */
 	public String simAction(Player player, int state) {
 		String action;
@@ -200,7 +222,6 @@ public class HiLo
 				action = "BASIC";
 				break;
 		}
-
 		return action;
 	}
 	
