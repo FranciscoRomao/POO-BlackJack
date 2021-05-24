@@ -1,6 +1,6 @@
-package blackjack;
+package blackjack.deck;
 
-class Card
+public class Card
 {
     int rank; //*package pq sei que mts vezes se usa card.get(i).rank e a solucao era fazer um metodo getRank()
     /*Ace - 0
@@ -59,6 +59,9 @@ class Card
             default:
                 break;
         }
+    }
+    public int getRank(){
+        return rank;
     }
 
     public char getSuit(){

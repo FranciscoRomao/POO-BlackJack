@@ -1,9 +1,9 @@
-package blackjack;
+package blackjack.deck;
 
 import java.util.*;
 import java.io.*;
 
-class Shoe
+public class Shoe
 {
     private LinkedList<Card> cards;
     private int totalCards;

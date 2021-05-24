@@ -1,12 +1,15 @@
 package blackjack;
 
+import blackjack.state_pattern.GameStart;
+import blackjack.state_pattern.State;
+
 public class StateContext {
     private State state;
-    public Game game;
+    private Game game;
     
     public StateContext(Game game_) {
         game = game_;
-        game.round = 0;
+        game.setRound(0);
         state = new GameStart();
     }
     /**
@@ -14,11 +17,14 @@ public class StateContext {
      * Normally only called by classes implementing the State interface.
      * @param newState the new state of this context
      */
-    void setState(State newState) {
+    public void setState(State newState) {
         state = newState;
     }
 
     public boolean play() {        
         return state.play(this);
+    }
+    public Game getGame(){
+        return game;
     }
 }

@@ -1,0 +1,27 @@
+@startuml
+
+package statePattern
+{
+    +interface State
+    {
+        +boolean play(context:StateContext);
+    }
+
+    +class GameStart implements State
+    {
+    }
+
+    +class DealState implements State
+    {
+        -firstInput:boolean
+    }
+
+    +class EndGameState implements State
+    {
+    }
+
+    +class SideRulesState implements State
+    {
+    }
+}
+@enduml

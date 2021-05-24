@@ -1,14 +1,16 @@
-package blackjack;
+package blackjack.strategies;
+
+import blackjack.Game;
 
 public class StdBet {
     private int bet;
 
     public void advice(Game game, boolean print) // mandar vir para aqui o minBet, maxBet e Bet = lastBet
     {       
-        if (game.round == 0) { // para saber se ja fez alguma aposta ou nao
-            bet = game.min_bet;
+        if (game.getRound() == 0) { // para saber se ja fez alguma aposta ou nao
+            bet = game.getMinBet();
         } else {
-            bet = increaseDecrease(game.player.roundOutcome, game.player.lastBet, game.min_bet, game.max_bet);
+            bet = increaseDecrease(game.getPlayer().roundOutcome, game.getPlayer().lastBet, game.getMinBet(), game.getMaxBet());
         }
 
         if (print)

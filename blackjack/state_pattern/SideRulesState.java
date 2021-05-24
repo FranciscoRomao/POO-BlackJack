@@ -1,18 +1,20 @@
-package blackjack;
+package blackjack.state_pattern;
 import java.util.Scanner;
+
+import blackjack.*;
 
 public class SideRulesState implements State
 {
     @Override
     public boolean play(StateContext context)
     {
-        Player player = context.game.player;
-        Dealer dealer = context.game.dealer;
+        Player player = context.getGame().getPlayer();
+        Dealer dealer = context.getGame().getDealer();
         String action;
         int handStatus = 1;
 
         action = player.readPlay(2);
-        if(context.game.mode == 'd')
+        if(context.getGame().getMode() == 'd')
             System.out.println("-cmd "+action);
             Scanner s = new Scanner(action);
         // try(Scanner s = new Scanner(action))
@@ -36,7 +38,7 @@ public class SideRulesState implements State
                     break;
                 case "h":
                     player.hit(true);
-                    handStatus = dealer.bustCheck(player.hands.get(player.handNumber));
+                    handStatus = dealer.bustCheck(player.getHands().get(player.handNumber));
                     if(handStatus == 1) //nao foi blackjack nem bust
                         context.setState(new EndGameState());
                     break;
@@ -45,8 +47,8 @@ public class SideRulesState implements State
                     break;
                 case "ad":
                     System.out.println("player asks for advice");
-                    player.basic.advice(context.game, true);
-                    player.hilo.advice(context.game, true, 2);                  
+                    player.getBasic().advice(context.getGame(), true);
+                    player.getHilo().advice(context.getGame(), true, 2);                  
                     break;                
                 case "st":
                     player.stats(); //#aqui
@@ -62,7 +64,7 @@ public class SideRulesState implements State
         //     return true;
         // }
 
-        // if(handStatus != 1 && player.balance < context.game.min_bet)
+        // if(handStatus != 1 && player.balance < context.getGame().min_bet)
         // {
         //     System.out.println("Player doesn't have enough money to start a new game");
         //     return false;

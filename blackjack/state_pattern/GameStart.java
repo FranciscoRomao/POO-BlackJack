@@ -1,19 +1,20 @@
-package blackjack;
+package blackjack.state_pattern;
 import java.util.Scanner;
+
+import blackjack.*;
 
 public class GameStart implements State
 {
     @Override
     public boolean play(StateContext context)
     {
-        Player player = context.game.player;
+        Player player = context.getGame().getPlayer();
         boolean nextState = false;
         String action;
-        if(context.game.shuffleNum == 0 && context.game.mode == 's')
+        if(context.getGame().getShuffleNum() == 0 && context.getGame().getMode() == 's')
             return false;
-
         action = player.readPlay(0);
-        if(context.game.mode == 'd')
+        if(context.getGame().getMode() == 'd')
             System.out.println("-cmd "+action);
         try(Scanner s = new Scanner(action))
         {
@@ -29,18 +30,18 @@ public class GameStart implements State
                     } 
                     catch (Exception e)
                     {
-                        if(context.game.mode != 'd')
+                        if(context.getGame().getMode() != 'd')
                             nextState = player.placeBet(-1);
                     }
 
-                    if(context.game.mode == 'd' || nextState)
+                    if(context.getGame().getMode() == 'd' || nextState)
                         context.setState(new DealState());
 
                     break;
 
                 case "ad":
-                    player.ace5.advice(context.game, true);
-                    player.stdbet.advice(context.game, true);
+                    player.getAce5().advice(context.getGame(), true);
+                    player.getStdBet().advice(context.getGame(), true);
                     break;
 
                 case "st":

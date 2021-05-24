@@ -2,6 +2,9 @@ package blackjack;
 
 import java.util.Iterator;
 
+import blackjack.deck.*;
+import blackjack.state_pattern.*;;
+
 public class Dealer
 {   
     protected Game game;
@@ -31,10 +34,10 @@ public class Dealer
         Card aux;
         aux = shoe.getCard();
         hand.addCard(aux);
-   if(game.mode != 's')
+        if(game.mode != 's')
             System.out.println("dealer hits");
-        game.player.hilo.Count(aux); 
-        game.player.ace5.ace5Count(aux);
+        game.getPlayer().hilo.Count(aux); 
+        game.getPlayer().ace5.ace5Count(aux);
     }
 
     /**
@@ -316,6 +319,13 @@ public class Dealer
     public String showHand()
     {
         return "dealer's hand "+hand;
+    }
+
+    public Hand getHand(){
+        return hand;
+    }
+    public Shoe getShoe(){
+        return shoe;
     }
 
 }
