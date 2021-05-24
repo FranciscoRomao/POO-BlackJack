@@ -2,14 +2,12 @@ package blackjack.state_pattern;
 import java.util.Scanner;
 
 import blackjack.*;
-
+/**
+ * Class representing the state of the game after the deal command
+ * <p>This is where the player can decide to pick any of the available siderules
+ */
 public class SideRulesState implements State
 {
-    
-    /** 
-     * @param context
-     * @return boolean
-     */
     @Override
     public boolean play(StateContext context)
     {

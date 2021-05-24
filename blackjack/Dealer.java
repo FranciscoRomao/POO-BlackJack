@@ -4,7 +4,9 @@ import java.util.Iterator;
 
 import blackjack.deck.*;
 import blackjack.state_pattern.*;;
-
+/**
+ * Class that implements the game's dealer
+ */
 public class Dealer
 {   
     protected Game game;
@@ -13,15 +15,22 @@ public class Dealer
     protected Hand hand;
     public int nHands;
     /**
-     * 
-     * @param game
+     * Dealer constructor for simulation or interactive modes
+     * @param game The game that's going to be played
      */
     public Dealer(Game game)
     {      
         this.game = game;
         this.hand = new Hand(0);
+        if(game.mode == 'i')
+            System.out.println("shuffling the shoe...");
         this.shoe = new Shoe(this.game.shoe);
     }
+    /**
+     * Dealer construcotr for debug mode
+     * @param game Game that's going to be played
+     * @param shoe String with the name of the file with the shoe
+     */
     public Dealer(Game game, String shoe)
     {
         this.game = game;
@@ -30,7 +39,7 @@ public class Dealer
     }
 
     /**
-     * 
+     * Implements the hit command. Takes card out of the shoe and adds it to te dealer's hand. It also counts the cards for the hilo and ace5 strategies
      */
     public void hit()
     {
@@ -44,7 +53,7 @@ public class Dealer
     }
 
     /**
-     * 
+     * Deals cards to the player and to themselves. It also counts the cards for the hilo and ace5 strategies
      */
     public void dealCards()
     {
@@ -64,40 +73,28 @@ public class Dealer
         game.player.hilo.Count(aux);
         game.player.ace5.ace5Count(aux);
         hand.addCard(aux);
-   if(game.mode != 's'){
+        if(game.mode != 's'){
             System.out.println(showHand()+"X");
             System.out.println("player's hand "+game.player.hands.get(game.player.handNumber)+"("+game.player.hands.get(game.player.handNumber).handSum()+")");
         }
     }
 
     /**
-     * 
-     */
-    public int checkBJ()
-    {
-        if(this.game.player.hands.get(game.player.handNumber).handSum() == 21)
-            return 1;
-        
-        if(this.hand.handSum() == 21)
-            return 2;
-            
-        return 0;
-    }
-
-    /**
-     * 
+     * Checks if the received hand is a bust
+     * @param handToCheck Hand to check if busted or not
+     * @return int -1 if busted, 1 otherwise
      */
     public int bustCheck(Hand handToCheck)
     {
         if(handToCheck.handSum() > 21)
         {
-       if(game.mode != 's')
+            if(game.mode != 's')
                 System.out.print("player busts ");
             game.player.hands.get(game.player.handNumber).busted = true;
 
             if(game.player.splitted && game.mode != 's')
                 System.out.print("["+(game.player.handNumber + 1)+"]");
-       if(game.mode != 's')
+            if(game.mode != 's')
                 System.out.println();
 
             if(game.player.handsLeft > 1)
@@ -112,7 +109,7 @@ public class Dealer
     }
 
     /**
-     * 
+     * Method that starts playing the next hand, in case of a split
      */
     public void playOtherHand()
     {
@@ -127,14 +124,14 @@ public class Dealer
         {
             th = "th";
         }
-   if(game.mode != 's')
+        if(game.mode != 's')
             System.out.println("playing "+(game.player.handNumber + 1)+th+" hand...");
         game.player.hit(false);
         game.changeState(new SideRulesState());
     }
 
     /**
-     * 
+     * Method that starts a new round, resetting all necessary variables and checking if shuffle is needed
      */
     public void newRound(){
         game.round++;
@@ -150,6 +147,8 @@ public class Dealer
         game.player.handNumber = 0;
         game.changeState(new GameStart());
         if(shoe.getPlayedCards() > game.shuffle){
+            if(game.mode == 'i')
+                System.out.println("shuffling the shoe...");
             shoe = new Shoe(game.shoe);
             game.player.hilo.resetCount();
             game.player.ace5.resetCount();
@@ -158,7 +157,7 @@ public class Dealer
     }
 
     /**
-     * 
+     * Shows the dealer's hole card
      */
     public void showHole(){
         hand.addCard(holeCard);
@@ -169,7 +168,7 @@ public class Dealer
     }
 
     /**
-     * 
+     * Processes what happens when the player busts
      */
     public void bust()
     {
@@ -188,7 +187,8 @@ public class Dealer
     }
 
     /**
-     * 
+     * Processes what happens when the player stands
+     * @param print True if printing commands is required, false otherwise
      */
     public void stand(boolean print)
     {
@@ -230,7 +230,7 @@ public class Dealer
     }   
 
     /**
-     * 
+     * If player insured, proceeds accordingly
      */
     public void insuranceCheck()
     {
@@ -247,8 +247,8 @@ public class Dealer
     }
 
     /**
-     * 
-     * @param dealerBust
+     * Prints the end of round screen, indicating whether the player won, lost or pushed
+     * @param dealerBust True if dealer busted, false otherwise
      */
     private void printEndScreen(boolean dealerBust) {
         String lastString = " and his current balance is ";
@@ -317,7 +317,7 @@ public class Dealer
     }
 
      /**
-      * 
+      * Shows dealer hand
       */
     public String showHand()
     {
@@ -326,14 +326,16 @@ public class Dealer
 
     
     /** 
-     * @return Hand
+     * Returns dealer hand
+     * @return Hand Dealer hand
      */
     public Hand getHand(){
         return hand;
     }
     
     /** 
-     * @return Shoe
+     * Returns the shoe
+     * @return Shoe Game shoe
      */
     public Shoe getShoe(){
         return shoe;

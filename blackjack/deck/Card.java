@@ -1,5 +1,8 @@
 package blackjack.deck;
 
+/**
+ * Card class, containing the rank and the suit of the card, and respective methods to access these.
+ */
 public class Card
 {
     int rank; //*package pq sei que mts vezes se usa card.get(i).rank e a solucao era fazer um metodo getRank()
@@ -14,13 +17,20 @@ public class Card
     Spades - 1
     Diamonds - 2
     Hearts - 3*/
-
+    /**
+     * Card constructor when creating shoe automatically
+     * @param rank Card Rank
+     * @param suit Card Suit
+     */
     public Card(int rank, int suit)
     {
         this.rank = rank;
         this.suit = suit;
     }
-
+    /**
+     * Card constructor when reading cards from a file
+     * @param cardCode Card in the format RS, where R is the rank and S is the suit of the card
+     */
     public Card(String cardCode)//tipo 2S
     {
         switch (cardCode.charAt(0))
@@ -62,7 +72,8 @@ public class Card
     }
     
     /** 
-     * @return int
+     * Returns the card's rank
+     * @return int Card rank
      */
     public int getRank(){
         return rank;
@@ -70,7 +81,8 @@ public class Card
 
     
     /** 
-     * @return char
+     * Returns the card's suit
+     * @return char Card suit
      */
     public char getSuit(){
         char retSuit = '\0';
@@ -95,7 +107,8 @@ public class Card
     }
     
     /** 
-     * @return String
+     * Returns the card's rank in readable format
+     * @return String Card rank in readable format
      */
     public String showRank(){
         char retSuit;
@@ -120,8 +133,11 @@ public class Card
     }
 
     
+
+    
     /** 
-     * @return int
+     * Returns the card's value
+     * @return int Value of the card
      */
     public int getValue()
     {

@@ -2,14 +2,11 @@ package blackjack.state_pattern;
 import java.util.Scanner;
 
 import blackjack.*;
-
+/**
+ * Class representing the final state of the game, where no more siderules are available to pick
+ */
 public class EndGameState implements State
 {
-    
-    /** 
-     * @param context
-     * @return boolean
-     */
     @Override
     public boolean play(StateContext context)
     {

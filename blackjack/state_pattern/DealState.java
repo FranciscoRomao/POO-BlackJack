@@ -1,16 +1,16 @@
 package blackjack.state_pattern;
-import java.util.Scanner;
 
+import java.util.Scanner;
 import blackjack.*;
 
+/**
+ * Class representing the state of the game right after the player bets, and is waiting for the deal command
+ * <p>The player can also check their balance
+ */
 public class DealState implements State
 {    
     private boolean firstInput = true;
     
-    /** 
-     * @param context
-     * @return boolean
-     */
     @Override
     public boolean play(StateContext context)
     {

@@ -2,14 +2,16 @@ package blackjack.deck;
 
 import java.util.*;
 import java.io.*;
-
+/**
+ * Shoe class containing the cards that make the whole shoe
+ */
 public class Shoe
 {
     private LinkedList<Card> cards;
     private int totalCards;
 
     /**
-     * Shoe constructor
+     * Shoe constructor when creating shoe automatically
      * @param   numDecks    Number of decks to add to the shoe
      */
     public Shoe(int numDecks)
@@ -25,7 +27,10 @@ public class Shoe
         cards = Shuffle();
         totalCards = cards.size(); 
     }
-
+    /**
+     * Shoe constructor when creating shoe from a file
+     * @param fileName Name of the file that contains the shoe
+     */
     public Shoe(String fileName)
     {
         File shoeFile = new File(fileName);
@@ -49,7 +54,8 @@ public class Shoe
 
     
     /** 
-     * @return LinkedList<Card>
+     * Creates a single deck of ordered cards
+     * @return LinkedList<Card> List of cards that make the deck
      */
     public LinkedList<Card> singleDeck()
     {
@@ -70,7 +76,8 @@ public class Shoe
 
     
     /** 
-     * @return LinkedList<Card>
+     * Shuffles the shoe
+     * @return LinkedList<Card> List of shuffled cards
      */
     public LinkedList<Card> Shuffle()
     {
@@ -94,7 +101,8 @@ public class Shoe
 
     
     /** 
-     * @return Card
+     * Returns the first card of the shoe
+     * @return Card First card of the shoe
      */
     public Card getCard()
     {
@@ -103,7 +111,8 @@ public class Shoe
 
     
     /** 
-     * @return int
+     * Indicates the number of cards that have been played
+     * @return int Number of played cards
      */
     public int getPlayedCards()
     {
@@ -112,7 +121,8 @@ public class Shoe
 
     
     /** 
-     * @return int
+     * Returns the ammount of cards left in the shoe
+     * @return int Number of cards in shoe
      */
     public int getNumCards()
     {

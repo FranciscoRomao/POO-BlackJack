@@ -2,14 +2,12 @@ package blackjack.state_pattern;
 import java.util.Scanner;
 
 import blackjack.*;
-
+/**
+ * Class representing the initial state of the game
+ * <p>This is where the player chooses the ammount of money to bet
+ */
 public class GameStart implements State
 {
-    
-    /** 
-     * @param context
-     * @return boolean
-     */
     @Override
     public boolean play(StateContext context)
     {

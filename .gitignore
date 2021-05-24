@@ -1,2 +1,8 @@
 *.class
 *.Identifier
+JDOC/
+resources/
+script-dir/
+*.html
+*.css 
+*.js

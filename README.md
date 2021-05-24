@@ -30,7 +30,6 @@
 - [x] Implementar constructor do Hand
 - [x] Implementar função hit do Dealer
 - [x] Implementar função dealCards do Dealer
-- [x] Implementar função checkBJ do Dealer
 - [x] Ler input e inicializar o jogo
 - [x] Mudar o handSum() e o hasAce() urgentemente para ver se no Basic fica mais facil e tb pq ta mal
 

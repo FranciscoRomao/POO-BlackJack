@@ -96,7 +96,6 @@ package "blackjack"
         +Dealer(game:Game, shoe:String)
         +hit()
         +dealCards()
-        +checkBJ():int
         +bustCheck(Hand handToCheck):int
         +playOtherHand()
         +newRound()
